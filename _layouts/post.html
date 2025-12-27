@@ -31,3 +31,59 @@ layout: default
     </p>
   </div>
 </article>
+
+<div class="image-modal" id="image-modal" aria-hidden="true">
+  <div class="image-modal-backdrop" data-close-modal></div>
+  <figure class="image-modal-content">
+    <img src="" alt="">
+    <button type="button" class="image-modal-close" data-close-modal aria-label="Fechar imagem">Fechar</button>
+  </figure>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('image-modal');
+    if (!modal) {
+      return;
+    }
+
+    var modalImage = modal.querySelector('img');
+    var closeElements = modal.querySelectorAll('[data-close-modal]');
+
+    function openModal(src, alt) {
+      modalImage.src = src;
+      modalImage.alt = alt || '';
+      modal.classList.add('is-visible');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('image-modal-open');
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-visible');
+      modal.setAttribute('aria-hidden', 'true');
+      modalImage.src = '';
+      modalImage.alt = '';
+      document.body.classList.remove('image-modal-open');
+    }
+
+    document.querySelectorAll('.post img').forEach(function (img) {
+      if (!img.classList.contains('image-zoomable')) {
+        img.classList.add('image-zoomable');
+      }
+
+      img.addEventListener('click', function () {
+        openModal(img.src, img.alt);
+      });
+    });
+
+    closeElements.forEach(function (element) {
+      element.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
+        closeModal();
+      }
+    });
+  });
+</script>

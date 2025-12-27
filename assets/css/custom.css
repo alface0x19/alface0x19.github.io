@@ -36,6 +36,19 @@
 .post img {
   display: block !important;
   margin: 1rem auto !important;
+  max-width: 100%;
+  border-radius: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-zoomable {
+  cursor: zoom-in;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.25);
+}
+
+.image-zoomable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3);
 }
 
 article.post {
@@ -261,6 +274,69 @@ article.post {
 
 .post-link:hover {
   text-decoration: underline;
+}
+
+.image-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 5000;
+  padding: 2rem;
+}
+
+.image-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+body.image-modal-open {
+  overflow: hidden;
+}
+
+.image-modal-content {
+  position: relative;
+  max-width: min(900px, 90vw);
+  max-height: min(90vh, 680px);
+  margin: 0;
+}
+
+.image-modal-content img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+}
+
+.image-modal-close {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  padding: 0.45rem 0.9rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.image-modal-close:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.image-modal-backdrop {
+  position: absolute;
+  inset: 0;
 }
 
 @media (max-width: 650px) {
