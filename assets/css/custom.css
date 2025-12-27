@@ -2,25 +2,46 @@
 ---
 
 .post {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  padding: 2rem 1rem !important;
+  text-align: center !important;
 }
 
-.post h1 {
-  text-align: center;
+.post h1,
+.post h2,
+.post h3,
+.post h4,
+.post h5,
+.post h6 {
+  text-align: center !important;
 }
 
 .post p {
-  text-align: center;
+  text-align: center !important;
 }
 
-.post .content {
-  text-align: center;
+.post ul,
+.post ol {
+  display: inline-block !important;
+  text-align: left !important;
+}
+
+.post pre {
+  text-align: left !important;
+}
+
+.post img {
+  display: block !important;
+  margin: 1rem auto !important;
 }
 
 article.post {
-  text-align: center;
+  text-align: center !important;
+}
+
+article.post > * {
+  text-align: center !important;
 }
 
 .support-box {
