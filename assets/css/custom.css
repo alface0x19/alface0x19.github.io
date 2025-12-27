@@ -5,25 +5,27 @@
   max-width: 800px !important;
   margin: 0 auto !important;
   padding: 2rem 1rem !important;
+  text-align: left !important;
+}
+
+.post h1 {
   text-align: center !important;
 }
 
-.post h1,
 .post h2,
 .post h3,
 .post h4,
 .post h5,
 .post h6 {
-  text-align: center !important;
+  text-align: left !important;
 }
 
 .post p {
-  text-align: center !important;
+  text-align: left !important;
 }
 
 .post ul,
 .post ol {
-  display: inline-block !important;
   text-align: left !important;
 }
 
@@ -37,11 +39,8 @@
 }
 
 article.post {
-  text-align: center !important;
-}
-
-article.post > * {
-  text-align: center !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
 }
 
 .support-box {
