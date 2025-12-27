@@ -40,6 +40,9 @@ author:
     - label: GitHub
       icon: fab fa-github
       url: https://github.com/alface0x19
+    - label: YouTube
+      icon: fab fa-youtube
+      url: https://www.youtube.com/channel/UCkxunWGUnHJlUcnN5K1w6Nw
 
 # =========================
 # Defaults
