@@ -3,9 +3,9 @@ layout: post
 title: "Recuperar 2 discos externos"
 ---
 
-## Como usar 2 discis externos que estavam a apanhar pó?
+## Como usar 2 discos externos que estavam a apanhar pó?
 
-Estava a arrumar algumas coisa e reparei em 2 discos externos que estavam a apanhar pó pelo menos desde 2021. 
+Estava a arrumar algumas coisa e reparei em 2 discos externos que estavam a apanhar pó pelo menos desde 2021.
 
 Após experimentar os discos e ver se que estavam ambos funcionais lembrei-me "se os discos estão aqui desligados porque não criar um file share com eles?"
 
@@ -21,9 +21,6 @@ Dai ter surgido a ideia de usar 2 discos como se fosse só um, tendo um único m
 ![SMD Mount](../_imgs/post_1/image3.png)
 
 ![SMD Folders](../_imgs/post_1/image4.png)
-
-
-
 
 
 Partilho o script usado para gerar estes setup:
