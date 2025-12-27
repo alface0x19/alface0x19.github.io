@@ -35,4 +35,4 @@ Aqui partilho:
 - 🖥️ Linux
 - 📝 E muito mais!
 	</section>
-</div>
+</div>![1766877921756](image/index/1766877921756.png)![1766877924248](image/index/1766877924248.png)
