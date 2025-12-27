@@ -6,7 +6,8 @@ title: Home
 👋 Bem-vindo ao alface0x19.
 
 Notas técnicas, tutoriais práticos e decisões reais em Linux, DevOps, homelab e segurança.
-📺 Conteúdo complementar em vídeo no YouTube.
+📺 Conteúdo complementar em vídeo no YouTube:
+https://youtube.com/@alface0x19
 
 Aqui partilho:
 - 🔧 DevOps & SRE
