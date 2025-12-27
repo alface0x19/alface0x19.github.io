@@ -1,0 +1,9 @@
+title: João Conde
+description: SRE • DevOps • Kubernetes • Cybersecurity
+theme: minima
+
+markdown: kramdown
+highlighter: rouge
+
+plugins:
+  - jekyll-feed
