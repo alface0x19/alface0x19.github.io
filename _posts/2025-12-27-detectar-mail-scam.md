@@ -7,9 +7,11 @@ title: "Detetar e-mail de scam"
 O projeto mal completou um dia de vida e, ainda assim, recebi um e-mail entusiasmado propondo networking imediato. Após analisar o conteúdo, percebi vários sinais de que se tratava de um scam disfarçado de oportunidade.
 
 ### Exemplo do e-mail recebido
-</br>
+
+
 ![alt text]({{ site.baseurl }}/assets/images/post-2/image1.png)
-</br>
+
+
 ### Sinais de alerta
 
 1. **Remetente desconhecido**: O e-mail foi enviado por um endereço que eu não reconhecia.
