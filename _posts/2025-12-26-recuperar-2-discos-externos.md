@@ -11,9 +11,20 @@ Após experimentar os discos e ver se que estavam ambos funcionais lembrei-me "s
 
 Dai ter surgido a ideia de usar 2 discos como se fosse só um, tendo um único mount point dentro do servidor de SMB.
 
-![SMB Mount](../_imgs/image.png)
+### Windows
 
-![SMD Folders](../_imgs/image2.png)
+![SMB Mount](../_imgs/post_1/image.png)
+
+![SMD Folders](../_imgs/post_1/image2.png)
+
+### Mac OS
+![SMD Mount](../_imgs/post_1/image3.png)
+
+![SMD Folders](../_imgs/post_1/image4.png)
+
+
+
+
 
 Partilho o script usado para gerar estes setup:
 ```bash
