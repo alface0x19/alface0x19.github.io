@@ -19,10 +19,15 @@ title: Home
 
 	<section class="home-content">
 		<header class="home-hero">
-			<p class="home-intro">👋 Bem-vindo ao <strong>alface0x19</strong>. Aqui partilho notas técnicas, experiências reais e projetos no ecossistema Linux, DevOps, homelab e segurança.</p>
-			<div class="hero-cta">
-				<span>📺 Conteúdo complementar em vídeo:</span>
-				<a class="hero-link" href="https://youtube.com/@alface0x19" target="_blank" rel="noopener">youtube.com/@alface0x19</a>
+			<div class="hero-media">
+				<img class="hero-image" src="{{ '/assets/images/index/icon.png' | relative_url }}" alt="Ícone do projeto alface0x19">
+			</div>
+			<div class="hero-details">
+				<p class="home-intro">👋 Bem-vindo ao <strong>alface0x19</strong>. Aqui partilho notas técnicas, experiências reais e projetos no ecossistema Linux, DevOps, homelab e segurança.</p>
+				<div class="hero-cta">
+					<span>📺 Conteúdo complementar em vídeo:</span>
+					<a class="hero-link" href="https://youtube.com/@alface0x19" target="_blank" rel="noopener">youtube.com/@alface0x19</a>
+				</div>
 			</div>
 		</header>
 

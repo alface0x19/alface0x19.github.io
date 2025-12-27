@@ -90,18 +90,22 @@ article.post {
   display: flex;
   flex-direction: row;
   gap: 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem 3rem;
   align-items: flex-start;
 }
 
 .home-sidebar {
-  flex: 0 0 260px;
+  flex: 0 0 240px;
   padding: 1.5rem;
-  border: 1px solid #444;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(20, 24, 40, 0.7);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 120px;
+  height: fit-content;
 }
 
 .home-sidebar h2 {
@@ -131,14 +135,16 @@ article.post {
 
 .home-content {
   flex: 1 1 auto;
+  min-width: 0;
 }
 
 .home-hero {
-  padding: 2rem;
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(120, 144, 255, 0.15), rgba(0, 0, 0, 0.3));
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
-  margin-bottom: 2.5rem;
+  padding: 2.4rem;
+  border-radius: 18px;
+  background: radial-gradient(circle at top left, rgba(120, 144, 255, 0.35), rgba(0, 0, 0, 0.6));
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+  margin-bottom: 3rem;
+  backdrop-filter: blur(6px);
 }
 
 .home-intro {
@@ -183,16 +189,22 @@ article.post {
 
 .topics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.4rem;
 }
 
 .topic-card {
-  padding: 1.4rem;
-  border-radius: 14px;
+  padding: 1.6rem;
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  background: rgba(20, 24, 40, 0.7);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.topic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
 }
 
 .topic-card h3 {
@@ -226,19 +238,25 @@ article.post {
 
 .latest-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.4rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.6rem;
 }
 
 .post-card {
-  padding: 1.6rem;
-  border-radius: 14px;
+  padding: 1.8rem;
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  background: rgba(20, 24, 40, 0.7);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.32);
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.42);
 }
 
 .post-card h3 {
@@ -342,10 +360,14 @@ body.image-modal-open {
 @media (max-width: 650px) {
   .home-layout {
     flex-direction: column;
+    margin: 0 auto;
+    padding: 1.5rem 1.2rem 2.5rem;
   }
 
   .home-sidebar {
     flex: 1 1 auto;
+    position: static;
+    top: auto;
   }
 
   .section-header {
