@@ -13,14 +13,14 @@ Dai ter surgido a ideia de usar 2 discos como se fosse só um, tendo um único m
 
 ### Windows
 
-![SMB Mount](../_imgs/post_1/image.png)
+![SMB Mount]({{ site.baseurl }}/assets/images/post-1/image.png)
 
-![SMD Folders](../_imgs/post_1/image2.png)
+![SMD Folders]({{ site.baseurl }}/assets/images/post-1/image2.png)
 
 ### Mac OS
-![SMD Mount](../_imgs/post_1/image3.png)
+![SMD Mount]({{ site.baseurl }}/assets/images/post-1/image3.png)
 
-![SMD Folders](../_imgs/post_1/image4.png)
+![SMD Folders]({{ site.baseurl }}/assets/images/post-1/image4.png)
 
 
 Partilho o script usado para gerar estes setup:
