@@ -1,3 +1,18 @@
+.post {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.post h1 {
+  text-align: center;
+}
+
+.post p {
+  text-align: center;
+}
+
 .support-box {
   margin-top: 2rem;
   padding: 1.5rem;
