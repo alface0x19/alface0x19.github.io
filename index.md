@@ -2,7 +2,6 @@
 layout: home
 title: Home
 ---
-
 ![alt]({{ site.baseurl }}/assets/images/index/icon.png)
 
 👋 Bem-vindo ao alface0x19.
@@ -13,6 +12,7 @@ Notas técnicas, tutoriais práticos e decisões reais em Linux, DevOps, homelab
 [youtube.com/@alface0x19](https://youtube.com/@alface0x19)
 
 Aqui partilho:
+
 - 🔧 DevOps & SRE
 - ☸️ Kubernetes
 - 🔐 Segurança & CTFs
