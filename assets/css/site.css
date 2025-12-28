@@ -10,3 +10,8 @@
 .page__inner {
   max-width: 1100px;
 }
+
+.layout--home .archive {
+  max-width: 1100px;
+  margin: 0 auto;
+}
