@@ -8,6 +8,12 @@ sidebar: false
 
 ## Conteúdos recentes
 
+<div class="sitemap-search">
+  <label for="sitemap-filter">Pesquisar conteúdos</label>
+  <input id="sitemap-filter" type="search" placeholder="Filtrar por título" aria-describedby="sitemap-filter-help">
+  <small id="sitemap-filter-help">Mostra posts e páginas correspondentes ao texto pesquisado.</small>
+</div>
+
 <ul class="sitemap-list">
   {% for post in site.posts %}
   <li>
@@ -16,6 +22,28 @@ sidebar: false
   </li>
   {% endfor %}
 </ul>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var filterInput = document.getElementById('sitemap-filter');
+  if (!filterInput) {
+    return;
+  }
+
+  var lists = document.querySelectorAll('.sitemap-list');
+
+  filterInput.addEventListener('input', function () {
+    var query = filterInput.value.trim().toLowerCase();
+
+    lists.forEach(function (list) {
+      list.querySelectorAll('li').forEach(function (item) {
+        var text = item.textContent.toLowerCase();
+        item.style.display = query && text.indexOf(query) === -1 ? 'none' : '';
+      });
+    });
+  });
+});
+</script>
 
 ## Páginas
 

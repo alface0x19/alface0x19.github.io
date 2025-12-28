@@ -16,6 +16,35 @@
   margin: 0 auto;
 }
 
+.sitemap-search {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.sitemap-search label {
+  font-weight: 600;
+}
+
+.sitemap-search input {
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(15, 18, 35, 0.7);
+  color: inherit;
+}
+
+.sitemap-search input:focus {
+  outline: 2px solid rgba(120, 144, 255, 0.8);
+  outline-offset: 1px;
+}
+
+.sitemap-search small {
+  opacity: 0.7;
+  font-size: 0.85rem;
+}
+
 .sitemap-list {
   list-style: none;
   padding: 0;
