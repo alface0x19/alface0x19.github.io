@@ -2,8 +2,10 @@
 .index-layout {
   display: flex;
   gap: 2rem;
-  margin: 2rem 6%;
-  padding: 0 1.5rem 3rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  width: calc(100% - 4rem);
+  padding: 0 2rem 3rem;
 }
 
 .index-sitemap {
@@ -80,7 +82,9 @@
 @media (max-width: 768px) {
   .index-layout {
     flex-direction: column;
-    margin: 1.5rem 4%;
+    margin: 1.5rem auto;
+    width: calc(100% - 2.5rem);
+    padding: 0 1.25rem 2.5rem;
   }
 
   .index-sitemap {
