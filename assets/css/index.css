@@ -6,6 +6,7 @@
   max-width: 1200px;
   width: calc(100% - 4rem);
   padding: 0 2rem 3rem;
+  align-items: flex-start;
 }
 
 .index-sitemap {
