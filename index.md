@@ -19,5 +19,6 @@ Notas técnicas, tutoriais práticos e decisões reais em Linux, DevOps, homelab
     
 <aside class="index-sitemap">
     <a href="{{ '/sitemap' | relative_url }}">Ver todos os artigos →</a>
+    <br>
     <a href="{{ '/support' | relative_url }}">Suporte ao projeto →</a>
 </aside>
