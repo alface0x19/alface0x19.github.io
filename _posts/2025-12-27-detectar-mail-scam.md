@@ -1,5 +1,3 @@
----
-layout: post
 title: "Detetar e-mail de scam"
 ---
 ## Como detetar um e-mail de scam?

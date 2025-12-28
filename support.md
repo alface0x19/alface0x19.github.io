@@ -35,6 +35,6 @@ O apoio ajuda a:
 
 - ⭐ Partilhar o blog
 - ⭐ Dar star no GitHub  
-  https://github.com/alface0x19
+  [GitHub](https://github.com/alface0x19)
 
 Obrigado pelo apoio 🙏
