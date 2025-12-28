@@ -4,7 +4,7 @@ title: Home
 ---
 <link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
 
-<div class="index-layout">
+<div class="post">
 	<aside class="index-sitemap">
 		<h2>Sitemap</h2>
 		<nav aria-label="Sitemap do site">
