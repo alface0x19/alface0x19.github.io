@@ -34,8 +34,7 @@ plugins:
 # =========================
 author:
   name: alface0x19
-  bio: "Cybersecurity • DevOps • CTFs"
-  location: Portugal
+  bio: "Tech enthusiast • Tech Blogger"
   links:
     - label: GitHub
       icon: fab fa-github
