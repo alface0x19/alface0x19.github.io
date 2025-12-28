@@ -4,7 +4,7 @@ title: Home
 ---
 <link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
 
-<div class="post">
+<div class="index-layout">
 	<aside class="index-sitemap">
 		<h2>Sitemap</h2>
 		<nav aria-label="Sitemap do site">
@@ -15,7 +15,8 @@ title: Home
 			</ul>
 		</nav>
 	</aside>
-
+</div>
+<div class="index-main">
   <section class="index-content" markdown="1">
 ![alt]({{ site.baseurl }}/assets/images/index/icon.png)
 
