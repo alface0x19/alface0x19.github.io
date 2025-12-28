@@ -16,16 +16,16 @@ Notas técnicas, tutoriais práticos e decisões reais em Linux, DevOps, homelab
 [youtube.com/@alface0x19](https://youtube.com/@alface0x19)
     </section>
     
-    <aside class="index-sitemap">
-        <h2>Últimos artigos</h2>
-        <ul>
-        {% for post in site.posts limit:5 %}
-        <li>
-            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            <br>
-            <small>{{ post.date | date: "%d-%m-%Y" }}</small>
-        </li>
-        {% endfor %}
-        </ul>
-        <a href="{{ '/sitemap' | relative_url }}">Ver todos os artigos →</a>
-    </aside>
+<aside class="index-sitemap">
+    <h2>Últimos artigos</h2>
+    <ul>
+    {% for post in site.posts limit:5 %}
+    <li>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <br>
+        <small>{{ post.date | date: "%d-%m-%Y" }}</small>
+    </li>
+    {% endfor %}
+    </ul>
+    <a href="{{ '/sitemap' | relative_url }}">Ver todos os artigos →</a>
+</aside>
