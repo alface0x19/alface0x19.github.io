@@ -1,6 +1,5 @@
 ---
 title: "All You Need Is RAM: O Novo Flex na Área de IT em 2026"
-date: 2026-01-20
 ---
 
 ## All You Need Is RAM 🎵
