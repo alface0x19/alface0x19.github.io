@@ -28,6 +28,13 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-include-cache
+  - jekyll-paginate
+
+# =========================
+# Pagination
+# =========================
+paginate: 10  # Número de posts por página
+paginate_path: /page:num/
 
 # =========================
 # Analytics
