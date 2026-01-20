@@ -1,9 +1,6 @@
 ---
 layout: home
-title: Home
 ---
-<link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
-
 <div class="index-main">
 <section class="index-content" markdown="1">
 ![alt]({{ site.baseurl }}/assets/images/index/icon.png){:class="index-logo"}
