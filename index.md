@@ -10,13 +10,13 @@ title: Home
 
 👋 Bem-vindo ao alface0x19.
 
-Notas técnicas, tutoriais práticos e decisões reais em Linux, DevOps, homelab e segurança.
+Notas técnicas, tutoriais práticos e decisões reais em Linux, DevOps, homelab e segurança e claro alguma brincadeira.
 
 📺 Conteúdo complementar em vídeo no YouTube:
 [youtube.com/@alface0x19](https://youtube.com/@alface0x19)
 
 </section>
-    
+
 <aside class="index-sitemap">
     <a href="{{ '/sitemap' | relative_url }}">Ver todos os artigos →</a>
     <br>
