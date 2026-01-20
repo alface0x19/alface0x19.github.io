@@ -60,22 +60,11 @@ Nos outros computadores:
 
 1. Abre o Synergy
 2. Seleciona **"Client"** (Cliente)
-3. Introduz o endereço IP do computador servidor
-4. Clica em **"Start"** (Iniciar)
+3. O Synergy irá automaticamente descobrir o servidor na rede local (auto-discovery)
+4. Seleciona o servidor descoberto da lista
+5. Clica em **"Start"** (Iniciar)
 
-#### 4. Encontrar o Endereço IP
-
-**No Windows:**
-```bash
-ipconfig
-```
-
-**No macOS/Linux:**
-```bash
-ifconfig
-```
-
-Procura pelo endereço IPv4 (geralmente algo como 192.168.1.x).
+**💡 Dica Útil**: Graças ao **auto-discovery**, quando os computadores estão na mesma rede local (LAN), o Synergy encontra automaticamente o servidor - não é necessário configurar IPs manualmente!
 
 ### Resolução de Problemas no Synergy
 
