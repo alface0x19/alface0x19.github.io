@@ -30,6 +30,15 @@ plugins:
   - jekyll-include-cache
 
 # =========================
+# Analytics
+# =========================
+analytics:
+  provider: google-gtag
+  google:
+    tracking_id: "G-N085QH7W6F"  # Substitua pelo seu ID do Google Analytics
+    anonymize_ip: false
+
+# =========================
 # Author
 # =========================
 author:

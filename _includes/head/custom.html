@@ -1,1 +1,21 @@
 <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+
+<!-- Google Analytics -->
+{% if site.analytics.provider == "google-gtag" and site.analytics.google.tracking_id %}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.google.tracking_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  
+  // Apenas rastreia se estiver no domínio correto (proteção contra bots)
+  var allowedHostnames = ['alface0x19.github.io', 'localhost', '127.0.0.1'];
+  if (allowedHostnames.indexOf(window.location.hostname) > -1) {
+    gtag('config', '{{ site.analytics.google.tracking_id }}', { 
+      'anonymize_ip': {{ site.analytics.google.anonymize_ip | default: false }},
+      'cookie_flags': 'SameSite=None;Secure'
+    });
+  }
+</script>
+{% endif %}
