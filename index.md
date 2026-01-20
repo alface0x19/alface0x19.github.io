@@ -1,6 +1,5 @@
 ---
 layout: home
-title: Home
 ---
 <div class="index-main">
 <section class="index-content" markdown="1">
