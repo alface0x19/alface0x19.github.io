@@ -1,2 +1,36 @@
 <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS Feed" href="{{ '/feed.xml' | relative_url }}">
+
+<!-- GLightbox for image zoom -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Adiciona automaticamente GLightbox a todas as imagens no conteúdo
+    const images = document.querySelectorAll('.page__content img');
+    images.forEach(img => {
+      // Cria um link wrapper se a imagem não estiver já num link
+      if (img.parentElement.tagName !== 'A') {
+        const link = document.createElement('a');
+        link.href = img.src;
+        link.className = 'glightbox';
+        link.setAttribute('data-gallery', 'post-images');
+        
+        // Se a imagem tem alt text, usa como descrição
+        if (img.alt) {
+          link.setAttribute('data-glightbox', `description: ${img.alt}`);
+        }
+        
+        img.parentNode.insertBefore(link, img);
+        link.appendChild(img);
+      }
+    });
+    
+    // Inicializa o GLightbox
+    const lightbox = GLightbox({
+      touchNavigation: true,
+      loop: true,
+      autoplayVideos: true
+    });
+  });
+</script>
