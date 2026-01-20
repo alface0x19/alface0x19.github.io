@@ -13,6 +13,10 @@ Notas técnicas, tutoriais práticos e decisões reais em Linux, DevOps, homelab
 📺 Conteúdo complementar em vídeo no YouTube:
 [youtube.com/@alface0x19](https://youtube.com/@alface0x19)
 
+🎮 Gaming e Fun na Twitch:
+[twitch.tv/alface0x19](https://www.twitch.tv/alface0x19)
+
+
 </section>
 
 <aside class="index-sitemap">
