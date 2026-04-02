@@ -21,17 +21,29 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - título natural;
 - ausência de brasileirismos, traduções literais e frases com cheiro a texto gerado;
 - acrónimos e chavões explicados quando necessário;
+- inglês técnico natural mantido quando fizer sentido, sem cair em expressões híbridas artificiais;
 - ritmo e naturalidade compatíveis com o blog.
+- pelo menos um marcador visível de persona autoral bem encaixado no texto.
+- esse traço de persona deve aparecer cedo o suficiente para moldar a leitura, não apenas numa frase perdida no fim.
+- esse traço deve ser reconhecível como música, carros, mitologia grega/nórdica ou humor seco contextual.
 
 ## Tens de caçar explicitamente
 
 - `fatos` quando devia ser `factos`;
 - `a gente`, `conectado`, `registros`, `libraries`, `fazer update`, `reconsider`, e outros desvios semelhantes;
+- `geladeira`, `arquivo`, `time`, `cadastre`, e outros vocábulos correntes de PT-BR que podem escapar em frases coloquiais ou analogias;
 - `Title Case` inglesa em títulos portugueses;
 - nomes técnicos mal escritos ou mal capitalizados;
 - frases demasiado sonoras mas vagas;
 - listas e parágrafos que soem a checklist automática em vez de texto humano;
 - inglês mal integrado no meio do português.
+- expressões meio corporate ou meio traduzidas que não soem a linguagem real de engenharia em PT-PT, mesmo quando usam palavras tecnicamente reconhecíveis.
+- inglês corporate ou burocrático desnecessário, como `policies`, quando existe uma alternativa portuguesa natural e mais forte.
+- hipercorreções de PT-PT que trocam uma formulação natural por outra mais dura, estranha ou pouco idiomática.
+- traduções literais fora do domínio técnico, como `audiência` quando o texto quer dizer adoção, uso ou base instalada.
+- artigos "certinhos" mas sem voz própria, humor leve, referência musical ou analogia autoral.
+- artigos onde a voz existe mas entra tarde demais para marcar o texto.
+- artigos onde a referência existe mas é tão vaga que podia ser qualquer metáfora genérica.
 
 ## Não fazer
 
@@ -39,14 +51,25 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - Não deixar problemas pequenos para humanos resolverem depois.
 - Não alterar factos ou o ângulo editorial sem necessidade.
 - Não reescrever por reescrever; mexe onde aumenta qualidade real.
+- Não aprovar um artigo que esteja tecnicamente limpo mas sem personalidade.
+- Não aprovar um artigo em que a persona apareça só como decoração mínima para cumprir checklist.
+- Não aprovar um artigo onde a referência autoral não seja claramente identificável.
+- Não implicar com termos técnicos em inglês só por estarem em inglês; só deves mexer quando o resultado soar artificial ou pouco natural.
+- Não transformar o texto em PT-PT artificial. O alvo é português europeu idiomático e vivo, não correção escolar rígida.
 
 ## Processo
 
 1. Lê o artigo completo.
 2. Lê rapidamente 2 ou 3 posts do blog para recalibrar a voz.
 3. Corrige diretamente tudo o que quebre PT-PT, naturalidade, casing técnico ou ritmo.
-4. Faz uma última passagem em busca de restos de texto gerado.
-5. Só no fim resume o que corrigiste.
+4. Confirma que existe pelo menos um traço visível de persona autoral, bem integrado e sem exagero.
+5. Confirma que esse traço aparece antes de metade do artigo ou, no mínimo, cedo o suficiente para influenciar o tom.
+6. Confirma que esse traço é reconhecível como música, carros, mitologia grega/nórdica ou humor seco, e não apenas uma metáfora vaga.
+7. Faz uma passagem específica à linguagem híbrida: mantém termos técnicos naturais em inglês, mas reescreve combinações artificiais como `hygiene proativa` para algo que soe mesmo a PT-PT técnico.
+8. Faz uma passagem específica por vocabulário quotidiano e por analogias para apanhar PT-BR escondido e inglês corporate fora do contexto técnico; `geladeira` e `policies` não podem passar.
+9. Faz uma passagem específica por idiomatismo: se uma correção soar mais artificial do que a frase original, volta atrás e escolhe a formulação que um falante de PT-PT realmente usaria.
+10. Faz uma última passagem em busca de restos de texto gerado.
+11. Só no fim resume o que corrigiste.
 
 ## Saída esperada
 
