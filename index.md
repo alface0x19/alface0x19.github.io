@@ -3,6 +3,12 @@ layout: home
 ---
 <div class="index-layout">
 
+  <aside class="index-sitemap">
+    <p class="sidebar-title">// navegar</p>
+    <a href="{{ '/sitemap' | relative_url }}" class="sidebar-link">→ todos os artigos</a>
+    <a href="{{ '/support' | relative_url }}" class="sidebar-link">→ apoiar o projeto</a>
+  </aside>
+
   <section class="index-content">
     <div class="hero-card">
       <div class="hero-bar">
@@ -24,11 +30,6 @@ layout: home
     </div>
   </section>
 
-  <aside class="index-sitemap">
-    <p class="sidebar-title">// navegar</p>
-    <a href="{{ '/sitemap' | relative_url }}" class="sidebar-link">→ todos os artigos</a>
-    <a href="{{ '/support' | relative_url }}" class="sidebar-link">→ apoiar o projeto</a>
-  </aside>
-
 </div>
+
 
