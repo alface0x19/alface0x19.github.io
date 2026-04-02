@@ -1,5 +1,6 @@
 ---
 layout: home
+author_profile: false
 ---
 <div class="index-layout">
 
