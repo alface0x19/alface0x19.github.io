@@ -208,8 +208,8 @@
    ----------------------------------------------- */
 @media (max-width: 600px) {
   .index-layout {
-    width: calc(100% - 1.5rem);
-    margin: 1.5rem auto;
+    width: 100%;
+    margin: 1.5rem 0 0;
     padding: 0 0 3rem;
   }
 
