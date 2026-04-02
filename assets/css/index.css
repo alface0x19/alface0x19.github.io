@@ -1,7 +1,286 @@
-/* ===================================
+/* =============================================
+   Index page — Amber Terminal aesthetic
+   ============================================= */
+
+/* -----------------------------------------------
    Layout wrapper
-   =================================== */
+   ----------------------------------------------- */
 .index-layout {
+  display: flex;
+  gap: 2rem;
+  margin: 2.5rem auto;
+  max-width: 1100px;
+  width: calc(100% - 4rem);
+  padding: 0 0 3rem;
+  align-items: flex-start;
+}
+
+/* -----------------------------------------------
+   Hero card: terminal window chrome
+   ----------------------------------------------- */
+.hero-card {
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-card:hover {
+  border-color: var(--border-bright);
+  box-shadow: var(--shadow-md), var(--shadow-amber);
+}
+
+/* Terminal title bar */
+.hero-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.55rem 1.1rem;
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-bar__dots {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.hero-bar__dots i {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  font-style: normal;
+}
+
+.hero-bar__dots i:nth-child(1) { background: rgba(255, 95, 87, 0.6); }
+.hero-bar__dots i:nth-child(2) { background: rgba(254, 188, 46, 0.6); }
+.hero-bar__dots i:nth-child(3) { background: rgba(40, 200, 64, 0.6); }
+
+.hero-bar__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.07em;
+  opacity: 0.65;
+}
+
+/* Hero body */
+.hero-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.75rem 2rem;
+  position: relative;
+}
+
+.hero-body::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -60px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(240, 168, 0, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.index-logo {
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 1px var(--border-mid), 0 4px 20px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+  object-fit: cover;
+  filter: sepia(15%) saturate(0.85);
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Hero title: terminal prompt style */
+.hero-title {
+  margin-top: 0 !important;
+  margin-bottom: 0.5rem !important;
+  font-family: var(--font-mono) !important;
+  font-size: 1.6rem !important;
+  line-height: 1.2 !important;
+  color: var(--amber) !important;
+  text-shadow: 0 0 20px rgba(240, 168, 0, 0.28);
+  -webkit-text-fill-color: var(--amber) !important;
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+}
+
+.hero-prompt {
+  color: var(--text-dim);
+  margin-right: 0.45rem;
+  font-size: 0.78em;
+  opacity: 0.7;
+  vertical-align: middle;
+}
+
+.hero-text p {
+  margin: 0;
+  font-family: var(--font-body) !important;
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: var(--text) !important;
+}
+
+.hero-text strong {
+  color: var(--text-bright) !important;
+  font-weight: 600;
+}
+
+/* -----------------------------------------------
+   Social buttons — clean terminal style
+   ----------------------------------------------- */
+.social-links {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.48rem 1.15rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-decoration: none !important;
+  transition: all 0.22s ease;
+  border: 1px solid var(--border);
+  color: var(--text-muted) !important;
+  background: var(--bg-raised);
+  text-shadow: none !important;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  text-shadow: none !important;
+}
+
+.social-btn--youtube:hover {
+  background: rgba(255, 40, 40, 0.09);
+  border-color: rgba(255, 60, 60, 0.28);
+  color: #ff7070 !important;
+  box-shadow: 0 4px 16px rgba(255, 0, 0, 0.15);
+}
+
+.social-btn--twitch:hover {
+  background: rgba(145, 70, 255, 0.09);
+  border-color: rgba(145, 70, 255, 0.26);
+  color: #c088ff !important;
+  box-shadow: 0 4px 16px rgba(145, 70, 255, 0.18);
+}
+
+/* -----------------------------------------------
+   Index content column
+   ----------------------------------------------- */
+.index-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* -----------------------------------------------
+   Sidebar — nav panel
+   ----------------------------------------------- */
+.index-sitemap {
+  flex: 0 0 198px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 80px;
+  overflow: hidden;
+}
+
+.sidebar-title {
+  margin: 0 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--text-dim) !important;
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1.1rem;
+  line-height: 1.2 !important;
+  -webkit-text-fill-color: var(--text-dim) !important;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 0.65rem 1.1rem;
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem;
+  color: var(--text-muted) !important;
+  text-decoration: none !important;
+  transition: all 0.18s ease;
+  border-left: 2px solid transparent;
+  text-shadow: none !important;
+}
+
+.sidebar-link:hover {
+  background: var(--amber-surface) !important;
+  border-left-color: var(--amber);
+  color: var(--amber) !important;
+  padding-left: 1.3rem;
+  text-shadow: none !important;
+}
+
+.sidebar-link + .sidebar-link {
+  border-top: 1px solid var(--border);
+}
+
+/* -----------------------------------------------
+   Responsive
+   ----------------------------------------------- */
+@media (max-width: 768px) {
+  .index-layout {
+    flex-direction: column;
+    margin: 1.5rem auto;
+    width: calc(100% - 2rem);
+    padding: 0 0 2rem;
+    gap: 1.25rem;
+  }
+
+  .index-sitemap {
+    flex: 1 1 auto;
+    position: static;
+    width: 100%;
+  }
+
+  .hero-body {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .hero-bar__label {
+    display: none;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
   display: flex;
   gap: 2rem;
   margin: 2rem auto;
