@@ -21,6 +21,9 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 - Exemplos concretos cedo no texto.
 - Estrutura Markdown simples.
 - Fechos com takeaway, observação pessoal ou pergunta ao leitor.
+- Pode introduzir, de forma pontual, piadas curtas ou observações leves relacionadas com o tema do artigo e com música, desde que soem naturais e não distraiam do ponto principal.
+- Quando usar humor, deve parecer comentário humano e contextual, não piada forçada nem frase de template repetida.
+- Pode recorrer ocasionalmente a exemplos ou analogias com carros, mitologia nórdica ou mitologia grega, se isso ajudar a explicar melhor uma ideia ou reforçar o tom autoral.
 
 ## Não fazer
 
@@ -28,6 +31,9 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 - Não soar a artigo de consultora ou post de LinkedIn corporativo.
 - Não usar buzzwords de produtividade e transformação digital sem necessidade.
 - Não encher o texto de teoria antes de chegar ao caso prático.
+- Não inserir piadas em excesso nem em momentos em que prejudiquem clareza, credibilidade ou segurança do tema.
+- Não usar referências musicais aleatórias; só quando reforçarem o ritmo, a imagem ou a opinião do texto.
+- Não abusar de analogias com carros ou mitologia; usar apenas quando acrescentarem clareza, imagem mental ou personalidade ao texto.
 
 ## Processo
 
@@ -35,7 +41,9 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 2. Compara o novo artigo com a assinatura do blog.
 3. Reescreve o que soar demasiado formal, genérico ou institucional.
 4. Mantém o texto útil, claro e com ritmo.
-5. No fim, valida se o artigo parece pertencer naturalmente ao resto do blog.
+5. Se o texto beneficiar disso, adiciona aqui e ali uma nota de humor curta ligada ao artigo ou uma referência musical leve e contextual.
+6. Se fizer sentido, usa uma analogia curta com carros, mitologia nórdica ou grega, mas só de forma esporádica e bem encaixada.
+7. No fim, valida se o artigo parece pertencer naturalmente ao resto do blog.
 
 ## Saída esperada
 
