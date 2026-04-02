@@ -1,36 +1,44 @@
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Custom styles -->
 <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
+
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS Feed" href="{{ '/feed.xml' | relative_url }}">
+
+<!-- Reading progress bar -->
+<script>
+  window.addEventListener('scroll', function () {
+    var el = document.getElementById('reading-progress');
+    if (!el) return;
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    el.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+  });
+</script>
 
 <!-- GLightbox for image zoom -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
 <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Adiciona automaticamente GLightbox a todas as imagens no conteúdo
+  document.addEventListener('DOMContentLoaded', function () {
     const images = document.querySelectorAll('.page__content img');
-    images.forEach(img => {
-      // Cria um link wrapper se a imagem não estiver já num link
+    images.forEach(function (img) {
       if (img.parentElement.tagName !== 'A') {
         const link = document.createElement('a');
         link.href = img.src;
         link.className = 'glightbox';
         link.setAttribute('data-gallery', 'post-images');
-        
-        // Se a imagem tem alt text, usa como descrição
         if (img.alt) {
-          link.setAttribute('data-glightbox', `description: ${img.alt}`);
+          link.setAttribute('data-glightbox', 'description: ' + img.alt);
         }
-        
         img.parentNode.insertBefore(link, img);
         link.appendChild(img);
       }
     });
-    
-    // Inicializa o GLightbox
-    const lightbox = GLightbox({
-      touchNavigation: true,
-      loop: true,
-      autoplayVideos: true
-    });
+    GLightbox({ touchNavigation: true, loop: true, autoplayVideos: true });
   });
 </script>

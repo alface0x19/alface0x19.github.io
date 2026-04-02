@@ -1,25 +1,27 @@
 ---
 layout: home
 ---
-<div class="index-main">
-<section class="index-content" markdown="1">
-![alt]({{ site.baseurl }}/assets/images/index/icon.png){:class="index-logo"}
+<div class="index-layout">
 
-👋 Bem-vindo ao alface0x19.
+  <section class="index-content">
+    <div class="hero-card">
+      <img src="{{ site.baseurl }}/assets/images/index/icon.png" alt="alface0x19" class="index-logo">
+      <div class="hero-text">
+        <h2 class="hero-title">👋 alface0x19</h2>
+        <p>Notas técnicas, tutoriais práticos e decisões reais em <strong>Linux</strong>, <strong>DevOps</strong>, <strong>homelab</strong> e <strong>segurança</strong> — e claro, alguma brincadeira.</p>
+      </div>
+    </div>
 
-Notas técnicas, tutoriais práticos e decisões reais em Linux, DevOps, homelab e segurança e claro alguma brincadeira.
+    <div class="social-links">
+      <a href="https://youtube.com/@alface0x19" target="_blank" rel="noopener noreferrer" class="social-btn social-btn--youtube">📺 YouTube</a>
+      <a href="https://www.twitch.tv/alface0x19" target="_blank" rel="noopener noreferrer" class="social-btn social-btn--twitch">🎮 Twitch</a>
+    </div>
+  </section>
 
-📺 Conteúdo complementar em vídeo no YouTube:
-[youtube.com/@alface0x19](https://youtube.com/@alface0x19)
+  <aside class="index-sitemap">
+    <p class="sidebar-title">📋 Navegar</p>
+    <a href="{{ '/sitemap' | relative_url }}" class="sidebar-link">📄 Todos os artigos</a>
+    <a href="{{ '/support' | relative_url }}" class="sidebar-link">☕ Apoiar o projeto</a>
+  </aside>
 
-🎮 Gaming e Fun na Twitch:
-[twitch.tv/alface0x19](https://www.twitch.tv/alface0x19)
-
-
-</section>
-
-<aside class="index-sitemap">
-    <a href="{{ '/sitemap' | relative_url }}">Ver todos os artigos →</a>
-    <br>
-    <a href="{{ '/support' | relative_url }}">Suporte ao projeto →</a>
-</aside>
+</div>
