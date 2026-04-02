@@ -383,10 +383,14 @@ pre code {
    Single post page
    ----------------------------------------------- */
 .layout--single #main {
-  display: block !important;
+  display: flex !important;
+  justify-content: center !important;
 }
 
-.layout--single .page {
+.layout--single .page,
+.layout--single .page__inner-wrap {
+  float: none !important;
+  width: 100% !important;
   max-width: var(--max-content);
   margin: 0 auto;
   padding: 2.5rem 1.5rem 5rem;
