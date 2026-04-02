@@ -695,7 +695,7 @@ pre code {
 /* -----------------------------------------------
    Post page — custom layout centering + typography
    ----------------------------------------------- */
-.layout--post #main {
+.layout--post .initial-content {
   display: flex !important;
   justify-content: center !important;
   padding: 0 1.5rem !important;
@@ -704,6 +704,7 @@ pre code {
 .layout--post .post {
   max-width: var(--max-content);
   width: 100%;
+  margin: 0 auto;
   padding: 2.5rem 0 5rem;
 }
 
