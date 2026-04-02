@@ -444,3 +444,242 @@ pre code {
 }
 
 .author__urls a:hover { color: var(--green) !important; }
+
+/* -----------------------------------------------
+   Single post — body typography detail
+   ----------------------------------------------- */
+.layout--single .page__content h1,
+.layout--single .page__content h2 {
+  font-family: var(--font-mono) !important;
+  color: var(--text-bright) !important;
+  margin-top: 2.5rem !important;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.layout--single .page__content h3 {
+  font-family: var(--font-mono) !important;
+  color: var(--green) !important;
+  font-size: 1.05rem !important;
+  margin-top: 2rem !important;
+}
+
+.layout--single .page__content h4 {
+  font-family: var(--font-mono) !important;
+  font-size: 0.88rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted) !important;
+  margin-top: 1.5rem !important;
+}
+
+.layout--single .page__content p {
+  color: var(--text-body) !important;
+  line-height: 1.82;
+  font-size: 1rem;
+}
+
+.layout--single .page__content ul,
+.layout--single .page__content ol {
+  color: var(--text-body) !important;
+}
+
+.layout--single .page__content li::marker {
+  color: var(--green-soft) !important;
+}
+
+/* Page meta (date, read time) on single posts */
+.layout--single .page__meta {
+  font-family: var(--font-mono) !important;
+  font-size: 0.73rem !important;
+  color: var(--text-dim) !important;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem !important;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.layout--single .page__meta a {
+  color: var(--text-muted) !important;
+  text-decoration: none !important;
+}
+
+.layout--single .page__meta a:hover {
+  color: var(--green) !important;
+}
+
+/* -----------------------------------------------
+   Related posts — "YOU MAY ALSO ENJOY"
+   ----------------------------------------------- */
+.page__related {
+  margin-top: 3rem;
+  border-top: 1px solid var(--border) !important;
+  padding-top: 2rem;
+}
+
+.page__related-title {
+  font-family: var(--font-mono) !important;
+  font-size: 0.7rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.12em;
+  text-transform: lowercase !important;
+  color: var(--text-dim) !important;
+  margin-bottom: 1.25rem !important;
+  border: none !important;
+}
+
+/* Prev/Next navigation */
+.pagination--pager {
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem !important;
+  color: var(--text-muted) !important;
+  border: 1px solid var(--border-mid) !important;
+  background: var(--bg-card) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 0.5rem 1rem !important;
+  text-decoration: none !important;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.pagination--pager:hover {
+  border-color: var(--green) !important;
+  color: var(--green) !important;
+  background: var(--green-surface) !important;
+}
+
+/* -----------------------------------------------
+   Post page nav (prev / next in single layout)
+   ----------------------------------------------- */
+.page__footer-follow li,
+.page__footer-follow a {
+  font-family: var(--font-mono) !important;
+  font-size: 0.75rem !important;
+}
+
+/* -----------------------------------------------
+   Notices / alerts
+   ----------------------------------------------- */
+.notice,
+.notice--info,
+.notice--warning,
+.notice--danger,
+.notice--success {
+  font-family: var(--font-body) !important;
+  border-radius: var(--radius-sm) !important;
+  border-left: 3px solid var(--green-soft) !important;
+  background: var(--bg-card) !important;
+  color: var(--text-body) !important;
+}
+
+/* -----------------------------------------------
+   Support page custom styles
+   ----------------------------------------------- */
+.support-hero {
+  text-align: center;
+  padding: 2.5rem 2rem 2rem;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.support-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; left: 50%; transform: translateX(-50%);
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(0, 200, 55, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.support-hero__emoji { font-size: 2.5rem; display: block; margin-bottom: 0.75rem; }
+
+.support-hero h2 {
+  font-family: var(--font-mono) !important;
+  font-size: 1.4rem !important;
+  color: var(--text-bright) !important;
+  margin: 0 0 0.75rem !important;
+  border: none !important;
+}
+
+.support-hero p {
+  font-size: 0.97rem;
+  color: var(--text-body) !important;
+  max-width: 480px;
+  margin: 0 auto 1.5rem !important;
+}
+
+.support-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2.25rem;
+  background: var(--green);
+  color: #060e06 !important;
+  -webkit-text-fill-color: #060e06 !important;
+  font-family: var(--font-mono) !important;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border-radius: var(--radius);
+  text-decoration: none !important;
+  box-shadow: 0 4px 18px rgba(0, 200, 55, 0.35);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  text-shadow: none !important;
+}
+
+.support-cta:hover {
+  background: var(--green-bright);
+  box-shadow: 0 6px 28px rgba(0, 255, 65, 0.45);
+  transform: translateY(-2px);
+  color: #060e06 !important;
+}
+
+.support-ways {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.support-way {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.support-way:hover {
+  border-color: var(--border-mid);
+  background: var(--bg-card-2);
+}
+
+.support-way h3 {
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem !important;
+  color: var(--text-muted) !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem !important;
+  border: none !important;
+}
+
+.support-way p {
+  font-size: 0.88rem;
+  color: var(--text-body) !important;
+  margin: 0 !important;
+}
+
+.support-way a {
+  color: var(--green) !important;
+}
+
+@media (max-width: 540px) {
+  .support-ways { grid-template-columns: 1fr; }
+}
