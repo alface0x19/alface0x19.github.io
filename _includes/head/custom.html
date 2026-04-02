@@ -25,7 +25,7 @@
 <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const images = document.querySelectorAll('.page__content img');
+    const images = document.querySelectorAll('.page__content img, .post img');
     images.forEach(function (img) {
       if (img.parentElement.tagName !== 'A') {
         const link = document.createElement('a');

@@ -20,5 +20,24 @@ layout: default
     </a>
     <p class="support-note">Obrigado pelo apoio ❤️</p>
   </div>
+
+  <nav class="post-nav">
+    {% if page.previous %}
+    <a class="post-nav__link post-nav__link--prev" href="{{ page.previous.url | relative_url }}">
+      <span class="post-nav__label">← anterior</span>
+      <span class="post-nav__title">{{ page.previous.title }}</span>
+    </a>
+    {% else %}
+    <span class="post-nav__link post-nav__link--empty"></span>
+    {% endif %}
+    {% if page.next %}
+    <a class="post-nav__link post-nav__link--next" href="{{ page.next.url | relative_url }}">
+      <span class="post-nav__label">próximo →</span>
+      <span class="post-nav__title">{{ page.next.title }}</span>
+    </a>
+    {% else %}
+    <span class="post-nav__link post-nav__link--empty"></span>
+    {% endif %}
+  </nav>
 </article>
 
