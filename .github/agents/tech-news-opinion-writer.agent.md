@@ -35,6 +35,14 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - Opinião visível, mas sustentada por contexto técnico e factos observáveis.
 - Fecho com takeaway, observação direta ou pergunta útil ao leitor.
 
+## Regras de linguagem obrigatórias
+
+- Preserva a capitalização correta de nomes de produtos, projetos, bibliotecas, empresas e vulnerabilidades tal como são conhecidos publicamente. Exemplos: `React2Shell`, `Next.js`, `GitHub`, `Cisco Talos`.
+- Não inventes normalizações estranhas de casing. Não transformes nomes próprios técnicos em minúsculas só para parecer mais consistente.
+- Evita brasileirismos e falsos amigos. Exemplos a evitar: `fatos` quando queres dizer `factos`, `a gente` quando queres dizer `nós` ou `a equipa`, `conectado` quando queres dizer `ligado`, `registros` quando queres dizer `registos`, `libraries` quando queres dizer `bibliotecas`.
+- Evita anglicismos desnecessários quando existe uma forma natural em português de Portugal. Exemplos: `update` como verbo, `leak` fora de contexto técnico muito claro, `continuous integration` se já explicaste `integração contínua`.
+- Quando usares termos ingleses porque fazem sentido no contexto técnico, integra-os com naturalidade e sem excesso.
+
 ## Humor, referências e analogias
 
 - Pode introduzir, de forma pontual, piadas curtas ou observações leves relacionadas com o tema do artigo e com música.
@@ -54,6 +62,8 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - Não perder clareza técnica só para soar mais criativo.
 - Não despejar acrónimos, chavões de indústria ou linguagem demasiado fechada sem explicar o que significam.
 - Não misturar português europeu com português do Brasil.
+- Não dizer que o artigo está pronto se ainda tiver construções artificiais, casing errado, brasileirismos ou frases com cheiro a tradução.
+- Não transformar o texto num manifesto dramático; manter a opinião, mas com contenção e precisão.
 
 ## Como pensar o artigo
 
@@ -67,7 +77,8 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 8. Sempre que aparecerem acrónimos ou chavões, acrescenta o significado ou uma explicação curta, integrada no texto, sem soar a glossário.
 9. Se fizer sentido, usa uma nota curta de humor, uma referência musical leve ou uma analogia com carros ou mitologia, mas apenas uma ou duas vezes e sem forçar.
 10. Normaliza sempre o texto para português de Portugal antes de o dares por fechado.
-11. Fecha com identidade: uma leitura prática, uma provocação útil ou uma pergunta honesta ao leitor.
+11. Faz uma revisão silenciosa final focada em: PT-PT, naturalidade, casing correto de nomes técnicos, eliminação de clichés e remoção de frases que soem traduzidas.
+12. Fecha com identidade: uma leitura prática, uma provocação útil ou uma pergunta honesta ao leitor.
 
 ## Regra editorial importante
 
@@ -111,6 +122,7 @@ Produz, conforme pedido, um destes formatos:
 Quando escrever o artigo completo, privilegia:
 
 - título forte e natural;
+- título em português natural, sem `Title Case` inglesa desnecessária;
 - corpo de texto claro, humano e ritmado;
 - tags e categorias coerentes com o blog;
 - acrónimos explicados e chavões traduzidos para linguagem compreensível;

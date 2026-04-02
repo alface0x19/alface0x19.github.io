@@ -20,6 +20,8 @@ Publicar apenas o que está realmente pronto, com segurança e contexto suficien
 - criar uma mensagem de commit curta e útil;
 - fazer `git add`, `git commit` e `git push origin main`;
 - evitar incluir trabalho não relacionado.
+- assumir que o artigo já passou pelo `post-quality-gate` e travar a publicação se isso não parecer verdade.
+- assumir que o artigo já foi promovido de `_drafts/` para `_posts/` antes de entrar em publicação.
 
 ## Regras de comportamento
 
@@ -36,6 +38,7 @@ Publicar apenas o que está realmente pronto, com segurança e contexto suficien
 - Não inventar mensagens de commit vagas como "update" ou "changes".
 - Não publicar conteúdo que ainda pareça draft incompleto, placeholder ou ficheiro temporário.
 - Não assumir que tudo o que está alterado deve ir para `main`.
+- Não publicar um artigo se ainda tiver sinais óbvios de PT-BR, casing técnico errado ou frases com cheiro a texto gerado.
 
 ## Processo
 
@@ -44,6 +47,7 @@ Publicar apenas o que está realmente pronto, com segurança e contexto suficien
    - novos posts em `_posts/`;
    - ficheiros em `news_queue/` se fizerem parte do fluxo que o utilizador quer guardar;
    - scripts ou config diretamente relacionados com a automação do blog.
+   - não incluir drafts ainda presentes em `_drafts/` no commit final, exceto se o utilizador pedir explicitamente.
 3. Lê rapidamente os ficheiros principais alterados para confirmar que fazem sentido publicar.
 4. Se existirem alterações não relacionadas, deixa-as de fora do commit.
 5. Gera uma mensagem de commit curta, específica e natural.

@@ -151,7 +151,11 @@ else
   slug="$(slugify "$title")"
 fi
 
+draft_dir="$repo_root/_drafts"
+draft_path="$draft_dir/${post_date}-${slug}.md"
 post_path="$repo_root/_posts/${post_date}-${slug}.md"
+
+mkdir -p "$draft_dir"
 
 if [[ -f "$post_path" ]]; then
   echo "O post ja existe: $post_path"
@@ -169,7 +173,7 @@ if [[ -n "$model" ]]; then
 fi
 
 writer_prompt=$(cat <<EOF
-Lê o ficheiro $queue_file e cria um artigo novo em _posts/${post_date}-${slug}.md.
+Lê o ficheiro $queue_file e cria um artigo novo em _drafts/${post_date}-${slug}.md.
 Usa o agente writer deste repositorio para transformar a noticia num artigo de opiniao em Markdown, com front matter Jekyll.
 Regras importantes:
 - o texto tem de soar humano e natural;
@@ -182,9 +186,17 @@ EOF
 )
 
 editor_prompt=$(cat <<EOF
-Revê e melhora o ficheiro _posts/${post_date}-${slug}.md.
+Revê e melhora o ficheiro _drafts/${post_date}-${slug}.md.
 Polir o texto para ficar mais humano, natural e alinhado com a voz do blog.
 Explicar acronimos e chavoes quando aparecerem, cortar frases demasiado artificiais e manter o texto pronto a publicar.
+Grava as alteracoes no mesmo ficheiro.
+EOF
+)
+
+quality_gate_prompt=$(cat <<EOF
+Faz a ultima revisao de qualidade ao ficheiro _drafts/${post_date}-${slug}.md.
+Corrige diretamente qualquer problema residual de portugues de Portugal, casing de nomes tecnicos, titulo artificial, frases com cheiro a traducao ou jargao mal explicado.
+So considera o artigo pronto se estiver mesmo publicavel sem remendos humanos depois.
 Grava as alteracoes no mesmo ficheiro.
 EOF
 )
@@ -197,16 +209,25 @@ Se houver alteracoes nao relacionadas, deixa-as de fora.
 EOF
 )
 
-echo "A criar draft em _posts/${post_date}-${slug}.md"
+echo "A criar draft em _drafts/${post_date}-${slug}.md"
 copilot -s "${copilot_args[@]}" --agent=tech-news-opinion-writer --prompt "$writer_prompt"
 
 echo "A rever draft com o editor"
 copilot -s "${copilot_args[@]}" --agent=blog-editor --prompt "$editor_prompt"
 
+echo "A passar no quality gate"
+copilot -s "${copilot_args[@]}" --agent=post-quality-gate --prompt "$quality_gate_prompt"
+
 if [[ "$publish" == "true" ]]; then
+  if [[ ! -f "$draft_path" ]]; then
+    echo "Draft nao encontrado para publicar: $draft_path"
+    exit 1
+  fi
+  mv "$draft_path" "$post_path"
+  echo "Draft movido para _posts/${post_date}-${slug}.md"
   echo "A publicar para main"
   copilot -s "${copilot_args[@]}" --agent=main-publisher --prompt "$publisher_prompt"
 else
-  echo "Draft criado em _posts/${post_date}-${slug}.md"
+  echo "Draft criado em _drafts/${post_date}-${slug}.md"
   echo "Se quiseres publicar de seguida, corre este comando com --publish."
 fi

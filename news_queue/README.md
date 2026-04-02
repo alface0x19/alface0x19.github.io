@@ -7,9 +7,11 @@ Cada ficheiro Markdown aqui dentro serve como matéria-prima para o fluxo editor
 
 1. O coletor cria um ficheiro por notícia.
 2. O `news-curator` pode fazer a triagem e escolher as mais relevantes.
-3. O `tech-news-opinion-writer` cria um rascunho em `_posts/`.
+3. O `tech-news-opinion-writer` cria um rascunho em `_drafts/`.
 4. O `blog-editor` faz o polimento final.
-5. O `main-publisher` pode fazer o commit e push para `main`.
+5. O `post-quality-gate` faz a última revisão de qualidade.
+6. O artigo terminado é movido para `_posts/`.
+7. O `main-publisher` pode fazer o commit e push para `main`.
 
 Comandos úteis:
 
