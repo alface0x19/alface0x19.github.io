@@ -68,8 +68,114 @@ body {
 }
 
 .layout--home .archive {
-  max-width: 1100px;
+  max-width: 860px;
   margin: 0 auto;
+  padding: 0 0 3rem;
+}
+
+/* -----------------------------------------------
+   Recent Posts section header
+   ----------------------------------------------- */
+.layout--home .archive__subtitle,
+.layout--home h3.archive__subtitle {
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+  font-weight: 400 !important;
+  color: var(--text-dim) !important;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  border: none !important;
+  border-top: 1px solid var(--border) !important;
+  padding: 1.5rem 0 1rem !important;
+  margin: 0.5rem 0 0 !important;
+}
+
+/* -----------------------------------------------
+   Article list items — terminal card style
+   ----------------------------------------------- */
+.list__item {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.list__item .archive__item {
+  padding: 1.1rem 1.4rem !important;
+  border-left: 2px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+  background: transparent !important;
+  margin: 0 !important;
+  transition: border-color 0.2s ease, background 0.2s ease, padding-left 0.2s ease;
+  position: relative;
+}
+
+.list__item:first-child .archive__item {
+  border-top: 1px solid var(--border) !important;
+}
+
+.list__item .archive__item:hover {
+  border-left-color: var(--green) !important;
+  background: var(--green-surface) !important;
+  padding-left: 1.8rem !important;
+}
+
+.archive__item-title {
+  font-family: var(--font-mono) !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  margin: 0 0 0.35rem !important;
+  color: var(--text-bright) !important;
+  line-height: 1.4 !important;
+}
+
+.archive__item-title a {
+  color: var(--text-bright) !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+}
+
+.archive__item-title a:hover {
+  color: var(--green-bright) !important;
+  text-shadow: 0 0 12px rgba(0, 255, 65, 0.2) !important;
+}
+
+.archive__item-excerpt {
+  font-family: var(--font-body) !important;
+  font-size: 0.88rem !important;
+  color: var(--text-muted) !important;
+  margin: 0.3rem 0 0 !important;
+  line-height: 1.6 !important;
+}
+
+/* Read time / meta */
+.page__meta,
+.page__meta-readtime,
+.page__meta p {
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+  color: var(--text-dim) !important;
+  opacity: 0.8;
+  margin: 0 0 0.2rem !important;
+}
+
+.page__meta .fa,
+.page__meta .fas,
+.page__meta .far {
+  opacity: 0.5;
+}
+
+/* Arrow indicator on hover */
+.list__item .archive__item::before {
+  content: '→';
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--green);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 /* -----------------------------------------------
