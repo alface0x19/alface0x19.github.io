@@ -86,3 +86,7 @@ header_pages:
 # =========================
 exclude:
   - README.md
+  - skills-lock.json
+  - scripts/
+  - config/
+  - news_queue/

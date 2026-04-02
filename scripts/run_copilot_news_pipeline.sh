@@ -1,0 +1,212 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage:
+  scripts/run_copilot_news_pipeline.sh <queue-file> [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
+  scripts/run_copilot_news_pipeline.sh --selected [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
+
+Examples:
+  scripts/run_copilot_news_pipeline.sh news_queue/2026-04-02-sample.md
+  scripts/run_copilot_news_pipeline.sh news_queue/2026-04-02-sample.md --publish
+  scripts/run_copilot_news_pipeline.sh --selected
+EOF
+}
+
+if [[ $# -eq 0 ]]; then
+  usage
+  exit 1
+fi
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+if ! command -v copilot >/dev/null 2>&1; then
+  echo "copilot CLI nao encontrado no PATH."
+  exit 1
+fi
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [[ -z "$repo_root" ]]; then
+  echo "Este script tem de correr dentro de um repositorio git."
+  exit 1
+fi
+
+queue_file=""
+use_selected="false"
+
+if [[ "${1:-}" == "--selected" ]]; then
+  use_selected="true"
+  shift
+else
+  queue_file="$1"
+  shift
+fi
+
+publish="false"
+post_date="$(date +%F)"
+custom_slug=""
+model=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --publish)
+      publish="true"
+      shift
+      ;;
+    --date)
+      post_date="$2"
+      shift 2
+      ;;
+    --slug)
+      custom_slug="$2"
+      shift 2
+      ;;
+    --model)
+      model="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Opcao desconhecida: $1"
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "$use_selected" == "true" ]]; then
+  shortlist_path="$repo_root/news_queue/SHORTLIST.md"
+  if [[ ! -f "$shortlist_path" ]]; then
+    echo "SHORTLIST.md nao encontrado em news_queue/. Corre primeiro scripts/curate_news_queue.sh."
+    exit 1
+  fi
+  queue_file="$(python3 - "$shortlist_path" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8", errors="ignore").splitlines()
+first = text[0].strip() if text else ""
+if ":" not in first:
+    print("")
+    raise SystemExit(0)
+selected = first.split(":", 1)[1].strip()
+print("" if selected == "none" else selected)
+PY
+)"
+  if [[ -z "$queue_file" ]]; then
+    echo "O SHORTLIST.md nao tem uma noticia selecionada."
+    exit 1
+  fi
+fi
+
+queue_path="$repo_root/$queue_file"
+if [[ ! -f "$queue_path" ]]; then
+  echo "Queue file nao encontrado: $queue_file"
+  exit 1
+fi
+
+extract_front_matter_value() {
+  local key="$1"
+  python3 - "$queue_path" "$key" <<'PY'
+from pathlib import Path
+import re
+import sys
+
+path = Path(sys.argv[1])
+key = sys.argv[2]
+text = path.read_text(encoding="utf-8", errors="ignore")
+match = re.search(rf"^{re.escape(key)}:\s*\"?(.*?)\"?\s*$", text, re.MULTILINE)
+if match:
+    print(match.group(1).strip())
+PY
+}
+
+slugify() {
+  python3 - "$1" <<'PY'
+import re
+import sys
+import unicodedata
+
+value = unicodedata.normalize("NFKD", sys.argv[1]).encode("ascii", "ignore").decode("ascii")
+value = re.sub(r"[^a-zA-Z0-9]+", "-", value.lower()).strip("-")
+print(value[:70] or "news-post")
+PY
+}
+
+title="$(extract_front_matter_value "title")"
+slug_hint="$(extract_front_matter_value "slug_hint")"
+
+if [[ -n "$custom_slug" ]]; then
+  slug="$custom_slug"
+elif [[ -n "$slug_hint" ]]; then
+  slug="$slug_hint"
+else
+  slug="$(slugify "$title")"
+fi
+
+post_path="$repo_root/_posts/${post_date}-${slug}.md"
+
+if [[ -f "$post_path" ]]; then
+  echo "O post ja existe: $post_path"
+  exit 1
+fi
+
+copilot_args=(
+  --allow-all-tools
+  --add-dir "$repo_root"
+  --no-ask-user
+)
+
+if [[ -n "$model" ]]; then
+  copilot_args+=(--model "$model")
+fi
+
+writer_prompt=$(cat <<EOF
+Lê o ficheiro $queue_file e cria um artigo novo em _posts/${post_date}-${slug}.md.
+Usa o agente writer deste repositorio para transformar a noticia num artigo de opiniao em Markdown, com front matter Jekyll.
+Regras importantes:
+- o texto tem de soar humano e natural;
+- nao inventar factos;
+- explicar acronimos e chavoes no proprio texto;
+- pode usar humor, musica, carros ou mitologia com moderacao, so quando fizer sentido;
+- manter um angulo claro e um tom alinhado com este blog.
+No fim, grava mesmo o ficheiro no caminho indicado.
+EOF
+)
+
+editor_prompt=$(cat <<EOF
+Revê e melhora o ficheiro _posts/${post_date}-${slug}.md.
+Polir o texto para ficar mais humano, natural e alinhado com a voz do blog.
+Explicar acronimos e chavoes quando aparecerem, cortar frases demasiado artificiais e manter o texto pronto a publicar.
+Grava as alteracoes no mesmo ficheiro.
+EOF
+)
+
+publisher_prompt=$(cat <<EOF
+Publica o artigo acabado de criar.
+Analisa o git status, inclui apenas os ficheiros relevantes deste fluxo e faz commit e push para main.
+O ficheiro principal a publicar e _posts/${post_date}-${slug}.md.
+Se houver alteracoes nao relacionadas, deixa-as de fora.
+EOF
+)
+
+echo "A criar draft em _posts/${post_date}-${slug}.md"
+copilot -s "${copilot_args[@]}" --agent=tech-news-opinion-writer --prompt "$writer_prompt"
+
+echo "A rever draft com o editor"
+copilot -s "${copilot_args[@]}" --agent=blog-editor --prompt "$editor_prompt"
+
+if [[ "$publish" == "true" ]]; then
+  echo "A publicar para main"
+  copilot -s "${copilot_args[@]}" --agent=main-publisher --prompt "$publisher_prompt"
+else
+  echo "Draft criado em _posts/${post_date}-${slug}.md"
+  echo "Se quiseres publicar de seguida, corre este comando com --publish."
+fi

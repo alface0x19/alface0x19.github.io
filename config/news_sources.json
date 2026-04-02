@@ -1,0 +1,97 @@
+{
+  "default_days": 7,
+  "recency_mode": "current_week",
+  "default_limit_per_feed": 4,
+  "default_total_limit": 10,
+  "include_keywords": [
+    "ai",
+    "artificial intelligence",
+    "agent",
+    "agents",
+    "copilot",
+    "developer",
+    "devops",
+    "devsecops",
+    "sre",
+    "security",
+    "cyber",
+    "cve",
+    "vulnerability",
+    "zero-day",
+    "zero day",
+    "breach",
+    "ransomware",
+    "malware",
+    "supply chain",
+    "cloud",
+    "kubernetes",
+    "docker",
+    "linux",
+    "microsoft",
+    "google",
+    "openai"
+  ],
+  "priority_keywords": [
+    "cve",
+    "zero-day",
+    "zero day",
+    "ransomware",
+    "breach",
+    "malware",
+    "supply chain",
+    "ai agent",
+    "copilot",
+    "cloud security",
+    "kubernetes"
+  ],
+  "block_keywords": [
+    "podcast",
+    "webinar",
+    "sponsored",
+    "sponsor",
+    "promo",
+    "earnings call"
+  ],
+  "sources": [
+    {
+      "name": "The Hacker News",
+      "category": "cybersecurity",
+      "url": "https://feeds.feedburner.com/TheHackersNews"
+    },
+    {
+      "name": "BleepingComputer",
+      "category": "cybersecurity",
+      "url": "https://www.bleepingcomputer.com/feed/"
+    },
+    {
+      "name": "Krebs on Security",
+      "category": "cybersecurity",
+      "url": "https://krebsonsecurity.com/feed/"
+    },
+    {
+      "name": "CISA Advisories",
+      "category": "cybersecurity",
+      "url": "https://www.cisa.gov/cybersecurity-advisories/all.xml"
+    },
+    {
+      "name": "Ars Technica",
+      "category": "technology",
+      "url": "http://feeds.arstechnica.com/arstechnica/index"
+    },
+    {
+      "name": "The Verge",
+      "category": "technology",
+      "url": "https://www.theverge.com/rss/index.xml"
+    },
+    {
+      "name": "TechCrunch",
+      "category": "technology",
+      "url": "https://techcrunch.com/feed/"
+    },
+    {
+      "name": "Wired",
+      "category": "technology",
+      "url": "https://www.wired.com/feed/rss"
+    }
+  ]
+}
