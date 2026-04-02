@@ -1,37 +1,50 @@
 /* =============================================
-   Index page — Amber Terminal aesthetic
+   Index page — CRT Terminal aesthetic
    ============================================= */
 
 /* -----------------------------------------------
-   Layout wrapper
+   Layout wrapper — single column, full width
    ----------------------------------------------- */
 .index-layout {
-  display: flex;
-  gap: 2rem;
   margin: 2.5rem auto;
-  max-width: 1100px;
-  width: calc(100% - 4rem);
-  padding: 0 0 3rem;
-  align-items: flex-start;
+  max-width: 860px;
+  width: calc(100% - 3rem);
+  padding: 0 0 4rem;
 }
 
 /* -----------------------------------------------
-   Hero card: terminal window chrome
+   Hero card: full-width terminal window
    ----------------------------------------------- */
 .hero-card {
   border: 1px solid var(--border-mid);
   border-radius: var(--radius-lg);
   background: var(--bg-card);
-  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(0, 200, 60, 0.04);
   overflow: hidden;
-  margin-bottom: 1.5rem;
   position: relative;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* CRT scanline overlay */
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+  border-radius: var(--radius-lg);
+}
+
 .hero-card:hover {
   border-color: var(--border-bright);
-  box-shadow: var(--shadow-md), var(--shadow-green);
+  box-shadow: var(--shadow-md), 0 0 40px rgba(0, 200, 60, 0.08);
 }
 
 /* Terminal title bar */
@@ -73,31 +86,21 @@
 /* Hero body */
 .hero-body {
   display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: 1.75rem 2rem;
+  align-items: center;
+  gap: 2rem;
+  padding: 2.25rem 2.5rem;
   position: relative;
-}
-
-.hero-body::after {
-  content: '';
-  position: absolute;
-  top: -40px;
-  right: -60px;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(0, 220, 60, 0.05) 0%, transparent 70%);
-  pointer-events: none;
+  z-index: 2;
 }
 
 .index-logo {
-  width: 68px;
-  height: 68px;
+  width: 80px;
+  height: 80px;
   border-radius: var(--radius);
-  box-shadow: 0 0 0 1px var(--border-mid), 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 1px var(--border-mid), 0 0 20px rgba(0, 200, 60, 0.12);
   flex-shrink: 0;
   object-fit: cover;
-  filter: sepia(15%) saturate(0.85);
+  filter: saturate(0.7) brightness(0.9);
 }
 
 .hero-text {
@@ -105,35 +108,52 @@
   min-width: 0;
 }
 
-/* Hero title: terminal prompt style */
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+  opacity: 0.8;
+}
+
+/* Hero title: big, clean, with blinking cursor */
 .hero-title {
   margin-top: 0 !important;
-  margin-bottom: 0.5rem !important;
+  margin-bottom: 0.6rem !important;
   font-family: var(--font-mono) !important;
-  font-size: 1.6rem !important;
-  line-height: 1.2 !important;
-  color: var(--green) !important;
-  text-shadow: 0 0 20px rgba(0, 220, 60, 0.28);
-  -webkit-text-fill-color: var(--green) !important;
+  font-size: 2.2rem !important;
+  line-height: 1.1 !important;
+  color: var(--green-bright) !important;
+  text-shadow: 0 0 30px rgba(0, 255, 65, 0.25);
+  -webkit-text-fill-color: var(--green-bright) !important;
   background: none !important;
   background-clip: unset !important;
   -webkit-background-clip: unset !important;
+  letter-spacing: -0.01em;
 }
 
-.hero-prompt {
-  color: var(--text-dim);
-  margin-right: 0.45rem;
-  font-size: 0.78em;
-  opacity: 0.7;
-  vertical-align: middle;
+.hero-cursor {
+  display: inline-block;
+  color: var(--green-bright);
+  -webkit-text-fill-color: var(--green-bright) !important;
+  animation: blink 1.1s step-end infinite;
+  margin-left: 2px;
+  font-weight: 400;
 }
 
-.hero-text p {
-  margin: 0;
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.hero-text > p {
+  margin: 0 0 1.5rem !important;
   font-family: var(--font-body) !important;
-  font-size: 0.97rem;
+  font-size: 1rem;
   line-height: 1.75;
   color: var(--text) !important;
+  max-width: 520px;
 }
 
 .hero-text strong {
@@ -142,141 +162,87 @@
 }
 
 /* -----------------------------------------------
-   Social buttons — clean terminal style
+   Hero actions row (social + nav)
    ----------------------------------------------- */
-.social-links {
+.hero-actions {
   display: flex;
-  gap: 0.65rem;
+  gap: 0.6rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .social-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.48rem 1.15rem;
+  padding: 0.44rem 1rem;
   border-radius: var(--radius-sm);
   font-family: var(--font-mono) !important;
-  font-size: 0.82rem;
-  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
   text-decoration: none !important;
-  transition: all 0.22s ease;
-  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-mid);
   color: var(--text-muted) !important;
   background: var(--bg-raised);
   text-shadow: none !important;
+  white-space: nowrap;
 }
 
 .social-btn:hover {
-  transform: translateY(-2px);
+  color: var(--green) !important;
+  border-color: var(--border-bright);
+  background: var(--green-surface);
+  box-shadow: 0 0 12px rgba(0, 200, 60, 0.1);
+  transform: translateY(-1px);
   text-shadow: none !important;
 }
 
 .social-btn--youtube:hover {
-  background: rgba(255, 40, 40, 0.09);
-  border-color: rgba(255, 60, 60, 0.28);
-  color: #ff7070 !important;
-  box-shadow: 0 4px 16px rgba(255, 0, 0, 0.15);
+  color: #ff6060 !important;
+  border-color: rgba(255, 60, 60, 0.3);
+  background: rgba(255, 40, 40, 0.06);
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.12);
 }
 
 .social-btn--twitch:hover {
-  background: rgba(145, 70, 255, 0.09);
-  border-color: rgba(145, 70, 255, 0.26);
-  color: #c088ff !important;
-  box-shadow: 0 4px 16px rgba(145, 70, 255, 0.18);
+  color: #b070ff !important;
+  border-color: rgba(145, 70, 255, 0.28);
+  background: rgba(145, 70, 255, 0.06);
+  box-shadow: 0 0 12px rgba(145, 70, 255, 0.14);
 }
 
-/* -----------------------------------------------
-   Index content column
-   ----------------------------------------------- */
+/* sidebar classes kept for other pages but not used in index */
 .index-content {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-/* -----------------------------------------------
-   Sidebar — nav panel
-   ----------------------------------------------- */
-.index-sitemap {
-  flex: 0 0 198px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--bg-card);
-  box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 80px;
-  overflow: hidden;
-}
-
-.sidebar-title {
-  margin: 0 !important;
-  font-family: var(--font-mono) !important;
-  font-size: 0.72rem !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
-  color: var(--text-dim) !important;
-  background: var(--bg-raised);
-  border-bottom: 1px solid var(--border);
-  padding: 0.6rem 1.1rem;
-  line-height: 1.2 !important;
-  -webkit-text-fill-color: var(--text-dim) !important;
-}
-
-.sidebar-link {
-  display: block;
-  padding: 0.65rem 1.1rem;
-  font-family: var(--font-mono) !important;
-  font-size: 0.82rem;
-  color: var(--text-muted) !important;
-  text-decoration: none !important;
-  transition: all 0.18s ease;
-  border-left: 2px solid transparent;
-  text-shadow: none !important;
-}
-
-.sidebar-link:hover {
-  background: var(--green-surface) !important;
-  border-left-color: var(--green);
-  color: var(--green) !important;
-  padding-left: 1.3rem;
-  text-shadow: none !important;
-}
-
-.sidebar-link + .sidebar-link {
-  border-top: 1px solid var(--border);
+  width: 100%;
 }
 
 /* -----------------------------------------------
    Responsive
    ----------------------------------------------- */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .index-layout {
-    flex-direction: column;
     margin: 1.5rem auto;
     width: calc(100% - 2rem);
     padding: 0 0 2rem;
-    gap: 1.25rem;
-  }
-
-  .index-sitemap {
-    flex: 1 1 auto;
-    position: static;
-    width: 100%;
   }
 
   .hero-body {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
     padding: 1.5rem;
+    gap: 1.2rem;
+  }
+
+  .hero-title {
+    font-size: 1.7rem !important;
   }
 
   .hero-bar__label {
-    display: none;
+    font-size: 0.68rem;
   }
 
-  .social-links {
-    justify-content: center;
+  .hero-actions {
+    gap: 0.5rem;
   }
 }
