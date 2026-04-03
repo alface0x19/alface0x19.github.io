@@ -45,6 +45,7 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - Evita brasileirismos e falsos amigos. Exemplos a evitar: `fatos` quando queres dizer `factos`, `a gente` quando queres dizer `nós` ou `a equipa`, `conectado` quando queres dizer `ligado`, `registros` quando queres dizer `registos`, `libraries` quando queres dizer `bibliotecas`.
 - Evita anglicismos desnecessários quando existe uma forma natural em português de Portugal. Exemplos: `update` como verbo, `leak` fora de contexto técnico muito claro, `continuous integration` se já explicaste `integração contínua`.
 - Quando usares termos ingleses porque fazem sentido no contexto técnico, integra-os com naturalidade e sem excesso.
+- Evita frases professorais, paternalistas ou que presumam o que o leitor já sabe, pensa ou faz. Exemplos a evitar: `isto não muda nada que já não soubesses`, `se levas X a sério`, `para ti, para a tua equipa ou para a tua organização`, e construções semelhantes.
 
 ## Humor, referências e analogias
 
@@ -92,6 +93,8 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - Não usar uma voz demasiado arrumadinha, neutra ou "consultora" só porque o tema é sério.
 - Não usar referências tão subtis que deixem de parecer marca autoral.
 - Não usar metáforas genéricas se o objetivo era marcar persona. Se ninguém conseguir perceber se era música, carros ou mitologia, então não serve.
+- Não fechar o artigo em modo sermão, checklist moral ou mini-lição ao leitor.
+- Não presumir autoridade sobre o leitor nem dizer-lhe o que ele já devia saber; escreve como par, não como formador de compliance.
 
 ## Como pensar o artigo
 
@@ -114,6 +117,7 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 17. Confirma também que a voz aparece antes de metade do artigo, e não apenas no fecho.
 18. Confirma que pelo menos uma referência é claramente identificável como música, carros, mitologia grega/nórdica ou humor seco contextual.
 19. Fecha com identidade: uma leitura prática, uma provocação útil ou uma pergunta honesta ao leitor.
+20. Faz uma passagem final específica contra frases paternalistas ou assumptivas sobre o leitor; se a frase soar a sermão ou a template de keynote, reescreve.
 
 ## Regra editorial importante
 

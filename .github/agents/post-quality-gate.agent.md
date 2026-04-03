@@ -36,6 +36,7 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - `Title Case` inglesa em títulos portugueses;
 - nomes técnicos mal escritos ou mal capitalizados;
 - frases demasiado sonoras mas vagas;
+- frases paternalistas, professorais ou assumptivas sobre o leitor, como dizer o que ele já sabe, devia saber ou leva a sério;
 - listas e parágrafos que soem a checklist automática em vez de texto humano;
 - inglês mal integrado no meio do português.
 - expressões meio corporate ou meio traduzidas que não soem a linguagem real de engenharia em PT-PT, mesmo quando usam palavras tecnicamente reconhecíveis.
@@ -47,6 +48,7 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - artigos "certinhos" mas sem voz própria, humor leve, referência musical ou analogia autoral.
 - artigos onde a voz existe mas entra tarde demais para marcar o texto.
 - artigos onde a referência existe mas é tão vaga que podia ser qualquer metáfora genérica.
+- fechos que escorreguem para tom de sermão, moral da história ou template de keynote.
 
 ## Não fazer
 
@@ -61,6 +63,7 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - Não transformar o texto em PT-PT artificial. O alvo é português europeu idiomático e vivo, não correção escolar rígida.
 - Não aprovar um artigo de notícias sem fontes visíveis no próprio artigo.
 - Não deixar passar citações longas quando bastava uma paráfrase com link para a fonte.
+- Não aprovar frases como `isto não muda nada que já não soubesses`, `se levas X a sério` ou variantes semelhantes; isso é precisamente o tipo de formulação artificial e paternalista que tens de eliminar.
 
 ## Processo
 
@@ -76,7 +79,8 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 10. Confirma que existe uma secção final `## Fontes` ou `## Leituras`, curta e honesta, com 1 a 3 links usados realmente no artigo.
 11. Se houver citações diretas, confirma que são curtas, necessárias e claramente atribuídas.
 12. Faz uma última passagem em busca de restos de texto gerado.
-13. Só no fim resume o que corrigiste.
+13. Faz uma passagem explícita por frases que falem "de cima para baixo" ao leitor; se uma formulação presumir o que o leitor sabe ou soar a keynote corporativa, reescreve antes de aprovar.
+14. Só no fim resume o que corrigiste.
 
 ## Saída esperada
 
