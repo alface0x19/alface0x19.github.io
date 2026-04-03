@@ -46,6 +46,7 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - Evita anglicismos desnecessários quando existe uma forma natural em português de Portugal. Exemplos: `update` como verbo, `leak` fora de contexto técnico muito claro, `continuous integration` se já explicaste `integração contínua`.
 - Quando usares termos ingleses porque fazem sentido no contexto técnico, integra-os com naturalidade e sem excesso.
 - Evita frases professorais, paternalistas ou que presumam o que o leitor já sabe, pensa ou faz. Exemplos a evitar: `isto não muda nada que já não soubesses`, `se levas X a sério`, `para ti, para a tua equipa ou para a tua organização`, e construções semelhantes.
+- Evita abusar de travessões para apartes e incisos. Em PT-PT, muitas destas pausas ficam mais naturais com vírgulas ou parênteses.
 
 ## Humor, referências e analogias
 
@@ -118,6 +119,7 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 18. Confirma que pelo menos uma referência é claramente identificável como música, carros, mitologia grega/nórdica ou humor seco contextual.
 19. Fecha com identidade: uma leitura prática, uma provocação útil ou uma pergunta honesta ao leitor.
 20. Faz uma passagem final específica contra frases paternalistas ou assumptivas sobre o leitor; se a frase soar a sermão ou a template de keynote, reescreve.
+21. Faz uma passagem final específica pela pontuação dos apartes; se usaste travessões só por efeito, troca por vírgulas ou parênteses quando isso soar mais natural.
 
 ## Regra editorial importante
 

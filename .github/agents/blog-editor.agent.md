@@ -46,6 +46,7 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 - Frases paternalistas, professorais ou que presumam o estado mental do leitor, como dizer-lhe o que ele já sabe, devia saber ou leva a sério.
 - Inglês mal encaixado no meio do texto.
 - Expressões meio importadas ou meio traduzidas que até podem parecer tech, mas soam artificiais no contexto, como `hygiene proativa`, `fazer um reassessment` ou construções semelhantes.
+- Uso excessivo ou pouco idiomático de travessões para apartes que, em PT-PT, ficariam mais naturais com vírgulas ou parênteses.
 - Vocabulário corrente em PT-BR escondido no meio de analogias ou frases coloquiais, como `geladeira`, `arquivo` quando devia ser `ficheiro`, `time` quando devia ser `equipa`, e desvios semelhantes.
 - Hipercorreções ou formulações gramaticalmente possíveis mas pouco idiomáticas em PT-PT, como trocar uma frase natural por outra mais dura ou estranha só para parecer "mais correta".
 - Acrónimos ou chavões sem contexto suficiente.
@@ -71,6 +72,7 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 - Não fazer hipercorreções de português europeu. O objetivo é soar a PT-PT real e idiomático, não a gramática forçada. Se `na cozinha` soar natural e `à cozinha` soar estranho, fica com a forma natural.
 - Não misturar registos de português europeu com português do Brasil.
 - Não deixar passar formulações como `isto não muda nada que já não soubesses`, `se levas X a sério` ou `para ti, para a tua equipa ou para a tua organização`; isso soa a template e não a voz autoral.
+- Não encher o texto de travessões colados ao estilo inglês ou de copy dramática quando uma vírgula resolve melhor.
 - Não te ficar pelo diagnóstico se ainda houver problemas no texto; corrige-os no ficheiro.
 - Não dar o artigo como pronto se ainda houver restos de tradução, casing errado ou tom artificial.
 - Não dar o artigo como pronto se ainda não houver pelo menos um marcador claro de persona bem encaixado no texto.
@@ -100,6 +102,7 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 17. Faz uma última revisão de controlo focada em: PT-PT idiomático, capitalização correta, nomes técnicos intactos, ausência de brasileirismos, naturalidade do título, uso natural de inglês técnico, ausência de inglês corporate frouxo, presença de voz autoral e fontes honestas.
 18. No fim, valida se o artigo parece pertencer naturalmente ao resto do blog.
 19. Faz uma última passagem dedicada ao fecho e às transições: remove qualquer frase que soe a sermão, que fale de cima para baixo ou que presuma o que o leitor já sabe.
+20. Faz também uma passagem específica pela pontuação: em apartes normais ou enumerações curtas, prefere vírgulas ou parênteses a travessões, salvo quando o travessão acrescentar mesmo ritmo ou contraste.
 
 ## Saída esperada
 

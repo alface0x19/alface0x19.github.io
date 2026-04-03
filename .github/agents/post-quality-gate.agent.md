@@ -40,6 +40,7 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - listas e parágrafos que soem a checklist automática em vez de texto humano;
 - inglês mal integrado no meio do português.
 - expressões meio corporate ou meio traduzidas que não soem a linguagem real de engenharia em PT-PT, mesmo quando usam palavras tecnicamente reconhecíveis.
+- travessões usados como muleta estilística em frases onde vírgulas ou parênteses soariam mais naturais em PT-PT.
 - inglês corporate ou burocrático desnecessário, como `policies`, quando existe uma alternativa portuguesa natural e mais forte.
 - hipercorreções de PT-PT que trocam uma formulação natural por outra mais dura, estranha ou pouco idiomática.
 - traduções literais fora do domínio técnico, como `audiência` quando o texto quer dizer adoção, uso ou base instalada.
@@ -64,6 +65,7 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - Não aprovar um artigo de notícias sem fontes visíveis no próprio artigo.
 - Não deixar passar citações longas quando bastava uma paráfrase com link para a fonte.
 - Não aprovar frases como `isto não muda nada que já não soubesses`, `se levas X a sério` ou variantes semelhantes; isso é precisamente o tipo de formulação artificial e paternalista que tens de eliminar.
+- Não aprovar pontuação com travessões colados ou excessivos quando o resultado soar teatral, inglês ou pouco idiomático em português europeu.
 
 ## Processo
 
@@ -81,6 +83,7 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 12. Faz uma última passagem em busca de restos de texto gerado.
 13. Faz uma passagem explícita por frases que falem "de cima para baixo" ao leitor; se uma formulação presumir o que o leitor sabe ou soar a keynote corporativa, reescreve antes de aprovar.
 14. Só no fim resume o que corrigiste.
+15. Faz uma passagem final específica por travessões e apartes: se uma intercalação soar mais natural com vírgulas ou parênteses, corrige antes de aprovar.
 
 ## Saída esperada
 
