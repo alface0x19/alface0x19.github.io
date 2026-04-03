@@ -20,7 +20,7 @@
   --text:                 #3a9e56;
   --text-dim:             #19401f;
   --text-bright:          #7de89a;
-  --text-body:            #558a6a;
+  --text-body:            #c8d8cc;
   --text-muted:           #2b6b3a;
   --font-mono:      'Share Tech Mono', 'JetBrains Mono', monospace;
   --font-body:      'IBM Plex Sans', system-ui, sans-serif;
@@ -323,7 +323,7 @@ pre code {
 
 .list__item .archive__item {
   padding: 1rem 1rem 1rem 1.1rem !important;
-  border-left: 2px solid var(--border) !important;
+  border-left: 2px solid var(--border-mid) !important;
   border-bottom: 1px solid var(--border) !important;
   background: transparent !important;
   margin: 0 !important;
@@ -467,6 +467,12 @@ pre code {
   margin-top: 2.5rem !important;
   padding-bottom: 0.45rem;
   border-bottom: 1px solid var(--border) !important;
+}
+
+.layout--single .page__content h2::before {
+  content: '> ';
+  color: var(--green) !important;
+  opacity: 0.7;
 }
 
 .layout--single .page__content h3 {
