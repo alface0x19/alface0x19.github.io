@@ -78,47 +78,92 @@ print("")
 PY
 }
 
-write_empty_shortlist() {
-  cat > "$repo_root/news_queue/SHORTLIST.md" <<'EOF'
-selected: none
-selected_secondary: none
-
----
-
-Sem noticias pendentes na fila neste momento.
-EOF
-}
-
-refresh_queue_state() {
-  local selected_path="$1"
-
-  if [[ -f "$selected_path" ]]; then
-    rm -f "$selected_path"
-    echo "Noticia publicada removida da fila: ${selected_path#$repo_root/}"
-  fi
+clear_dynamic_queue() {
+  local queue_dir="$repo_root/news_queue"
+  local removed_any="false"
+  local queue_file
 
   shopt -s nullglob
-  local queue_files=(news_queue/*.md)
-  shopt -u nullglob
-
-  local filtered=()
-  local file
-  for file in "${queue_files[@]}"; do
-    case "$(basename "$file")" in
-      README.md|SHORTLIST.md)
+  for queue_file in "$queue_dir"/*; do
+    case "$(basename "$queue_file")" in
+      README.md)
         continue
         ;;
     esac
-    filtered+=("$file")
+    rm -f "$queue_file"
+    removed_any="true"
   done
+  shopt -u nullglob
 
-  if [[ ${#filtered[@]} -eq 0 ]]; then
-    write_empty_shortlist
-    return 0
+  if [[ "$removed_any" == "true" ]]; then
+    echo "Fila local limpa: removidos os ficheiros dinamicos de news_queue/."
+  else
+    echo "Fila local ja estava limpa."
+  fi
+}
+
+validate_clean_finish() {
+  local status
+  local branch_status
+  local queue_file
+
+  status="$(git status --short)"
+  if [[ -n "$status" ]]; then
+    echo "Worktree nao ficou limpa no fim do autopilot:"
+    printf '%s\n' "$status"
+    return 1
   fi
 
-  bash scripts/curate_news_queue.sh || true
+  branch_status="$(git status --short --branch | head -n 1)"
+  if [[ "$branch_status" == *"[ahead "* || "$branch_status" == *"[behind "* || "$branch_status" == *"[diverged "* ]]; then
+    echo "A branch nao ficou sincronizada com origin/main no fim do autopilot: $branch_status"
+    return 1
+  fi
+
+  shopt -s nullglob
+  for queue_file in "$repo_root"/news_queue/*; do
+    case "$(basename "$queue_file")" in
+      README.md)
+        continue
+        ;;
+      *)
+        echo "A fila local nao foi totalmente limpa: ${queue_file#$repo_root/}"
+        shopt -u nullglob
+        return 1
+        ;;
+    esac
+  done
+  shopt -u nullglob
+
+  echo "Validacao final OK: worktree limpa, branch sincronizada e news_queue sem lixo dinamico."
 }
+
+published_any="false"
+
+cleanup_after_run() {
+  local exit_code=$?
+  local final_code=$exit_code
+
+  trap - EXIT
+
+  if [[ "$published_any" == "true" ]]; then
+    echo "[4/5] Limpar fila local"
+    if ! clear_dynamic_queue; then
+      final_code=1
+    fi
+  fi
+
+  if [[ $exit_code -eq 0 && "$published_any" == "true" ]]; then
+    echo "[5/5] Validar worktree final"
+    if ! validate_clean_finish; then
+      final_code=1
+    fi
+  fi
+
+  exit "$final_code"
+}
+
+trap cleanup_after_run EXIT
 
 ensure_clean_start
 bash scripts/ensure_github_identity.sh
@@ -160,18 +205,13 @@ publish_one() {
     pipeline_args+=(--model "$model")
   fi
   bash scripts/run_copilot_news_pipeline.sh "${pipeline_args[@]}"
+  published_any="true"
 }
 
 echo "[3/4] Gerar, validar e publicar"
 publish_one "$selected_file" "Publicar tema principal"
 if [[ -n "$secondary_file" ]]; then
   publish_one "$secondary_file" "Publicar tema secundario"
-fi
-
-echo "[4/4] Limpar fila local"
-refresh_queue_state "$repo_root/$selected_file"
-if [[ -n "$secondary_file" ]]; then
-  refresh_queue_state "$repo_root/$secondary_file"
 fi
 
 echo "Fluxo autonomo concluido."

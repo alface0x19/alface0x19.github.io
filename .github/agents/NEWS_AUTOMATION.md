@@ -27,7 +27,7 @@ Este repositório agora tem um fluxo simples e dividido por responsabilidades:
 2. O autopilot recolhe notícias, atualiza `news_queue/`, faz curadoria, escreve, revê e tenta publicar sozinho.
 3. Sempre que houver material suficiente, tenta publicar até 2 artigos por ronda, desde que sejam temas claramente diferentes.
 4. Só publica se cada artigo passar writer, editor, quality gate e publisher.
-5. As notícias publicadas são removidas da fila local no fim do processo.
+5. No fim de uma ronda com publicação bem-sucedida, limpa o conteúdo dinâmico de `news_queue/` e valida que a worktree ficou limpa e sincronizada com `origin/main`.
 
 ## Fluxo manual
 
@@ -87,6 +87,7 @@ Nesse modo, o próprio script promove o draft para `_posts/` e chama o `main-pub
 - O `news-curator` ajuda a separar o que parece promissor do que parece só ruído ou hype.
 - A curadoria e o pipeline travam temas já cobertos no blog; se a notícia bater num CVE ou tema já publicado, a automação procura alternativa ou aborta.
 - A curadoria tenta evitar viés para um único vendor de IA e procura diversidade real de ecossistema quando há boas opções.
+- Depois de publicar, a automação limpa a `news_queue/` dinâmica; fica apenas o `README.md`.
 - O `post-quality-gate` faz a última revisão para evitar PT-BR, casing técnico errado e texto com cheiro a geração automática.
 - Um artigo só entra em `_posts/` quando já estiver terminado e pronto a publicar.
 - O writer/editor continuam a ser usados apenas onde faz sentido.
