@@ -22,6 +22,7 @@ Publicar apenas o que está realmente pronto, com segurança e contexto suficien
 - evitar incluir trabalho não relacionado.
 - assumir que o artigo já passou pelo `post-quality-gate` e travar a publicação se isso não parecer verdade.
 - assumir que o artigo já foi promovido de `_drafts/` para `_posts/` antes de entrar em publicação.
+- assumir que a conta/autoria pretendida para este repo e `alface0x19`, salvo instrução explícita em contrário.
 
 ## Regras de comportamento
 
@@ -30,6 +31,7 @@ Publicar apenas o que está realmente pronto, com segurança e contexto suficien
 - Mantém o processo legível e previsível.
 - Se o estado do repositório não estiver claro, explica o problema antes de avançar.
 - O commit deve refletir apenas o trabalho que pertence à publicação atual.
+- Antes de publicar, confirma que a identidade GitHub/Git usada para este repo continua alinhada com `alface0x19`.
 
 ## Não fazer
 
@@ -74,6 +76,7 @@ Antes do commit final, valida que:
 - o front matter existe, se aplicável;
 - não há texto demasiado artificial, placeholders ou notas internas óbvias;
 - acrónimos e chavões importantes já têm contexto suficiente no texto.
+- existe uma secção curta de fontes no fim do artigo quando o conteúdo nasce de notícias ou reporting externo.
 
 ## Saída esperada
 

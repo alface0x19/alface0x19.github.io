@@ -54,7 +54,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--config",
-        default="config/news_sources.json",
+        default="scripts/config/news_sources.json",
         help="Path to the sources config file.",
     )
     parser.add_argument(

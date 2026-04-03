@@ -23,6 +23,7 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - acrónimos e chavões explicados quando necessário;
 - inglês técnico natural mantido quando fizer sentido, sem cair em expressões híbridas artificiais;
 - ritmo e naturalidade compatíveis com o blog.
+- presença de fontes explícitas no fim do artigo quando ele nasce de notícias externas.
 - pelo menos um marcador visível de persona autoral bem encaixado no texto.
 - esse traço de persona deve aparecer cedo o suficiente para moldar a leitura, não apenas numa frase perdida no fim.
 - esse traço deve ser reconhecível como música, carros, mitologia grega/nórdica ou humor seco contextual.
@@ -41,6 +42,8 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - inglês corporate ou burocrático desnecessário, como `policies`, quando existe uma alternativa portuguesa natural e mais forte.
 - hipercorreções de PT-PT que trocam uma formulação natural por outra mais dura, estranha ou pouco idiomática.
 - traduções literais fora do domínio técnico, como `audiência` quando o texto quer dizer adoção, uso ou base instalada.
+- artigos baseados em notícias externas sem secção `## Fontes` ou `## Leituras`.
+- links decorativos, irrelevantes ou não usados realmente na construção do artigo.
 - artigos "certinhos" mas sem voz própria, humor leve, referência musical ou analogia autoral.
 - artigos onde a voz existe mas entra tarde demais para marcar o texto.
 - artigos onde a referência existe mas é tão vaga que podia ser qualquer metáfora genérica.
@@ -56,6 +59,8 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - Não aprovar um artigo onde a referência autoral não seja claramente identificável.
 - Não implicar com termos técnicos em inglês só por estarem em inglês; só deves mexer quando o resultado soar artificial ou pouco natural.
 - Não transformar o texto em PT-PT artificial. O alvo é português europeu idiomático e vivo, não correção escolar rígida.
+- Não aprovar um artigo de notícias sem fontes visíveis no próprio artigo.
+- Não deixar passar citações longas quando bastava uma paráfrase com link para a fonte.
 
 ## Processo
 
@@ -68,8 +73,10 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 7. Faz uma passagem específica à linguagem híbrida: mantém termos técnicos naturais em inglês, mas reescreve combinações artificiais como `hygiene proativa` para algo que soe mesmo a PT-PT técnico.
 8. Faz uma passagem específica por vocabulário quotidiano e por analogias para apanhar PT-BR escondido e inglês corporate fora do contexto técnico; `geladeira` e `policies` não podem passar.
 9. Faz uma passagem específica por idiomatismo: se uma correção soar mais artificial do que a frase original, volta atrás e escolhe a formulação que um falante de PT-PT realmente usaria.
-10. Faz uma última passagem em busca de restos de texto gerado.
-11. Só no fim resume o que corrigiste.
+10. Confirma que existe uma secção final `## Fontes` ou `## Leituras`, curta e honesta, com 1 a 3 links usados realmente no artigo.
+11. Se houver citações diretas, confirma que são curtas, necessárias e claramente atribuídas.
+12. Faz uma última passagem em busca de restos de texto gerado.
+13. Só no fim resume o que corrigiste.
 
 ## Saída esperada
 

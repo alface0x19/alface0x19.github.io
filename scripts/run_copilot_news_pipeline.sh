@@ -6,11 +6,13 @@ usage() {
 Usage:
   scripts/run_copilot_news_pipeline.sh <queue-file> [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
   scripts/run_copilot_news_pipeline.sh --selected [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
+  scripts/run_copilot_news_pipeline.sh --publish-draft _drafts/YYYY-MM-DD-slug.md [--model model-name]
 
 Examples:
   scripts/run_copilot_news_pipeline.sh news_queue/2026-04-02-sample.md
   scripts/run_copilot_news_pipeline.sh news_queue/2026-04-02-sample.md --publish
   scripts/run_copilot_news_pipeline.sh --selected
+  scripts/run_copilot_news_pipeline.sh --publish-draft _drafts/2026-04-02-sample.md
 EOF
 }
 
@@ -37,8 +39,18 @@ fi
 
 queue_file=""
 use_selected="false"
+publish_draft_input=""
 
-if [[ "${1:-}" == "--selected" ]]; then
+if [[ "${1:-}" == "--publish-draft" ]]; then
+  shift
+  if [[ $# -eq 0 ]]; then
+    echo "Falta indicar o draft a publicar."
+    usage
+    exit 1
+  fi
+  publish_draft_input="$1"
+  shift
+elif [[ "${1:-}" == "--selected" ]]; then
   use_selected="true"
   shift
 else
@@ -81,6 +93,120 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+resolve_repo_path() {
+  local input_path="$1"
+  if [[ "$input_path" = /* ]]; then
+    printf '%s\n' "$input_path"
+  else
+    printf '%s\n' "$repo_root/$input_path"
+  fi
+}
+
+normalize_generated_draft() {
+  local expected_abs="$1"
+  local expected_name
+  local date_prefix
+  local found_abs=""
+  local found_count=0
+  local candidate
+
+  if [[ -f "$expected_abs" ]]; then
+    return 0
+  fi
+
+  expected_name="$(basename "$expected_abs")"
+  date_prefix="${expected_name%%-*}"
+  date_prefix="${expected_name%%.md}"
+  date_prefix="${expected_name:0:10}"
+
+  shopt -s nullglob
+  for candidate in "$draft_dir"/"${date_prefix}"*.md; do
+    [[ "$candidate" == "$expected_abs" ]] && continue
+    found_abs="$candidate"
+    found_count=$((found_count + 1))
+  done
+  shopt -u nullglob
+
+  if [[ $found_count -eq 1 && -n "$found_abs" ]]; then
+    mv "$found_abs" "$expected_abs"
+    echo "Draft renomeado automaticamente para $(basename "$expected_abs")"
+    return 0
+  fi
+
+  echo "Draft nao encontrado no caminho esperado: $expected_abs"
+  if [[ $found_count -gt 1 ]]; then
+    echo "Tambem encontrei varios drafts alternativos em _drafts/ para esta data; abortar para evitar escolher o ficheiro errado."
+  elif [[ $found_count -eq 1 ]]; then
+    echo "Encontrei um draft alternativo em _drafts/, mas nao o consegui normalizar automaticamente."
+  fi
+  exit 1
+}
+
+publish_existing_draft() {
+  local draft_input="$1"
+  local draft_abs
+  local draft_rel
+  local draft_name
+  local post_abs
+  local post_rel
+  local publisher_prompt
+
+  draft_abs="$(resolve_repo_path "$draft_input")"
+  if [[ ! -f "$draft_abs" ]]; then
+    echo "Draft nao encontrado: $draft_input"
+    exit 1
+  fi
+
+  draft_rel="${draft_abs#$repo_root/}"
+  if [[ "$draft_rel" == "$draft_abs" ]]; then
+    echo "O draft tem de estar dentro deste repositorio."
+    exit 1
+  fi
+
+  if [[ "$draft_rel" != _drafts/* ]]; then
+    echo "O draft a publicar tem de estar dentro de _drafts/."
+    exit 1
+  fi
+
+  draft_name="$(basename "$draft_abs")"
+  post_abs="$repo_root/_posts/$draft_name"
+  post_rel="_posts/$draft_name"
+
+  if [[ -f "$post_abs" ]]; then
+    echo "O post ja existe: $post_abs"
+    exit 1
+  fi
+
+  mv "$draft_abs" "$post_abs"
+  echo "Draft movido para $post_rel"
+
+  publisher_prompt=$(cat <<EOF
+Publica o artigo ja validado em $post_rel.
+Analisa o git status, inclui apenas os ficheiros relevantes desta publicacao e faz commit e push para main.
+Se houver alteracoes nao relacionadas, deixa-as de fora.
+EOF
+)
+
+  echo "A publicar para main"
+  copilot -s "${copilot_args[@]}" --agent=main-publisher --prompt "$publisher_prompt"
+}
+
+copilot_args=(
+  --allow-all-tools
+  --add-dir "$repo_root"
+  --no-ask-user
+)
+
+if [[ -n "$model" ]]; then
+  copilot_args+=(--model "$model")
+fi
+
+if [[ -n "$publish_draft_input" ]]; then
+  bash scripts/ensure_github_identity.sh
+  publish_existing_draft "$publish_draft_input"
+  exit 0
+fi
+
 if [[ "$use_selected" == "true" ]]; then
   shortlist_path="$repo_root/news_queue/SHORTLIST.md"
   if [[ ! -f "$shortlist_path" ]]; then
@@ -110,6 +236,17 @@ queue_path="$repo_root/$queue_file"
 if [[ ! -f "$queue_path" ]]; then
   echo "Queue file nao encontrado: $queue_file"
   exit 1
+fi
+
+if python3 scripts/check_topic_uniqueness.py --queue-file "$queue_path" --posts-dir "$repo_root/_posts"; then
+  :
+else
+  status=$?
+  if [[ $status -eq 2 ]]; then
+    echo "A noticia selecionada ja esta coberta no blog. Abortar antes de escrever novo artigo."
+    exit 0
+  fi
+  exit "$status"
 fi
 
 extract_front_matter_value() {
@@ -162,20 +299,12 @@ if [[ -f "$post_path" ]]; then
   exit 1
 fi
 
-copilot_args=(
-  --allow-all-tools
-  --add-dir "$repo_root"
-  --no-ask-user
-)
-
-if [[ -n "$model" ]]; then
-  copilot_args+=(--model "$model")
-fi
-
 writer_prompt=$(cat <<EOF
 Lê o ficheiro $queue_file e cria um artigo novo em _drafts/${post_date}-${slug}.md.
 Usa o agente writer deste repositorio para transformar a noticia num artigo de opiniao em Markdown, com front matter Jekyll.
 Regras importantes:
+- tens de gravar exatamente no caminho _drafts/${post_date}-${slug}.md;
+- nao podes inventar outro nome de ficheiro, nao podes renomear, nao podes traduzir o slug e nao podes introduzir Unicode no nome;
 - o texto tem de soar humano e natural;
 - nao inventar factos;
 - explicar acronimos e chavoes no proprio texto;
@@ -209,14 +338,19 @@ Se houver alteracoes nao relacionadas, deixa-as de fora.
 EOF
 )
 
+bash scripts/ensure_github_identity.sh
+
 echo "A criar draft em _drafts/${post_date}-${slug}.md"
 copilot -s "${copilot_args[@]}" --agent=tech-news-opinion-writer --prompt "$writer_prompt"
+normalize_generated_draft "$draft_path"
 
 echo "A rever draft com o editor"
 copilot -s "${copilot_args[@]}" --agent=blog-editor --prompt "$editor_prompt"
+normalize_generated_draft "$draft_path"
 
 echo "A passar no quality gate"
 copilot -s "${copilot_args[@]}" --agent=post-quality-gate --prompt "$quality_gate_prompt"
+normalize_generated_draft "$draft_path"
 
 if [[ "$publish" == "true" ]]; then
   if [[ ! -f "$draft_path" ]]; then

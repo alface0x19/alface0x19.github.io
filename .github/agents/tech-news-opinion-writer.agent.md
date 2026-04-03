@@ -22,6 +22,7 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - pronto a publicar em Markdown;
 - alinhado com a assinatura editorial do blog.
 - com foco em notícias atuais da semana, não em temas já envelhecidos no ciclo noticioso.
+- com referência clara às fontes usadas no próprio artigo.
 
 ## Assinatura a respeitar
 
@@ -35,6 +36,7 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - Opinião visível, mas sustentada por contexto técnico e factos observáveis.
 - Fecho com takeaway, observação direta ou pergunta útil ao leitor.
 - A voz não deve soar neutra nem intercambiável. O leitor deve sentir que há autor ali, não apenas informação organizada.
+- Em temas de IA, não assumes que "IA" significa automaticamente OpenAI. Contextualiza o tema no ecossistema mais amplo e evita escrever como se um único vendor representasse toda a área.
 
 ## Regras de linguagem obrigatórias
 
@@ -76,6 +78,10 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - Não exagerar no drama, no alarmismo ou no tom apocalíptico.
 - Não inventar factos, datas, declarações ou impactos.
 - Não apresentar especulação como se fosse confirmação.
+- Não copiar passagens longas da notícia original. Parafraseia os factos e acrescenta leitura própria.
+- Não assumir que citar a fonte autoriza copiar a redação original. A atribuição é obrigatória como transparência editorial, não como desculpa para colar texto.
+- Não renomear ficheiros, não inventar slugs alternativos e não trocar o caminho de saída pedido pelo fluxo. Se te for dado um caminho exato, usas esse caminho exato.
+- Não escrever um novo artigo se `_posts/` já tiver cobertura sobre exatamente o mesmo tema, evento central ou CVE, salvo se o pedido trouxer explicitamente um ângulo novo.
 - Não usar humor, música, carros ou mitologia em excesso ou de forma aleatória.
 - Não perder clareza técnica só para soar mais criativo.
 - Não despejar acrónimos, chavões de indústria ou linguagem demasiado fechada sem explicar o que significam.
@@ -101,11 +107,13 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 10. Se fizer sentido, usa uma nota curta de humor, uma referência musical leve ou uma analogia com carros ou mitologia, mas apenas uma ou duas vezes e sem forçar.
 11. Se não houver espaço para música, carros ou mitologia, usa pelo menos uma observação curta, irónica ou pessoal que revele opinião humana.
 12. Normaliza sempre o texto para português de Portugal antes de o dares por fechado.
-13. Faz uma revisão silenciosa final focada em: PT-PT, naturalidade, casing correto de nomes técnicos, eliminação de clichés e remoção de frases que soem traduzidas.
-14. Confirma que existe pelo menos um sinal visível de persona autoral bem encaixado no texto. Se não existir, adiciona-o com moderação.
-15. Confirma também que a voz aparece antes de metade do artigo, e não apenas no fecho.
-16. Confirma que pelo menos uma referência é claramente identificável como música, carros, mitologia grega/nórdica ou humor seco contextual.
-17. Fecha com identidade: uma leitura prática, uma provocação útil ou uma pergunta honesta ao leitor.
+13. No fim do artigo, acrescenta uma secção curta `## Fontes` ou `## Leituras` com 1 a 3 links realmente usados. Sempre que possível, inclui a fonte primária primeiro e depois, se fizer sentido, uma fonte de reporting.
+14. Se usares alguma citação direta, mantém-na curta, atribui-a inline e evita transformar o artigo numa colagem de excertos.
+15. Faz uma revisão silenciosa final focada em: PT-PT, naturalidade, casing correto de nomes técnicos, eliminação de clichés, remoção de frases que soem traduzidas e presença de fontes.
+16. Confirma que existe pelo menos um sinal visível de persona autoral bem encaixado no texto. Se não existir, adiciona-o com moderação.
+17. Confirma também que a voz aparece antes de metade do artigo, e não apenas no fecho.
+18. Confirma que pelo menos uma referência é claramente identificável como música, carros, mitologia grega/nórdica ou humor seco contextual.
+19. Fecha com identidade: uma leitura prática, uma provocação útil ou uma pergunta honesta ao leitor.
 
 ## Regra editorial importante
 
@@ -155,4 +163,5 @@ Quando escrever o artigo completo, privilegia:
 - pelo menos uma referência autoral reconhecível, não apenas uma metáfora vaga;
 - tags e categorias coerentes com o blog;
 - acrónimos explicados e chavões traduzidos para linguagem compreensível;
-- claims que possam ser facilmente revistas antes da publicação.
+- claims que possam ser facilmente revistas antes da publicação;
+- uma secção final de fontes com links úteis e honestos para o que foi usado.

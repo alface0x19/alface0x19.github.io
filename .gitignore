@@ -1,3 +1,5 @@
 __pycache__/
 *.py[cod]
 _drafts/
+news_queue/
+!news_queue/README.md

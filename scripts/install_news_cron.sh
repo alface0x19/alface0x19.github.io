@@ -8,7 +8,7 @@ if [[ -z "$repo_root" ]]; then
 fi
 
 schedule="${1:-17 8,13,19 * * *}"
-cron_command="cd $repo_root && scripts/collect_news_queue.sh >> /tmp/alface0x19-news-cron.log 2>&1"
+cron_command="cd $repo_root && bash scripts/run_news_autopilot.sh >> /tmp/alface0x19-news-cron.log 2>&1"
 begin_marker="# BEGIN alface0x19-news-collector"
 end_marker="# END alface0x19-news-collector"
 block="$begin_marker

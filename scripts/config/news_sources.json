@@ -2,13 +2,29 @@
   "default_days": 7,
   "recency_mode": "current_week",
   "default_limit_per_feed": 4,
-  "default_total_limit": 10,
+  "default_total_limit": 14,
   "include_keywords": [
     "ai",
     "artificial intelligence",
+    "llm",
+    "llms",
+    "model",
+    "models",
+    "foundation model",
+    "foundation models",
     "agent",
     "agents",
+    "agentic",
     "copilot",
+    "claude",
+    "gemini",
+    "anthropic",
+    "mistral",
+    "llama",
+    "meta ai",
+    "hugging face",
+    "bedrock",
+    "vertex ai",
     "developer",
     "devops",
     "devsecops",
@@ -24,6 +40,13 @@
     "malware",
     "supply chain",
     "cloud",
+    "cloud computing",
+    "aws",
+    "azure",
+    "gcp",
+    "google cloud",
+    "cloud native",
+    "serverless",
     "kubernetes",
     "docker",
     "linux",
@@ -40,8 +63,18 @@
     "malware",
     "supply chain",
     "ai agent",
+    "claude",
     "copilot",
+    "anthropic",
+    "gemini",
+    "mistral",
+    "llama",
+    "bedrock",
+    "vertex ai",
     "cloud security",
+    "google cloud",
+    "aws",
+    "azure",
     "kubernetes"
   ],
   "block_keywords": [
@@ -92,6 +125,41 @@
       "name": "Wired",
       "category": "technology",
       "url": "https://www.wired.com/feed/rss"
+    },
+    {
+      "name": "OpenAI News",
+      "category": "ai",
+      "url": "https://openai.com/news/rss.xml"
+    },
+    {
+      "name": "Google AI",
+      "category": "ai",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/rss/"
+    },
+    {
+      "name": "TechCrunch AI",
+      "category": "ai",
+      "url": "https://techcrunch.com/category/artificial-intelligence/feed/"
+    },
+    {
+      "name": "VentureBeat AI",
+      "category": "ai",
+      "url": "https://venturebeat.com/category/ai/feed"
+    },
+    {
+      "name": "AWS News Blog",
+      "category": "cloud",
+      "url": "https://aws.amazon.com/blogs/aws/feed/"
+    },
+    {
+      "name": "Azure Blog",
+      "category": "cloud",
+      "url": "https://azure.microsoft.com/en-us/blog/feed/"
+    },
+    {
+      "name": "The New Stack",
+      "category": "cloud",
+      "url": "https://thenewstack.io/feed/"
     }
   ]
 }

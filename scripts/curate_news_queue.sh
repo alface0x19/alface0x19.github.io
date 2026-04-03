@@ -14,6 +14,8 @@ if ! command -v copilot >/dev/null 2>&1; then
   exit 1
 fi
 
+bash scripts/ensure_github_identity.sh
+
 shopt -s nullglob
 queue_files=(news_queue/*.md)
 shopt -u nullglob
@@ -37,10 +39,17 @@ Lê os ficheiros Markdown em news_queue/ e faz triagem editorial usando o agente
 Cria ou atualiza o ficheiro news_queue/SHORTLIST.md.
 Regras:
 - escolhe a noticia mais relevante para virar artigo;
+- antes de fechar a selecao, verifica em _posts/ se o blog ja tem um artigo sobre exatamente o mesmo tema, evento central ou CVE;
+- se a noticia principal ja estiver coberta no blog, escolhe a melhor alternativa ainda nao coberta;
+- sempre que houver material suficiente, escolhe tambem uma segunda noticia publicavel e claramente diferente da principal;
+- a segunda escolha nao deve ser o mesmo CVE, o mesmo incidente, o mesmo vendor launch disfarçado, nem um tema quase igual;
+- em noticias de IA, nao assumes que OpenAI representa a area inteira; tenta manter diversidade de vendors e subtemas quando houver opcoes boas;
+- se todas as candidatas fortes ja estiverem cobertas, escreve selected: none e explica por que motivo;
 - sugere 2 ou 3 alternativas, se existirem;
 - justifica cada escolha em poucas linhas;
 - se vires hype, ruido, falta de fontes ou pouca relevancia, diz isso;
 - na primeira linha do ficheiro escreve exatamente: selected: news_queue/<ficheiro>.md
+- na segunda linha do ficheiro escreve exatamente: selected_secondary: news_queue/<ficheiro>.md ou selected_secondary: none
 - se nenhuma noticia servir, escreve: selected: none
 No fim, grava mesmo o ficheiro news_queue/SHORTLIST.md.
 EOF

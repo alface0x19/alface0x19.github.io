@@ -25,23 +25,31 @@ Avaliar notícias de tecnologia e cibersegurança com base no perfil do blog e e
 - Capacidade de ligar a notícia a trabalho real, risco real ou mudança estrutural.
 - Potencial para um artigo humano, natural e útil.
 - Preferência por temas que encaixem naturalmente em português de Portugal e no tom já existente do blog.
+- Verificar se o blog já tem um artigo sobre exatamente o mesmo tema, evento central, incidente ou CVE, para não repetir cobertura sem necessidade.
+- Quando houver material suficiente, preferir duas escolhas publicáveis e claramente diferentes entre si.
+- Em temas de IA, manter neutralidade de ecossistema: OpenAI é apenas um ator entre vários. Dá espaço a Anthropic, Google, Microsoft, AWS, Meta, Mistral, open source, tooling, infra e cloud quando houver relevância real.
 
 ## Despriorizar
 
 - Press releases disfarçados de notícia.
 - Hype sem consequência prática.
 - Notícias repetidas sem ângulo novo.
+- Notícias cujo tema central já esteja coberto em `_posts/`, salvo se existir um ângulo materialmente novo e explícito.
 - Notícias antigas, mesmo que tecnicamente interessantes.
 - Tópicos que só funcionam como link roundup, mas não como artigo de opinião.
+- Cobertura enviesada para um único vendor de IA quando existem opções mais relevantes ou mais diversas no mesmo ciclo.
 
 ## Processo
 
 1. Lê os ficheiros em `news_queue/`.
-2. Identifica as notícias com melhor potencial editorial.
-3. Ordena as melhores por relevância.
-4. Escolhe uma principal.
-5. Explica em poucas linhas porque vale a pena escrever sobre ela.
-6. Se nenhuma for suficientemente boa, diz isso de forma direta.
+2. Lê também os posts em `_posts/` que pareçam relacionados com as notícias mais fortes.
+3. Identifica as notícias com melhor potencial editorial.
+4. Exclui ou despromove temas que já tenham cobertura essencialmente igual no blog, a menos que exista um ângulo novo claro.
+5. Ordena as melhores por relevância.
+6. Escolhe uma principal.
+7. Se houver material suficiente, escolhe também uma secundária publicável que seja claramente diferente da principal em tema central, incidente, CVE, subdomínio ou tipo de impacto.
+8. Explica em poucas linhas porque vale a pena escrever sobre cada uma.
+9. Se nenhuma for suficientemente boa ou se as melhores já estiverem cobertas, diz isso de forma direta.
 
 ## Saída esperada
 
@@ -51,10 +59,19 @@ Cria ou atualiza `news_queue/SHORTLIST.md` com:
 - 2 ou 3 alternativas, se existirem;
 - uma justificação curta para cada escolha;
 - alerta explícito para hype, falta de fontes ou baixa relevância quando aplicável.
+- alerta explícito quando um tema foi descartado por já estar coberto no blog.
 
 Na primeira linha do ficheiro inclui:
 
 `selected: news_queue/<ficheiro>.md`
+
+Na segunda linha inclui:
+
+`selected_secondary: news_queue/<ficheiro>.md`
+
+Se não houver uma segunda escolha forte e diferente, usa:
+
+`selected_secondary: none`
 
 Se não houver nenhuma escolha suficientemente boa, usa:
 

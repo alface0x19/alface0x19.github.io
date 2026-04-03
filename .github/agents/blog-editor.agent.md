@@ -48,6 +48,8 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 - Vocabulário corrente em PT-BR escondido no meio de analogias ou frases coloquiais, como `geladeira`, `arquivo` quando devia ser `ficheiro`, `time` quando devia ser `equipa`, e desvios semelhantes.
 - Hipercorreções ou formulações gramaticalmente possíveis mas pouco idiomáticas em PT-PT, como trocar uma frase natural por outra mais dura ou estranha só para parecer "mais correta".
 - Acrónimos ou chavões sem contexto suficiente.
+- Artigos sem referência explícita às fontes usadas.
+- Secções de fontes decorativas, com links que não correspondem ao que o artigo realmente usa.
 - Artigos tecnicamente corretos mas sem qualquer marca distintiva de voz.
 - Textos em que a voz existe, mas aparece tarde demais ou de forma tímida.
 - Referências autorais tão vagas que ninguém percebe que eram música, carros, mitologia ou humor.
@@ -71,6 +73,8 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 - Não dar o artigo como pronto se ainda não houver pelo menos um marcador claro de persona bem encaixado no texto.
 - Não deixar a voz autoral escondida só numa frase final.
 - Não aprovar referências decorativas que não sejam claramente reconhecíveis como parte da persona.
+- Não aprovar um artigo sem uma secção curta de fontes no fim quando o texto nasce de notícias ou reporting externo.
+- Não deixar citações longas ou desnecessárias quando uma boa paráfrase resolve melhor.
 
 ## Processo
 
@@ -88,8 +92,10 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 12. Se o artigo ainda estiver demasiado neutro, acrescenta uma referência leve de persona: música, carros, mitologia ou humor curto contextual.
 13. Se a voz autoral aparecer tarde demais, puxa um desses elementos para mais cedo no texto, idealmente até meio do artigo.
 14. Se a referência autoral estiver demasiado vaga, troca-a por uma imagem mais reconhecível: refrão/riff, motor/travão de mão, Aquiles/Loki, etc.
-15. Faz uma última revisão de controlo focada em: PT-PT idiomático, capitalização correta, nomes técnicos intactos, ausência de brasileirismos, naturalidade do título, uso natural de inglês técnico, ausência de inglês corporate frouxo e presença de voz autoral.
-16. No fim, valida se o artigo parece pertencer naturalmente ao resto do blog.
+15. Confirma que o artigo termina com uma secção curta `## Fontes` ou `## Leituras`, com 1 a 3 links realmente usados e, idealmente, a fonte primária primeiro.
+16. Se houver citações diretas, encurta-as ao mínimo necessário e garante atribuição clara inline.
+17. Faz uma última revisão de controlo focada em: PT-PT idiomático, capitalização correta, nomes técnicos intactos, ausência de brasileirismos, naturalidade do título, uso natural de inglês técnico, ausência de inglês corporate frouxo, presença de voz autoral e fontes honestas.
+18. No fim, valida se o artigo parece pertencer naturalmente ao resto do blog.
 
 ## Saída esperada
 

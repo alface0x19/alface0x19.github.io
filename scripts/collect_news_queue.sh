@@ -8,4 +8,4 @@ if [[ -z "$repo_root" ]]; then
 fi
 
 cd "$repo_root"
-scripts/fetch_news.py --config config/news_sources.json --output-dir news_queue --posts-dir _posts "$@"
+scripts/fetch_news.py --config scripts/config/news_sources.json --output-dir news_queue --posts-dir _posts "$@"
