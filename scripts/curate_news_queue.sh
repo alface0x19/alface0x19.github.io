@@ -9,10 +9,8 @@ fi
 
 cd "$repo_root"
 
-if ! command -v copilot >/dev/null 2>&1; then
-  echo "copilot CLI nao encontrado no PATH."
-  exit 1
-fi
+source "$repo_root/scripts/lib/copilot_cli.sh"
+ensure_copilot_cli || exit 1
 
 bash scripts/ensure_github_identity.sh
 
@@ -55,7 +53,7 @@ No fim, grava mesmo o ficheiro news_queue/SHORTLIST.md.
 EOF
 )
 
-copilot \
+run_copilot \
   -s \
   --allow-all-tools \
   --add-dir "$repo_root" \

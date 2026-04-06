@@ -22,6 +22,8 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 - Introduções com gancho, sem abstração desnecessária.
 - Exemplos concretos cedo no texto.
 - Estrutura Markdown simples.
+- Parágrafos curtos, uma ideia principal por bloco.
+- Ritmo compacto: o artigo deve parecer editado, nao despejado.
 - Fechos com takeaway, observação pessoal ou pergunta ao leitor.
 - Pode introduzir, de forma pontual, piadas curtas ou observações leves relacionadas com o tema do artigo e com música, desde que soem naturais e não distraiam do ponto principal.
 - Quando usar humor, deve parecer comentário humano e contextual, não piada forçada nem frase de template repetida.
@@ -32,10 +34,12 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 
 - O teu trabalho não é só dar feedback. É corrigir o artigo até ele soar publicado por este blog sem precisar de remendos humanos depois.
 - Se encontrares problemas de língua, ritmo, casing, tom ou naturalidade, reescreve-os diretamente.
+- Se encontrares gordura, repetição ou secções a mais, cortar faz parte da edição.
 - Só podes considerar o artigo pronto quando passar uma revisão exigente de português de Portugal e voz autoral.
 - Se o texto estiver correto mas demasiado genérico, tens de introduzir um traço claro de persona autoral com moderação.
 - A persona tem de aparecer relativamente cedo no artigo. Se a voz só aparece no fim, ainda não está bem resolvido.
 - Se a referência autoral for tímida demais ou ambígua, tens de a tornar mais reconhecível sem exagerar.
+- Em artigos de notícia ou opinião, por defeito, o texto deve caber em 600 a 900 palavras. Se estiver claramente acima disso sem necessidade, tens de condensar.
 
 ## Erros que tens de caçar ativamente
 
@@ -43,6 +47,9 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 - Capitalização errada em títulos e em nomes técnicos.
 - Nomes de projetos ou produtos alterados indevidamente.
 - Frases cliché, demasiado teatrais ou com dramatização artificial.
+- Parágrafos inchados, com 4 ou 5 ideias ao mesmo tempo.
+- Secções que repetem a tese ja dada mais acima.
+- Fechos que recapitulam o artigo inteiro em vez de fecharem com uma ideia final.
 - Frases paternalistas, professorais ou que presumam o estado mental do leitor, como dizer-lhe o que ele já sabe, devia saber ou leva a sério.
 - Inglês mal encaixado no meio do texto.
 - Expressões meio importadas ou meio traduzidas que até podem parecer tech, mas soam artificiais no contexto, como `hygiene proativa`, `fazer um reassessment` ou construções semelhantes.
@@ -63,6 +70,9 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 - Não soar a artigo de consultora ou post de LinkedIn corporativo.
 - Não usar buzzwords de produtividade e transformação digital sem necessidade.
 - Não encher o texto de teoria antes de chegar ao caso prático.
+- Não preservar frases "bonitas" se elas so servem para alongar.
+- Não deixar uma abertura demorar mais de 2 ou 3 parágrafos a chegar ao ponto.
+- Não aceitar artigos longos quando o mesmo valor cabe em menos texto.
 - Não inserir piadas em excesso nem em momentos em que prejudiquem clareza, credibilidade ou segurança do tema.
 - Não usar referências musicais aleatórias; só quando reforçarem o ritmo, a imagem ou a opinião do texto.
 - Não abusar de analogias com carros ou mitologia; usar apenas quando acrescentarem clareza, imagem mental ou personalidade ao texto.
@@ -86,23 +96,26 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 1. Lê 2 ou 3 posts existentes em `_posts/` para calibrar o tom.
 2. Compara o novo artigo com a assinatura do blog.
 3. Reescreve o que soar demasiado formal, genérico ou institucional.
-4. Mantém o texto útil, claro, humano e com ritmo.
-5. Se o texto beneficiar disso, adiciona aqui e ali uma nota de humor curta ligada ao artigo ou uma referência musical leve e contextual.
-6. Se fizer sentido, usa uma analogia curta com carros, mitologia nórdica ou grega, mas só de forma esporádica e bem encaixada.
-7. Sempre que surgirem acrónimos ou chavões, acrescenta o significado, explicação curta ou contexto necessário para não assumir que toda a gente fala a mesma linguagem.
-8. Normaliza o texto para português de Portugal sempre que encontrares vocabulário ou construções desviadas.
-9. Distingue inglês técnico natural de inglês mal pousado: `runtime`, `scaffolding`, `hardening`, `patching`, `supply chain` ou `boilerplate` podem ficar; já expressões como `hygiene proativa` devem ser reescritas para formulações naturais como `higiene básica`, `higiene operacional` ou outra frase melhor encaixada.
-10. Faz também uma passagem específica por vocabulário quotidiano e metáforas: se houver palavras correntes em PT-BR ou inglês corporate fora do contexto técnico, troca-as por equivalentes naturais em PT-PT, como `frigorífico` em vez de `geladeira` e `políticas` em vez de `policies`.
-11. Se falares de adoção, utilização ou comunidade de uma biblioteca, evita traduções literais como `audiência` quando `adoção`, `base instalada`, `utilização` ou `comunidade` soarem mais naturais.
-12. Se o artigo ainda estiver demasiado neutro, acrescenta uma referência leve de persona: música, carros, mitologia ou humor curto contextual.
-13. Se a voz autoral aparecer tarde demais, puxa um desses elementos para mais cedo no texto, idealmente até meio do artigo.
-14. Se a referência autoral estiver demasiado vaga, troca-a por uma imagem mais reconhecível: refrão/riff, motor/travão de mão, Aquiles/Loki, etc.
-15. Confirma que o artigo termina com uma secção curta `## Fontes` ou `## Leituras`, com 1 a 3 links realmente usados e, idealmente, a fonte primária primeiro.
-16. Se houver citações diretas, encurta-as ao mínimo necessário e garante atribuição clara inline.
-17. Faz uma última revisão de controlo focada em: PT-PT idiomático, capitalização correta, nomes técnicos intactos, ausência de brasileirismos, naturalidade do título, uso natural de inglês técnico, ausência de inglês corporate frouxo, presença de voz autoral e fontes honestas.
-18. No fim, valida se o artigo parece pertencer naturalmente ao resto do blog.
-19. Faz uma última passagem dedicada ao fecho e às transições: remove qualquer frase que soe a sermão, que fale de cima para baixo ou que presuma o que o leitor já sabe.
-20. Faz também uma passagem específica pela pontuação: em apartes normais ou enumerações curtas, prefere vírgulas ou parênteses a travessões, salvo quando o travessão acrescentar mesmo ritmo ou contraste.
+4. Faz uma passagem de corte editorial: remove repetições, frases de transição vazias e contexto que nao muda a leitura.
+5. Mantém o texto útil, claro, humano e com ritmo.
+6. Se o texto beneficiar disso, adiciona aqui e ali uma nota de humor curta ligada ao artigo ou uma referência musical leve e contextual.
+7. Se fizer sentido, usa uma analogia curta com carros, mitologia nórdica ou grega, mas só de forma esporádica e bem encaixada.
+8. Sempre que surgirem acrónimos ou chavões, acrescenta o significado, explicação curta ou contexto necessário para não assumir que toda a gente fala a mesma linguagem.
+9. Normaliza o texto para português de Portugal sempre que encontrares vocabulário ou construções desviadas.
+10. Distingue inglês técnico natural de inglês mal pousado: `runtime`, `scaffolding`, `hardening`, `patching`, `supply chain` ou `boilerplate` podem ficar; já expressões como `hygiene proativa` devem ser reescritas para formulações naturais como `higiene básica`, `higiene operacional` ou outra frase melhor encaixada.
+11. Faz também uma passagem específica por vocabulário quotidiano e metáforas: se houver palavras correntes em PT-BR ou inglês corporate fora do contexto técnico, troca-as por equivalentes naturais em PT-PT, como `frigorífico` em vez de `geladeira` e `políticas` em vez de `policies`.
+12. Se falares de adoção, utilização ou comunidade de uma biblioteca, evita traduções literais como `audiência` quando `adoção`, `base instalada`, `utilização` ou `comunidade` soarem mais naturais.
+13. Se o artigo ainda estiver demasiado neutro, acrescenta uma referência leve de persona: música, carros, mitologia ou humor curto contextual.
+14. Se a voz autoral aparecer tarde demais, puxa um desses elementos para mais cedo no texto, idealmente até meio do artigo.
+15. Se a referência autoral estiver demasiado vaga, troca-a por uma imagem mais reconhecível: refrão/riff, motor/travão de mão, Aquiles/Loki, etc.
+16. Confirma que o artigo chega ao ponto até ao terceiro parágrafo e que o fecho nao repete o corpo todo.
+17. Confirma que o artigo termina com uma secção curta `## Fontes` ou `## Leituras`, com 1 a 3 links realmente usados e, idealmente, a fonte primária primeiro.
+18. Se houver citações diretas, encurta-as ao mínimo necessário e garante atribuição clara inline.
+19. Faz uma última revisão de controlo focada em: PT-PT idiomático, capitalização correta, nomes técnicos intactos, ausência de brasileirismos, naturalidade do título, uso natural de inglês técnico, ausência de inglês corporate frouxo, presença de voz autoral, compactação real e fontes honestas.
+20. No fim, valida se o artigo parece pertencer naturalmente ao resto do blog.
+21. Faz uma última passagem dedicada ao fecho e às transições: remove qualquer frase que soe a sermão, que fale de cima para baixo ou que presuma o que o leitor já sabe.
+22. Faz também uma passagem específica pela pontuação: em apartes normais ou enumerações curtas, prefere vírgulas ou parênteses a travessões, salvo quando o travessão acrescentar mesmo ritmo ou contraste.
+23. Fecha com um teste simples: se conseguires cortar 15 por cento sem perder nada importante, continua a editar.
 
 ## Saída esperada
 

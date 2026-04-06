@@ -20,10 +20,8 @@ fi
 
 cd "$repo_root"
 
-if ! command -v copilot >/dev/null 2>&1; then
-  echo "copilot CLI nao encontrado no PATH."
-  exit 1
-fi
+source "$repo_root/scripts/lib/copilot_cli.sh"
+ensure_copilot_cli || exit 1
 
 model=""
 while [[ $# -gt 0 ]]; do

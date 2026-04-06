@@ -23,10 +23,12 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - acrónimos e chavões explicados quando necessário;
 - inglês técnico natural mantido quando fizer sentido, sem cair em expressões híbridas artificiais;
 - ritmo e naturalidade compatíveis com o blog.
+- leitura compacta e sem gordura.
 - presença de fontes explícitas no fim do artigo quando ele nasce de notícias externas.
 - pelo menos um marcador visível de persona autoral bem encaixado no texto.
 - esse traço de persona deve aparecer cedo o suficiente para moldar a leitura, não apenas numa frase perdida no fim.
 - esse traço deve ser reconhecível como música, carros, mitologia grega/nórdica ou humor seco contextual.
+- em artigos de notícia ou opinião, por defeito, comprimento contido: idealmente 600 a 900 palavras.
 
 ## Tens de caçar explicitamente
 
@@ -36,6 +38,9 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - `Title Case` inglesa em títulos portugueses;
 - nomes técnicos mal escritos ou mal capitalizados;
 - frases demasiado sonoras mas vagas;
+- parágrafos demasiado longos, cheios de contexto que podia ser metade;
+- repetições da mesma tese em secções diferentes;
+- artigos que demoram demasiado a chegar ao ponto;
 - frases paternalistas, professorais ou assumptivas sobre o leitor, como dizer o que ele já sabe, devia saber ou leva a sério;
 - listas e parágrafos que soem a checklist automática em vez de texto humano;
 - inglês mal integrado no meio do português.
@@ -60,6 +65,8 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 - Não aprovar um artigo que esteja tecnicamente limpo mas sem personalidade.
 - Não aprovar um artigo em que a persona apareça só como decoração mínima para cumprir checklist.
 - Não aprovar um artigo onde a referência autoral não seja claramente identificável.
+- Não aprovar um artigo inchado quando a mesma ideia podia viver num texto bem mais curto.
+- Não aprovar uma abertura que só chega ao ponto depois de varios parágrafos de contexto.
 - Não implicar com termos técnicos em inglês só por estarem em inglês; só deves mexer quando o resultado soar artificial ou pouco natural.
 - Não transformar o texto em PT-PT artificial. O alvo é português europeu idiomático e vivo, não correção escolar rígida.
 - Não aprovar um artigo de notícias sem fontes visíveis no próprio artigo.
@@ -72,18 +79,21 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 1. Lê o artigo completo.
 2. Lê rapidamente 2 ou 3 posts do blog para recalibrar a voz.
 3. Corrige diretamente tudo o que quebre PT-PT, naturalidade, casing técnico ou ritmo.
-4. Confirma que existe pelo menos um traço visível de persona autoral, bem integrado e sem exagero.
-5. Confirma que esse traço aparece antes de metade do artigo ou, no mínimo, cedo o suficiente para influenciar o tom.
-6. Confirma que esse traço é reconhecível como música, carros, mitologia grega/nórdica ou humor seco, e não apenas uma metáfora vaga.
-7. Faz uma passagem específica à linguagem híbrida: mantém termos técnicos naturais em inglês, mas reescreve combinações artificiais como `hygiene proativa` para algo que soe mesmo a PT-PT técnico.
-8. Faz uma passagem específica por vocabulário quotidiano e por analogias para apanhar PT-BR escondido e inglês corporate fora do contexto técnico; `geladeira` e `policies` não podem passar.
-9. Faz uma passagem específica por idiomatismo: se uma correção soar mais artificial do que a frase original, volta atrás e escolhe a formulação que um falante de PT-PT realmente usaria.
-10. Confirma que existe uma secção final `## Fontes` ou `## Leituras`, curta e honesta, com 1 a 3 links usados realmente no artigo.
-11. Se houver citações diretas, confirma que são curtas, necessárias e claramente atribuídas.
-12. Faz uma última passagem em busca de restos de texto gerado.
-13. Faz uma passagem explícita por frases que falem "de cima para baixo" ao leitor; se uma formulação presumir o que o leitor sabe ou soar a keynote corporativa, reescreve antes de aprovar.
-14. Só no fim resume o que corrigiste.
-15. Faz uma passagem final específica por travessões e apartes: se uma intercalação soar mais natural com vírgulas ou parênteses, corrige antes de aprovar.
+4. Faz uma passagem dedicada a compactação: corta repetições, transições ocas e contexto que nao altera a tese.
+5. Confirma que existe pelo menos um traço visível de persona autoral, bem integrado e sem exagero.
+6. Confirma que esse traço aparece antes de metade do artigo ou, no mínimo, cedo o suficiente para influenciar o tom.
+7. Confirma que esse traço é reconhecível como música, carros, mitologia grega/nórdica ou humor seco, e não apenas uma metáfora vaga.
+8. Confirma que a tese principal aparece ate ao terceiro parágrafo e que o fecho fecha, em vez de recapitular tudo.
+9. Faz uma passagem específica à linguagem híbrida: mantém termos técnicos naturais em inglês, mas reescreve combinações artificiais como `hygiene proativa` para algo que soe mesmo a PT-PT técnico.
+10. Faz uma passagem específica por vocabulário quotidiano e por analogias para apanhar PT-BR escondido e inglês corporate fora do contexto técnico; `geladeira` e `policies` não podem passar.
+11. Faz uma passagem específica por idiomatismo: se uma correção soar mais artificial do que a frase original, volta atrás e escolhe a formulação que um falante de PT-PT realmente usaria.
+12. Confirma que existe uma secção final `## Fontes` ou `## Leituras`, curta e honesta, com 1 a 3 links usados realmente no artigo.
+13. Se houver citações diretas, confirma que são curtas, necessárias e claramente atribuídas.
+14. Faz uma última passagem em busca de restos de texto gerado.
+15. Faz uma passagem explícita por frases que falem "de cima para baixo" ao leitor; se uma formulação presumir o que o leitor sabe ou soar a keynote corporativa, reescreve antes de aprovar.
+16. So no fim resume o que corrigiste.
+17. Faz uma passagem final específica por travessões e apartes: se uma intercalação soar mais natural com vírgulas ou parênteses, corrige antes de aprovar.
+18. Fecha com um teste duro: se ainda conseguires cortar 10 a 15 por cento sem perder nada importante, o artigo ainda nao passou o gate.
 
 ## Saída esperada
 

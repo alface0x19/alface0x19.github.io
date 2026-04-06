@@ -26,16 +26,14 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   exit 0
 fi
 
-if ! command -v copilot >/dev/null 2>&1; then
-  echo "copilot CLI nao encontrado no PATH."
-  exit 1
-fi
-
 repo_root="$(git rev-parse --show-toplevel 2>/dev/null || true)"
 if [[ -z "$repo_root" ]]; then
   echo "Este script tem de correr dentro de um repositorio git."
   exit 1
 fi
+
+source "$repo_root/scripts/lib/copilot_cli.sh"
+ensure_copilot_cli || exit 1
 
 queue_file=""
 use_selected="false"
@@ -188,7 +186,7 @@ EOF
 )
 
   echo "A publicar para main"
-  copilot -s "${copilot_args[@]}" --agent=main-publisher --prompt "$publisher_prompt"
+  run_copilot -s "${copilot_args[@]}" --agent=main-publisher --prompt "$publisher_prompt"
 }
 
 copilot_args=(
@@ -306,6 +304,10 @@ Regras importantes:
 - tens de gravar exatamente no caminho _drafts/${post_date}-${slug}.md;
 - nao podes inventar outro nome de ficheiro, nao podes renomear, nao podes traduzir o slug e nao podes introduzir Unicode no nome;
 - o texto tem de soar humano e natural;
+- privilegia leitura compacta: por defeito, aponta para 600 a 900 palavras;
+- chega a tese principal ate ao terceiro paragrafo;
+- usa paragrafos curtos, em regra com 1 a 3 frases;
+- evita repetir a mesma ideia em abertura, desenvolvimento e fecho;
 - nao inventar factos;
 - explicar acronimos e chavoes no proprio texto;
 - pode usar humor, musica, carros ou mitologia com moderacao, so quando fizer sentido;
@@ -317,7 +319,8 @@ EOF
 editor_prompt=$(cat <<EOF
 Revê e melhora o ficheiro _drafts/${post_date}-${slug}.md.
 Polir o texto para ficar mais humano, natural e alinhado com a voz do blog.
-Explicar acronimos e chavoes quando aparecerem, cortar frases demasiado artificiais e manter o texto pronto a publicar.
+Explicar acronimos e chavoes quando aparecerem, cortar frases demasiado artificiais, remover gordura e redundancia e manter o texto pronto a publicar.
+Se o artigo estiver comprido para o valor que entrega, encurta sem perder voz.
 Grava as alteracoes no mesmo ficheiro.
 EOF
 )
@@ -325,6 +328,7 @@ EOF
 quality_gate_prompt=$(cat <<EOF
 Faz a ultima revisao de qualidade ao ficheiro _drafts/${post_date}-${slug}.md.
 Corrige diretamente qualquer problema residual de portugues de Portugal, casing de nomes tecnicos, titulo artificial, frases com cheiro a traducao ou jargao mal explicado.
+Se ainda houver repeticao, paragrafo inchado ou contexto a mais, corta.
 So considera o artigo pronto se estiver mesmo publicavel sem remendos humanos depois.
 Grava as alteracoes no mesmo ficheiro.
 EOF
@@ -341,15 +345,15 @@ EOF
 bash scripts/ensure_github_identity.sh
 
 echo "A criar draft em _drafts/${post_date}-${slug}.md"
-copilot -s "${copilot_args[@]}" --agent=tech-news-opinion-writer --prompt "$writer_prompt"
+run_copilot -s "${copilot_args[@]}" --agent=tech-news-opinion-writer --prompt "$writer_prompt"
 normalize_generated_draft "$draft_path"
 
 echo "A rever draft com o editor"
-copilot -s "${copilot_args[@]}" --agent=blog-editor --prompt "$editor_prompt"
+run_copilot -s "${copilot_args[@]}" --agent=blog-editor --prompt "$editor_prompt"
 normalize_generated_draft "$draft_path"
 
 echo "A passar no quality gate"
-copilot -s "${copilot_args[@]}" --agent=post-quality-gate --prompt "$quality_gate_prompt"
+run_copilot -s "${copilot_args[@]}" --agent=post-quality-gate --prompt "$quality_gate_prompt"
 normalize_generated_draft "$draft_path"
 
 if [[ "$publish" == "true" ]]; then
@@ -360,7 +364,7 @@ if [[ "$publish" == "true" ]]; then
   mv "$draft_path" "$post_path"
   echo "Draft movido para _posts/${post_date}-${slug}.md"
   echo "A publicar para main"
-  copilot -s "${copilot_args[@]}" --agent=main-publisher --prompt "$publisher_prompt"
+  run_copilot -s "${copilot_args[@]}" --agent=main-publisher --prompt "$publisher_prompt"
 else
   echo "Draft criado em _drafts/${post_date}-${slug}.md"
   echo "Se quiseres publicar de seguida, corre este comando com --publish."

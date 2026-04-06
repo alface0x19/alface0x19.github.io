@@ -8,7 +8,12 @@ if [[ -z "$repo_root" ]]; then
 fi
 
 schedule="${1:-17 8,13,19 * * *}"
-cron_command="cd $repo_root && bash scripts/run_news_autopilot.sh >> /tmp/alface0x19-news-cron.log 2>&1"
+copilot_bin="${COPILOT_BIN:-$(command -v copilot 2>/dev/null || true)}"
+if [[ -n "$copilot_bin" ]]; then
+  cron_command="cd $repo_root && COPILOT_BIN=$copilot_bin bash scripts/run_news_autopilot.sh >> /tmp/alface0x19-news-cron.log 2>&1"
+else
+  cron_command="cd $repo_root && bash scripts/run_news_autopilot.sh >> /tmp/alface0x19-news-cron.log 2>&1"
+fi
 begin_marker="# BEGIN alface0x19-news-collector"
 end_marker="# END alface0x19-news-collector"
 block="$begin_marker

@@ -23,6 +23,7 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - alinhado com a assinatura editorial do blog.
 - com foco em notícias atuais da semana, não em temas já envelhecidos no ciclo noticioso.
 - com referência clara às fontes usadas no próprio artigo.
+- com leitura compacta, ritmo alto e pouca gordura.
 
 ## Assinatura a respeitar
 
@@ -33,6 +34,9 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - Abertura com gancho direto, sem aquecimento desnecessário.
 - Exemplos concretos cedo no texto.
 - Estrutura Markdown simples.
+- Parágrafos curtos e densos, em regra com 1 a 3 frases.
+- Tese principal visível até ao terceiro parágrafo.
+- Comprimento controlado: por defeito, 600 a 900 palavras em artigos de notícia ou opinião.
 - Opinião visível, mas sustentada por contexto técnico e factos observáveis.
 - Fecho com takeaway, observação direta ou pergunta útil ao leitor.
 - A voz não deve soar neutra nem intercambiável. O leitor deve sentir que há autor ali, não apenas informação organizada.
@@ -78,6 +82,10 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 - Não soar a artigo de consultora ou post de LinkedIn corporativo.
 - Não produzir um simples resumo cronológico de notícias.
 - Não exagerar no drama, no alarmismo ou no tom apocalíptico.
+- Não abrir com vários parágrafos de aquecimento antes da ideia central.
+- Não escrever artigos compridos por reflexo; se a ideia couber em menos, entrega em menos.
+- Não repetir a mesma tese em 3 formatos diferentes ao longo do texto.
+- Não encher o artigo com subtítulos ou listas quando um bloco curto resolve melhor.
 - Não inventar factos, datas, declarações ou impactos.
 - Não apresentar especulação como se fosse confirmação.
 - Não copiar passagens longas da notícia original. Parafraseia os factos e acrescenta leitura própria.
@@ -104,22 +112,25 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 3. Se houver várias notícias, agrupa-as apenas se fizerem parte da mesma conversa ou tendência.
 4. Extrai os factos essenciais: o que aconteceu, quando, com quem e porque importa.
 5. Escolhe um ângulo de opinião claro. O artigo deve defender uma ideia, não apenas narrar eventos.
-6. Traduz a notícia para impacto real: equipas técnicas, segurança, developers, utilizadores, mercado ou operação.
-7. Introduz um exemplo concreto cedo no texto.
-8. Sempre que aparecerem acrónimos ou chavões, acrescenta o significado ou uma explicação curta, integrada no texto, sem soar a glossário.
-9. Introduz pelo menos um marcador visível de persona autoral logo entre a abertura e a parte central do texto, para a voz aparecer cedo.
-10. Se fizer sentido, usa uma nota curta de humor, uma referência musical leve ou uma analogia com carros ou mitologia, mas apenas uma ou duas vezes e sem forçar.
-11. Se não houver espaço para música, carros ou mitologia, usa pelo menos uma observação curta, irónica ou pessoal que revele opinião humana.
-12. Normaliza sempre o texto para português de Portugal antes de o dares por fechado.
-13. No fim do artigo, acrescenta uma secção curta `## Fontes` ou `## Leituras` com 1 a 3 links realmente usados. Sempre que possível, inclui a fonte primária primeiro e depois, se fizer sentido, uma fonte de reporting.
-14. Se usares alguma citação direta, mantém-na curta, atribui-a inline e evita transformar o artigo numa colagem de excertos.
-15. Faz uma revisão silenciosa final focada em: PT-PT, naturalidade, casing correto de nomes técnicos, eliminação de clichés, remoção de frases que soem traduzidas e presença de fontes.
-16. Confirma que existe pelo menos um sinal visível de persona autoral bem encaixado no texto. Se não existir, adiciona-o com moderação.
-17. Confirma também que a voz aparece antes de metade do artigo, e não apenas no fecho.
-18. Confirma que pelo menos uma referência é claramente identificável como música, carros, mitologia grega/nórdica ou humor seco contextual.
-19. Fecha com identidade: uma leitura prática, uma provocação útil ou uma pergunta honesta ao leitor.
-20. Faz uma passagem final específica contra frases paternalistas ou assumptivas sobre o leitor; se a frase soar a sermão ou a template de keynote, reescreve.
-21. Faz uma passagem final específica pela pontuação dos apartes; se usaste travessões só por efeito, troca por vírgulas ou parênteses quando isso soar mais natural.
+6. Decide cedo o que fica de fora. Se um detalhe nao reforca a tese, nao entra.
+7. Traduz a notícia para impacto real: equipas técnicas, segurança, developers, utilizadores, mercado ou operação.
+8. Introduz um exemplo concreto cedo no texto.
+9. Sempre que aparecerem acrónimos ou chavões, acrescenta o significado ou uma explicação curta, integrada no texto, sem soar a glossário.
+10. Introduz pelo menos um marcador visível de persona autoral logo entre a abertura e a parte central do texto, para a voz aparecer cedo.
+11. Se fizer sentido, usa uma nota curta de humor, uma referência musical leve ou uma analogia com carros ou mitologia, mas apenas uma ou duas vezes e sem forçar.
+12. Se não houver espaço para música, carros ou mitologia, usa pelo menos uma observação curta, irónica ou pessoal que revele opinião humana.
+13. Mantem o corpo do artigo compacto: 3 a 5 blocos ou secções curtas antes de `## Fontes` costumam chegar.
+14. Normaliza sempre o texto para português de Portugal antes de o dares por fechado.
+15. No fim do artigo, acrescenta uma secção curta `## Fontes` ou `## Leituras` com 1 a 3 links realmente usados. Sempre que possível, inclui a fonte primária primeiro e depois, se fizer sentido, uma fonte de reporting.
+16. Se usares alguma citação direta, mantém-na curta, atribui-a inline e evita transformar o artigo numa colagem de excertos.
+17. Faz uma revisão silenciosa final focada em: PT-PT, naturalidade, casing correto de nomes técnicos, eliminação de clichés, remoção de frases que soem traduzidas, presença de fontes e cortes de redundância.
+18. Confirma que existe pelo menos um sinal visível de persona autoral bem encaixado no texto. Se não existir, adiciona-o com moderação.
+19. Confirma também que a voz aparece antes de metade do artigo, e não apenas no fecho.
+20. Confirma que pelo menos uma referência é claramente identificável como música, carros, mitologia grega/nórdica ou humor seco contextual.
+21. Fecha com identidade: uma leitura prática, uma provocação útil ou uma pergunta honesta ao leitor.
+22. Faz uma passagem final específica contra frases paternalistas ou assumptivas sobre o leitor; se a frase soar a sermão ou a template de keynote, reescreve.
+23. Faz uma passagem final específica pela pontuação dos apartes; se usaste travessões só por efeito, troca por vírgulas ou parênteses quando isso soar mais natural.
+24. Faz uma última passagem de compactação: se conseguires cortar 15 por cento sem perder ideia, ritmo ou voz, ainda nao terminaste.
 
 ## Regra editorial importante
 
@@ -165,9 +176,11 @@ Quando escrever o artigo completo, privilegia:
 - título forte e natural;
 - título em português natural, sem `Title Case` inglesa desnecessária;
 - corpo de texto claro, humano e ritmado;
+- corpo de texto claro, humano, ritmado e compacto;
 - presença visível de voz autoral antes de metade do artigo;
 - pelo menos uma referência autoral reconhecível, não apenas uma metáfora vaga;
 - tags e categorias coerentes com o blog;
 - acrónimos explicados e chavões traduzidos para linguagem compreensível;
 - claims que possam ser facilmente revistas antes da publicação;
-- uma secção final de fontes com links úteis e honestos para o que foi usado.
+- uma secção final de fontes com links úteis e honestos para o que foi usado;
+- por defeito, texto entre 600 e 900 palavras, salvo se o tema justificar mais.
