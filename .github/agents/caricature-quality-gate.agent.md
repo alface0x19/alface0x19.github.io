@@ -35,6 +35,7 @@ Validar e corrigir diretamente a caricatura para que ela:
 - Clareza do conceito visual.
 - Relação real com a notícia e com o conflito central.
 - Legibilidade dos elementos principais.
+- Contraste real de qualquer texto, label ou callout dentro do SVG.
 - Hierarquia visual e composição.
 - Uso moderado e reconhecível da persona: música, carros, mitologia ou humor seco.
 - SVG limpo, válido e sem dependências externas.
@@ -53,6 +54,8 @@ Validar e corrigir diretamente a caricatura para que ela:
 - composição desorganizada;
 - demasiados elementos para o espaço disponível;
 - texto excessivo dentro do SVG;
+- texto com contraste fraco ou ilegivel sobre fundos luminosos, gradientes ou zonas detalhadas;
+- texto pequeno demais, fino demais ou com cor decorativa que prejudique leitura;
 - referências de persona atiradas para cima da imagem sem ligação ao tema;
 - desenho demasiado literal, demasiado stock ou demasiado meme;
 - formas que parecem placeholders em vez de ilustração pensada;
@@ -71,11 +74,12 @@ Validar e corrigir diretamente a caricatura para que ela:
 1. Lê rapidamente a notícia de origem.
 2. Inspeciona o SVG completo.
 3. Confirma qual é a metáfora visual principal.
-4. Corrige diretamente o que prejudicar clareza, leitura ou personalidade.
+4. Corrige diretamente o que prejudicar clareza, leitura, contraste ou personalidade.
 5. Reduz elementos se houver ruído visual.
-6. Confirma que existe um traço de persona reconhecível, mas sem exagero.
-7. Confirma que o SVG fica válido, autónomo e pronto a servir no site.
-8. Se ainda estiver claramente fraco depois de uma passagem séria, bloqueia.
+6. Se houver texto dentro do SVG, confirma que ele continua legivel em thumbnail e no artigo; se nao, aumenta contraste, simplifica o fundo ou reduz texto.
+7. Confirma que existe um traço de persona reconhecível, mas sem exagero.
+8. Confirma que o SVG fica válido, autónomo e pronto a servir no site.
+9. Se ainda estiver claramente fraco depois de uma passagem séria, bloqueia.
 
 ## Critério de pronto
 
@@ -83,6 +87,7 @@ A caricatura passa o gate quando:
 
 - a notícia continua reconhecível na imagem;
 - a composição é clara e legível;
+- qualquer texto usado tem contraste suficiente e percebe-se sem esforço;
 - o estilo tem pulso editorial;
 - a persona existe mas não rouba a cena;
 - o SVG está pronto a usar sem remendos humanos.

@@ -122,19 +122,13 @@ emit_codex_agent_prompt() {
   local task_prompt="$3"
 
   printf '%s\n' "You are running inside Codex CLI for this repository."
-  printf '%s\n' "Treat the agent file below as the role instructions for this run."
-  printf '%s\n' "Map any tool references in that file to the tools available in Codex CLI."
-  printf '%s\n' "Complete the task end-to-end without interactive questions unless the task is genuinely blocked."
-  printf '%s\n' "Do not narrate your plan, do not provide progress updates, and do not explain what you are about to do."
-  printf '%s\n' "Perform the required file or git operations directly and finish with the exact terminal status line requested by the task."
-  printf '%s\n' "If the task or the agent file defines an automation mode, an exact terminal status line, or a required final state, that contract overrides any generic 'Saida esperada' or reporting section."
-  printf '%s\n' "In automation mode, do the work, keep stdout minimal, and ensure the final non-empty stdout line is exactly the required status line with nothing after it."
-  printf '\n%s\n' "===== BEGIN AGENT FILE: .github/agents/${agent}.agent.md ====="
+  printf '%s\n' "Use the agent file below as the role instructions for this run and map its tool references to the tools available in Codex CLI."
+  printf '%s\n' "Complete the task end-to-end without interactive questions unless genuinely blocked."
+  printf '%s\n' "Modify files directly, keep stdout minimal, and make the final non-empty stdout line exactly the status required by the task."
+  printf '\n%s\n' "===== AGENT FILE: .github/agents/${agent}.agent.md ====="
   cat "$agent_file"
-  printf '\n%s\n' "===== END AGENT FILE ====="
-  printf '\n%s\n' "===== BEGIN TASK ====="
+  printf '\n%s\n' "===== TASK ====="
   printf '%s\n' "$task_prompt"
-  printf '%s\n' "===== END TASK ====="
 }
 
 run_codex_agent() {

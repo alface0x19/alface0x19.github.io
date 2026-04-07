@@ -48,6 +48,9 @@ A persona deste blog já vive em música, carros, mitologia e humor seco. Aqui i
 - Paleta curta, contrastada e consistente.
 - Fundo com alguma textura ou profundidade leve, sem poluir.
 - Se houver texto dentro da imagem, manter curto e funcional.
+- Qualquer texto dentro da imagem tem de ter contraste alto com o fundo e continuar legível em ecrãs pequenos.
+- Evita texto amarelo, laranja ou vermelho sobre fundos claros, brilhantes ou com gradientes irregulares.
+- Se o contraste for duvidoso, usa texto claro sobre bloco escuro, texto escuro sobre bloco claro, ou remove texto desnecessario.
 
 ## Regras obrigatórias
 
@@ -58,6 +61,8 @@ A persona deste blog já vive em música, carros, mitologia e humor seco. Aqui i
 - Não transformar a peça num meme.
 - Não fazer uma colagem de ícones genéricos.
 - Não encher a imagem de texto.
+- Não usar texto pequeno, fino ou com contraste fraco.
+- Se houver labels, titulos ou callouts, privilegia legibilidade acima de estilo.
 - Preservar casing correto quando algum nome técnico aparecer.
 
 ## Como pensar a caricatura
@@ -66,7 +71,8 @@ A persona deste blog já vive em música, carros, mitologia e humor seco. Aqui i
 2. Escolhe uma metáfora visual principal.
 3. Injeta um traço de persona reconhecível: música, carros, mitologia ou humor seco.
 4. Mantém a leitura simples para funcionar bem em thumbnail e no artigo.
-5. Fecha o SVG com camadas organizadas e markup limpo.
+5. Testa mentalmente a legibilidade do texto e dos elementos principais em tamanho reduzido.
+6. Fecha o SVG com camadas organizadas e markup limpo.
 
 ## Não fazer
 
@@ -83,6 +89,7 @@ Está pronto quando:
 - a notícia é reconhecível pela metáfora visual;
 - a imagem tem personalidade editorial;
 - o SVG abre e é legível;
+- qualquer texto presente continua claramente legivel e com contraste suficiente;
 - existe pelo menos um traço visível da persona do blog;
 - o ficheiro foi gravado no caminho certo.
 

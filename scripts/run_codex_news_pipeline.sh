@@ -5,7 +5,11 @@ usage() {
   cat <<'EOF'
 Usage:
   scripts/run_codex_news_pipeline.sh <queue-file> [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
+    [--writer-model model-name] [--editor-model model-name] [--angle-model model-name]
+    [--image-model model-name] [--gate-model model-name]
   scripts/run_codex_news_pipeline.sh --selected [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
+    [--writer-model model-name] [--editor-model model-name] [--angle-model model-name]
+    [--image-model model-name] [--gate-model model-name]
   scripts/run_codex_news_pipeline.sh --publish-draft _drafts/YYYY-MM-DD-slug.md [--model model-name]
 
 Examples:
@@ -119,6 +123,11 @@ publish="false"
 post_date="$(date +%F)"
 custom_slug=""
 model=""
+writer_model=""
+editor_model=""
+angle_model=""
+image_model=""
+gate_model=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -136,6 +145,26 @@ while [[ $# -gt 0 ]]; do
       ;;
     --model)
       model="$2"
+      shift 2
+      ;;
+    --writer-model)
+      writer_model="$2"
+      shift 2
+      ;;
+    --editor-model)
+      editor_model="$2"
+      shift 2
+      ;;
+    --angle-model)
+      angle_model="$2"
+      shift 2
+      ;;
+    --image-model)
+      image_model="$2"
+      shift 2
+      ;;
+    --gate-model)
+      gate_model="$2"
       shift 2
       ;;
     -h|--help)
@@ -275,6 +304,7 @@ Objetivo visual:
 - interpretar a notícia de forma editorial, não fotográfica;
 - a imagem deve parecer uma caricatura conceptual da notícia, não um logo colado nem um screenshot;
 - privilegiar composição simples, legível e expressiva;
+- se houver texto dentro do SVG, ele tem de ser curto, ter contraste alto com o fundo e continuar legivel em ecrãs pequenos;
 - manter compatibilidade web: SVG puro, sem JavaScript, sem assets externos, sem fontes remotas;
 - incluir título e subtítulo curtos dentro do SVG apenas se isso ajudar a leitura;
 - evitar excesso de texto e evitar copiar o headline completo.
@@ -295,7 +325,7 @@ EOF
 )
 
   echo "A gerar caricatura editorial em ${target_rel}"
-  run_agent_expect_status news-caricaturist "$cover_prompt" "CARICATURE_CREATED: $target_rel"
+  run_agent_expect_status news-caricaturist "$cover_prompt" "CARICATURE_CREATED: $target_rel" "image"
 
   article_image_abs="$repo_root/$target_rel"
   article_image_rel="$target_rel"
@@ -338,7 +368,7 @@ EOF
 )
 
   echo "A gerar brief editorial em ${target_rel}"
-  run_agent_expect_status angle-setter "$angle_prompt" "ANGLE_READY: $target_rel"
+  run_agent_expect_status angle-setter "$angle_prompt" "ANGLE_READY: $target_rel" "angle"
 }
 
 quality_gate_article_caricature() {
@@ -352,6 +382,7 @@ Revê o SVG com exigência editorial e corrige diretamente o próprio ficheiro s
 Valida especialmente:
 - se a imagem representa o conflito central da notícia;
 - se a composição está legível e não demasiado confusa;
+- se qualquer texto, label ou callout dentro do SVG tem contraste suficiente e se lê sem esforço;
 - se a persona do blog está presente com moderação e de forma reconhecível;
 - se o resultado parece caricatura editorial e não stock art, meme ou slide genérico;
 - se o SVG está limpo, válido e sem dependências externas.
@@ -370,7 +401,7 @@ EOF
 )
 
   echo "A passar caricatura no quality gate: ${target_rel}"
-  run_agent_expect_status caricature-quality-gate "$gate_prompt" "CARICATURE_READY: $target_rel"
+  run_agent_expect_status caricature-quality-gate "$gate_prompt" "CARICATURE_READY: $target_rel" "image"
 }
 
 run_publication_readiness_gate() {
@@ -413,7 +444,7 @@ EOF
 )
 
   echo "A passar no gate final de prontidao editorial"
-  run_agent_expect_status publication-readiness-gate "$readiness_prompt" "PACKAGE_READY: $draft_rel"
+  run_agent_expect_status publication-readiness-gate "$readiness_prompt" "PACKAGE_READY: $draft_rel" "gate"
 }
 
 track_existing_drafts() {
@@ -518,12 +549,41 @@ publish_existing_draft() {
   restorable_draft_target=""
 }
 
+resolve_stage_model() {
+  local stage="$1"
+
+  case "$stage" in
+    writer)
+      printf '%s\n' "${writer_model:-$model}"
+      ;;
+    editor)
+      printf '%s\n' "${editor_model:-$model}"
+      ;;
+    angle)
+      printf '%s\n' "${angle_model:-$model}"
+      ;;
+    image)
+      printf '%s\n' "${image_model:-$model}"
+      ;;
+    gate)
+      printf '%s\n' "${gate_model:-$model}"
+      ;;
+    *)
+      printf '%s\n' "$model"
+      ;;
+  esac
+}
+
 run_agent() {
   local agent_name="$1"
   local agent_prompt="$2"
+  local stage="${3:-}"
+  local selected_model=""
 
-  if [[ -n "$model" ]]; then
-    run_codex_agent --repo-root "$repo_root" --agent "$agent_name" --model "$model" --prompt "$agent_prompt"
+  selected_model="$(resolve_stage_model "$stage")"
+
+  if [[ -n "$selected_model" ]]; then
+    run_codex_agent --repo-root "$repo_root" --agent "$agent_name" --model "$selected_model" --prompt "$agent_prompt"
   else
     run_codex_agent --repo-root "$repo_root" --agent "$agent_name" --prompt "$agent_prompt"
   fi
@@ -548,10 +608,11 @@ run_agent_expect_status() {
   local agent_name="$1"
   local agent_prompt="$2"
   local expected_status="$3"
+  local stage="${4:-}"
   local output=""
   local last_nonempty=""
 
-  output="$(run_agent "$agent_name" "$agent_prompt")"
+  output="$(run_agent "$agent_name" "$agent_prompt" "$stage")"
   printf '%s\n' "$output"
 
   last_nonempty="$(printf '%s\n' "$output" | awk 'NF { line=$0 } END { print line }')"
@@ -716,16 +777,17 @@ EOF
 )
 
 editor_prompt=$(cat <<EOF
-Revê e melhora o ficheiro _drafts/${post_date}-${slug}.md.
-Polir o texto para ficar mais humano, natural e alinhado com a voz do blog.
-Explicar acronimos e chavoes quando aparecerem, cortar frases demasiado artificiais, remover gordura e redundancia e manter o texto pronto a publicar.
+Faz a revisao editorial final do ficheiro _drafts/${post_date}-${slug}.md e deixa-o pronto a publicar.
+Polir o texto para ficar humano, natural e alinhado com a voz do blog.
+Corrige diretamente portugues de Portugal, casing tecnico, titulo artificial, jargao mal explicado, repeticao e frases com cheiro a traducao.
 Se o artigo estiver comprido para o valor que entrega, encurta sem perder voz.
 Regras importantes:
 - corres em modo de automacao: nao dês diagnostico, nao deixes sugestoes e nao abras novas rondas de revisao;
 - faz uma unica passagem editorial forte e, no maximo, uma passagem curta de compactacao;
 - usa a heuristica de compactacao apenas uma vez; se o texto ja estiver suficientemente denso, para;
+- so considera o artigo pronto se estiver mesmo publicavel sem remendos humanos depois;
 - grava as alteracoes no mesmo ficheiro e termina logo de seguida;
-- a ultima linha da tua resposta tem de ser exatamente: EDIT_COMPLETE: _drafts/${post_date}-${slug}.md
+- a ultima linha da tua resposta tem de ser exatamente: READY_TO_PUBLISH: _drafts/${post_date}-${slug}.md
 - se ficares genuinamente bloqueado, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
 EOF
 )
@@ -738,31 +800,12 @@ if [[ -n "$article_image_rel" ]]; then
   editor_prompt+="Nao dupliques a imagem e nao uses HTML."
 fi
 
-quality_gate_prompt=$(cat <<EOF
-Faz a ultima revisao de qualidade ao ficheiro _drafts/${post_date}-${slug}.md.
-Corrige diretamente qualquer problema residual de portugues de Portugal, casing de nomes tecnicos, titulo artificial, frases com cheiro a traducao ou jargao mal explicado.
-Se ainda houver repeticao, paragrafo inchado ou contexto a mais, corta.
-So considera o artigo pronto se estiver mesmo publicavel sem remendos humanos depois.
-Regras importantes:
-- corres em modo de automacao: nao dês relatorio longo, nao proposes nova ronda e nao reescrevas por perfeccionismo;
-- faz uma unica passagem de quality gate e, se ficar publicavel, para;
-- usa a regra de compactacao apenas como heuristica numa unica passagem, nao como motivo para iteracao infinita;
-- grava as alteracoes no mesmo ficheiro e termina logo de seguida;
-- se o artigo ficar pronto, a ultima linha da tua resposta tem de ser exatamente: READY_TO_PUBLISH: _drafts/${post_date}-${slug}.md
-- se encontrares um bloqueio real que impeça publicacao automatica, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
-EOF
-)
-
 echo "A criar draft em _drafts/${post_date}-${slug}.md"
-run_agent_expect_status tech-news-opinion-writer "$writer_prompt" "DRAFT_WRITTEN: _drafts/${post_date}-${slug}.md"
+run_agent_expect_status tech-news-opinion-writer "$writer_prompt" "DRAFT_WRITTEN: _drafts/${post_date}-${slug}.md" "writer"
 normalize_generated_draft "$draft_path"
 
-echo "A rever draft com o editor"
-run_agent_expect_status blog-editor "$editor_prompt" "EDIT_COMPLETE: _drafts/${post_date}-${slug}.md"
-normalize_generated_draft "$draft_path"
-
-echo "A passar no quality gate"
-run_agent_expect_status post-quality-gate "$quality_gate_prompt" "READY_TO_PUBLISH: _drafts/${post_date}-${slug}.md"
+echo "A fazer revisao editorial final"
+run_agent_expect_status blog-editor "$editor_prompt" "READY_TO_PUBLISH: _drafts/${post_date}-${slug}.md" "editor"
 normalize_generated_draft "$draft_path"
 
 run_publication_readiness_gate "_drafts/${post_date}-${slug}.md" "$article_image_rel" "$angle_brief_rel"

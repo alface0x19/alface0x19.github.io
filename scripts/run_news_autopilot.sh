@@ -5,6 +5,8 @@ usage() {
   cat <<'EOF'
 Usage:
   scripts/run_news_autopilot.sh [--model model-name]
+    [--writer-model model-name] [--editor-model model-name] [--angle-model model-name]
+    [--image-model model-name] [--gate-model model-name]
 
 Description:
   Recolhe noticias, faz curadoria, gera artigo, valida e publica automaticamente
@@ -24,10 +26,35 @@ source "$repo_root/scripts/lib/codex_cli.sh"
 ensure_codex_cli || exit 1
 
 model=""
+writer_model=""
+editor_model=""
+angle_model=""
+image_model=""
+gate_model=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --model)
       model="$2"
+      shift 2
+      ;;
+    --writer-model)
+      writer_model="$2"
+      shift 2
+      ;;
+    --editor-model)
+      editor_model="$2"
+      shift 2
+      ;;
+    --angle-model)
+      angle_model="$2"
+      shift 2
+      ;;
+    --image-model)
+      image_model="$2"
+      shift 2
+      ;;
+    --gate-model)
+      gate_model="$2"
       shift 2
       ;;
     -h|--help)
@@ -255,6 +282,21 @@ publish_one() {
   echo "$label"
   if [[ -n "$model" ]]; then
     pipeline_args+=(--model "$model")
+  fi
+  if [[ -n "$writer_model" ]]; then
+    pipeline_args+=(--writer-model "$writer_model")
+  fi
+  if [[ -n "$editor_model" ]]; then
+    pipeline_args+=(--editor-model "$editor_model")
+  fi
+  if [[ -n "$angle_model" ]]; then
+    pipeline_args+=(--angle-model "$angle_model")
+  fi
+  if [[ -n "$image_model" ]]; then
+    pipeline_args+=(--image-model "$image_model")
+  fi
+  if [[ -n "$gate_model" ]]; then
+    pipeline_args+=(--gate-model "$gate_model")
   fi
   bash scripts/run_codex_news_pipeline.sh "${pipeline_args[@]}"
   published_any="true"
