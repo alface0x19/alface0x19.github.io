@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Editorial cover for Mitsubishi Electric GENESIS64 and ICONICS Suite products advisory</title>
+  <desc id="desc">An industrial control cabinet styled like a restrained studio dashboard. A local cache drawer slides open while a key tagged SQL credentials spills toward a SQLite disk, signaling plaintext secrets exposed inside industrial software.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1320"/>
+      <stop offset="55%" stop-color="#14253c"/>
+      <stop offset="100%" stop-color="#091018"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#243348"/>
+      <stop offset="100%" stop-color="#101a28"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#293b53"/>
+      <stop offset="100%" stop-color="#172232"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f15a29"/>
+      <stop offset="50%" stop-color="#ffbe3d"/>
+      <stop offset="100%" stop-color="#ff6b57"/>
+    </linearGradient>
+    <radialGradient id="vinyl" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1d2a3d"/>
+      <stop offset="45%" stop-color="#0c1118"/>
+      <stop offset="100%" stop-color="#020406"/>
+    </radialGradient>
+    <pattern id="noise" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="4" r="1" fill="#ffffff" opacity="0.05"/>
+      <circle cx="11" cy="9" r="1" fill="#ffffff" opacity="0.04"/>
+      <circle cx="15" cy="3" r="1" fill="#ffffff" opacity="0.03"/>
+      <circle cx="6" cy="15" r="1" fill="#ffffff" opacity="0.04"/>
+    </pattern>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#noise)"/>
+  <circle cx="1260" cy="170" r="180" fill="#ff8a3d" opacity="0.1" filter="url(#soft)"/>
+  <circle cx="280" cy="760" r="240" fill="#3bb7a1" opacity="0.08" filter="url(#soft)"/>
+
+  <g opacity="0.2">
+    <path d="M0 728C187 688 256 764 421 734C553 710 595 625 736 623C864 622 920 708 1063 719C1225 732 1354 633 1600 664V900H0Z" fill="#08101a"/>
+    <path d="M0 776C192 733 312 825 454 806C624 783 676 676 856 674C1037 673 1144 780 1306 792C1420 801 1504 758 1600 734V900H0Z" fill="#061019"/>
+  </g>
+
+  <g transform="translate(336 136)">
+    <rect x="0" y="0" width="930" height="592" rx="32" fill="url(#steel)" stroke="#3a506c" stroke-width="4"/>
+    <rect x="28" y="28" width="874" height="536" rx="24" fill="#121d2b" stroke="#435a77" stroke-width="2"/>
+
+    <g transform="translate(64 44)">
+      <rect x="0" y="0" width="802" height="84" rx="18" fill="url(#panel)"/>
+      <text x="30" y="33" fill="#f2f5f9" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="2">Mitsubishi Electric</text>
+      <text x="30" y="61" fill="#9eb4c8" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="1.2">GENESIS64 / ICONICS Suite</text>
+      <g transform="translate(528 18)">
+        <rect x="0" y="0" width="242" height="48" rx="12" fill="#0f1621" stroke="#31445d" stroke-width="2"/>
+        <text x="18" y="20" fill="#ffb955" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="2">LOCAL CACHE</text>
+        <text x="18" y="38" fill="#f36c5f" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="1.5">PLAINTEXT</text>
+        <circle cx="212" cy="24" r="10" fill="#ff6b57"/>
+      </g>
+    </g>
+
+    <g transform="translate(118 162)">
+      <path d="M335 0A335 335 0 0 1 670 335L610 335A275 275 0 0 0 60 335L0 335A335 335 0 0 1 335 0Z" fill="#1a2637"/>
+      <path d="M335 52A283 283 0 0 1 618 335L572 335A237 237 0 0 0 98 335L52 335A283 283 0 0 1 335 52Z" fill="#0f1824"/>
+      <path d="M117 286A252 252 0 0 1 318 84" fill="none" stroke="#47c1ad" stroke-width="20" stroke-linecap="round"/>
+      <path d="M343 82A252 252 0 0 1 532 170" fill="none" stroke="#ffbe3d" stroke-width="20" stroke-linecap="round"/>
+      <path d="M551 188A252 252 0 0 1 594 286" fill="none" stroke="#ff6b57" stroke-width="20" stroke-linecap="round"/>
+      <g stroke="#8aa0b5" stroke-width="4" stroke-linecap="round">
+        <path d="M130 287L107 295"/>
+        <path d="M178 204L161 187"/>
+        <path d="M257 138L248 112"/>
+        <path d="M335 118V92"/>
+        <path d="M414 138L423 112"/>
+        <path d="M492 204L510 187"/>
+        <path d="M540 287L563 295"/>
+      </g>
+      <path d="M335 335L530 162" stroke="url(#glow)" stroke-width="14" stroke-linecap="round"/>
+      <circle cx="335" cy="335" r="30" fill="#f3f5f8"/>
+      <circle cx="335" cy="335" r="11" fill="#182536"/>
+      <text x="335" y="238" text-anchor="middle" fill="#9ab1c6" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="5">SQL CREDS</text>
+      <text x="335" y="304" text-anchor="middle" fill="#f0f3f8" font-family="Arial, Helvetica, sans-serif" font-size="78" font-weight="700" letter-spacing="4">PLAINTEXT</text>
+      <text x="335" y="340" text-anchor="middle" fill="#90a6bc" font-family="Arial, Helvetica, sans-serif" font-size="24" letter-spacing="3">local cache leak</text>
+    </g>
+
+    <g transform="translate(138 476)">
+      <rect x="0" y="0" width="654" height="98" rx="18" fill="#0f1722" stroke="#405873" stroke-width="3"/>
+      <rect x="18" y="18" width="420" height="62" rx="12" fill="#1a2635"/>
+      <circle cx="480" cy="49" r="19" fill="#ffbe3d"/>
+      <circle cx="542" cy="49" r="19" fill="#ff6b57"/>
+      <circle cx="604" cy="49" r="19" fill="#47c1ad"/>
+      <g stroke="#304156" stroke-width="8" stroke-linecap="round">
+        <path d="M42 52H404"/>
+        <path d="M42 36H186"/>
+        <path d="M42 68H308"/>
+      </g>
+    </g>
+
+    <g transform="translate(730 428)">
+      <rect x="0" y="0" width="128" height="138" rx="18" fill="#121d2b" stroke="#425974" stroke-width="3"/>
+      <rect x="20" y="18" width="88" height="16" rx="8" fill="#233247"/>
+      <rect x="20" y="50" width="88" height="16" rx="8" fill="#233247"/>
+      <rect x="20" y="82" width="88" height="16" rx="8" fill="#233247"/>
+      <path d="M22 122H106" stroke="#ff6b57" stroke-width="8" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(252 476)">
+      <rect x="0" y="0" width="426" height="140" rx="24" fill="#1f2c3d" stroke="#5f7690" stroke-width="4"/>
+      <path d="M28 28H398V113C398 126 388 136 375 136H51C38 136 28 126 28 113Z" fill="#27384c"/>
+      <rect x="64" y="54" width="298" height="28" rx="14" fill="#0e1621"/>
+      <circle cx="363" cy="68" r="8" fill="#ff6b57"/>
+      <path d="M84 94H320" stroke="#40526a" stroke-width="10" stroke-linecap="round"/>
+      <path d="M205 140V236" stroke="#8ea5bb" stroke-width="12" stroke-linecap="round"/>
+      <rect x="98" y="216" width="214" height="44" rx="18" fill="#c9d5df" stroke="#7a8da2" stroke-width="4"/>
+      <text x="205" y="245" text-anchor="middle" fill="#1a2637" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="3">CACHE FILE</text>
+    </g>
+
+    <g transform="translate(664 584)">
+      <path d="M0 0C22 5 44 17 63 32C84 49 103 72 122 98" fill="none" stroke="#ff8a5b" stroke-width="10" stroke-linecap="round" stroke-dasharray="10 16" opacity="0.9"/>
+      <path d="M28 8C43 12 56 18 69 28" fill="none" stroke="#ffd08a" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+    </g>
+
+    <g transform="translate(742 580)">
+      <path d="M0 0C62 8 104 38 134 97C106 116 74 128 24 129C7 86 0 49 0 0Z" fill="#e4edf4"/>
+      <path d="M25 18C61 20 88 38 108 78C81 91 58 99 31 98C23 73 20 50 25 18Z" fill="#f8fbfd"/>
+      <circle cx="45" cy="61" r="10" fill="#162334"/>
+      <path d="M108 77L196 38C206 33 217 33 227 37L250 47C261 52 262 67 252 73L164 112C155 116 144 117 134 114L110 106C100 102 98 86 108 77Z" fill="#ffbe3d"/>
+      <circle cx="197" cy="74" r="16" fill="#162334"/>
+      <path d="M252 59L338 39" stroke="#f15a29" stroke-width="14" stroke-linecap="round"/>
+      <text x="46" y="64" text-anchor="middle" fill="#ffb955" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1.4">SQL</text>
+    </g>
+
+    <g transform="translate(880 538)">
+      <circle cx="96" cy="96" r="86" fill="url(#vinyl)" stroke="#3e556f" stroke-width="6"/>
+      <circle cx="96" cy="96" r="57" fill="none" stroke="#213045" stroke-width="3"/>
+      <circle cx="96" cy="96" r="34" fill="none" stroke="#213045" stroke-width="3"/>
+      <circle cx="96" cy="96" r="11" fill="#cbd6de"/>
+      <path d="M96 10A86 86 0 0 1 172 60" fill="none" stroke="#ff6b57" stroke-width="8" stroke-linecap="round"/>
+      <text x="96" y="103" text-anchor="middle" fill="#9ab1c6" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="3">SQLite</text>
+    </g>
+
+    <g transform="translate(880 690)">
+      <path d="M0 22H184" stroke="#ff6b57" stroke-width="12" stroke-linecap="round"/>
+      <path d="M20 46H160" stroke="#7f93a7" stroke-width="10" stroke-linecap="round"/>
+      <path d="M38 70H138" stroke="#7f93a7" stroke-width="10" stroke-linecap="round"/>
+      <text x="0" y="0" fill="#ffbe3d" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="2">local cache leaks SQL credentials</text>
+      <text x="0" y="104" fill="#9eb4c8" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="1.5">industrial software, local access, high impact</text>
+    </g>
+  </g>
+</svg>
