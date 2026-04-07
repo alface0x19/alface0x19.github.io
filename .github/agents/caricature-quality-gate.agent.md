@@ -38,6 +38,7 @@ Validar e corrigir diretamente a caricatura para que ela:
 - Contraste real de qualquer texto, label ou callout dentro do SVG.
 - Hierarquia visual e composição.
 - Uso moderado e reconhecível da persona: música, carros, mitologia ou humor seco.
+- Presença de pelo menos um marcador visual de persona que seja realmente identificável.
 - SVG limpo, válido e sem dependências externas.
 - Ausência de excesso de texto, logos dominantes, memética barata ou decoração gratuita.
 
@@ -56,7 +57,9 @@ Validar e corrigir diretamente a caricatura para que ela:
 - texto excessivo dentro do SVG;
 - texto com contraste fraco ou ilegivel sobre fundos luminosos, gradientes ou zonas detalhadas;
 - texto pequeno demais, fino demais ou com cor decorativa que prejudique leitura;
+- ausência de persona visual ou persona tão tímida que quase não se nota;
 - referências de persona atiradas para cima da imagem sem ligação ao tema;
+- símbolos vagos que tentam parecer persona mas podiam significar qualquer coisa;
 - desenho demasiado literal, demasiado stock ou demasiado meme;
 - formas que parecem placeholders em vez de ilustração pensada;
 - ficheiros SVG com markup desnecessariamente caótico.
@@ -68,6 +71,7 @@ Validar e corrigir diretamente a caricatura para que ela:
 - Não aprovar uma capa que só funcione em tamanho grande mas falhe como thumbnail.
 - Não aprovar um SVG que pareça um slide corporativo com clip-art.
 - Não aprovar uma caricatura sem qualquer traço reconhecível da persona do blog.
+- Não aprovar uma imagem tecnicamente correta mas genérica demais para este blog.
 
 ## Processo
 
@@ -77,7 +81,7 @@ Validar e corrigir diretamente a caricatura para que ela:
 4. Corrige diretamente o que prejudicar clareza, leitura, contraste ou personalidade.
 5. Reduz elementos se houver ruído visual.
 6. Se houver texto dentro do SVG, confirma que ele continua legivel em thumbnail e no artigo; se nao, aumenta contraste, simplifica o fundo ou reduz texto.
-7. Confirma que existe um traço de persona reconhecível, mas sem exagero.
+7. Confirma que existe pelo menos um traço de persona claramente reconhecível, mas sem exagero.
 8. Confirma que o SVG fica válido, autónomo e pronto a servir no site.
 9. Se ainda estiver claramente fraco depois de uma passagem séria, bloqueia.
 
@@ -89,7 +93,7 @@ A caricatura passa o gate quando:
 - a composição é clara e legível;
 - qualquer texto usado tem contraste suficiente e percebe-se sem esforço;
 - o estilo tem pulso editorial;
-- a persona existe mas não rouba a cena;
+- a persona existe, percebe-se sem esforço e não rouba a cena;
 - o SVG está pronto a usar sem remendos humanos.
 
 ## Modo de automação

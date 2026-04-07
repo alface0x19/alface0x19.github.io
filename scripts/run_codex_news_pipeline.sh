@@ -355,6 +355,7 @@ Objetivo visual:
 - interpretar a notícia de forma editorial, não fotográfica;
 - ser fiel ao ângulo e à tese que ficaram no draft final, não apenas ao headline bruto;
 - a imagem deve parecer uma caricatura conceptual da notícia, não um logo colado nem um screenshot;
+- a imagem tem de incluir pelo menos um marcador visual claro da persona do blog, reconhecível como musica, carros, mitologia ou humor seco;
 - privilegiar composição simples, legível e expressiva;
 - se houver texto dentro do SVG, ele tem de ser curto, ter contraste alto com o fundo e continuar legivel em ecrãs pequenos;
 - manter compatibilidade web: SVG puro, sem JavaScript, sem assets externos, sem fontes remotas;
@@ -437,7 +438,7 @@ Valida especialmente:
 - se a imagem está alinhada com a tese e o ângulo do draft final;
 - se a composição está legível e não demasiado confusa;
 - se qualquer texto, label ou callout dentro do SVG tem contraste suficiente e se lê sem esforço;
-- se a persona do blog está presente com moderação e de forma reconhecível;
+- se a persona do blog está presente de forma claramente reconhecível e não apenas decorativa;
 - se o resultado parece caricatura editorial e não stock art, meme ou slide genérico;
 - se o SVG está limpo, válido e sem dependências externas.
 Regras:
