@@ -39,6 +39,7 @@ created_post_path=""
 restorable_draft_source=""
 restorable_draft_target=""
 tracked_draft_prefix=""
+angle_brief_path=""
 declare -a tracked_draft_baseline=()
 
 cleanup_failed_run() {
@@ -49,6 +50,9 @@ cleanup_failed_run() {
   trap - EXIT
 
   if [[ $exit_code -eq 0 ]]; then
+    if [[ -n "$angle_brief_path" && -f "$angle_brief_path" ]]; then
+      rm -f "$angle_brief_path"
+    fi
     exit 0
   fi
 
@@ -78,6 +82,11 @@ cleanup_failed_run() {
       fi
     done
     shopt -u nullglob
+  fi
+
+  if [[ -n "$angle_brief_path" && -f "$angle_brief_path" ]]; then
+    rm -f "$angle_brief_path"
+    echo "Cleanup: removido brief temporario ${angle_brief_path}"
   fi
 
   exit "$exit_code"
@@ -153,7 +162,7 @@ resolve_repo_path() {
 find_existing_cover_image_abs() {
   local candidate
   shopt -s nullglob
-  for candidate in "$article_image_dir"/cover.png "$article_image_dir"/cover.jpg "$article_image_dir"/cover.jpeg "$article_image_dir"/cover.webp; do
+  for candidate in "$article_image_dir"/cover.svg "$article_image_dir"/cover.png "$article_image_dir"/cover.jpg "$article_image_dir"/cover.jpeg "$article_image_dir"/cover.webp; do
     if [[ -f "$candidate" ]]; then
       printf '%s\n' "$candidate"
       shopt -u nullglob
@@ -244,6 +253,167 @@ PY
 
   rm -f "$tmp_abs"
   return 0
+}
+
+generate_article_caricature() {
+  local queue_rel="$1"
+  local draft_rel="$2"
+  local target_rel="$3"
+  local cover_prompt=""
+
+  article_image_abs=""
+  article_image_rel=""
+  article_image_url=""
+
+  mkdir -p "$article_image_dir"
+
+  cover_prompt=$(cat <<EOF
+Lê o ficheiro $queue_rel e cria uma caricatura editorial em SVG para esta notícia.
+Grava exatamente o ficheiro em $target_rel.
+Usa a persona já definida neste repositório: tom humano, ligeiro humor seco e uma referência reconhecível a música, carros ou mitologia quando isso encaixar.
+Objetivo visual:
+- interpretar a notícia de forma editorial, não fotográfica;
+- a imagem deve parecer uma caricatura conceptual da notícia, não um logo colado nem um screenshot;
+- privilegiar composição simples, legível e expressiva;
+- manter compatibilidade web: SVG puro, sem JavaScript, sem assets externos, sem fontes remotas;
+- incluir título e subtítulo curtos dentro do SVG apenas se isso ajudar a leitura;
+- evitar excesso de texto e evitar copiar o headline completo.
+Restrições:
+- usa apenas um único ficheiro SVG;
+- não cries PNG, JPG, WebP nem ficheiros auxiliares;
+- não mudes o nome nem o diretório de saída;
+- se houver menção a vendors, produtos ou CVEs, preserva casing correto;
+- o SVG tem de ser válido e pronto a servir como cover local do post.
+Contexto:
+- draft alvo do artigo: $draft_rel
+- path final obrigatório da caricatura: $target_rel
+Quando terminares, a última linha não vazia tem de ser exatamente:
+CARICATURE_CREATED: $target_rel
+Se houver bloqueio real, a última linha não vazia tem de ser exatamente:
+BLOCKED: <motivo>
+EOF
+)
+
+  echo "A gerar caricatura editorial em ${target_rel}"
+  run_agent_expect_status news-caricaturist "$cover_prompt" "CARICATURE_CREATED: $target_rel"
+
+  article_image_abs="$repo_root/$target_rel"
+  article_image_rel="$target_rel"
+  article_image_url="{{ site.baseurl }}/${article_image_rel}"
+}
+
+generate_angle_brief() {
+  local queue_rel="$1"
+  local target_abs="$2"
+  local target_rel="$3"
+  local angle_prompt=""
+
+  angle_prompt=$(cat <<EOF
+Lê o ficheiro $queue_rel e cria um brief editorial curto para orientar o artigo.
+Grava exatamente esse brief em $target_abs.
+Objetivo:
+- identificar a tese principal;
+- fixar um ângulo claro e publicável;
+- resumir o que importa de facto;
+- dizer o que deve ficar de fora;
+- preservar explicitamente a persona do autor como parte obrigatória do artigo final.
+O brief deve ser curto, direto e útil para um writer.
+Estrutura recomendada:
+- headline da notícia em 1 linha;
+- tese editorial;
+- 3 a 5 factos-chave;
+- impacto prático;
+- ruído ou hype a cortar;
+- toque de persona obrigatório: como a voz do autor deve aparecer sem parecer forçada.
+Regras:
+- não escrevas o artigo completo;
+- não cries ficheiros paralelos;
+- não mudes o caminho de saída;
+- o brief tem de dizer explicitamente que a persona do autor é obrigatória e deve aparecer cedo no texto.
+Quando terminares, a última linha não vazia tem de ser exatamente:
+ANGLE_READY: $target_rel
+Se houver bloqueio real, a última linha não vazia tem de ser exatamente:
+BLOCKED: <motivo>
+EOF
+)
+
+  echo "A gerar brief editorial em ${target_rel}"
+  run_agent_expect_status angle-setter "$angle_prompt" "ANGLE_READY: $target_rel"
+}
+
+quality_gate_article_caricature() {
+  local queue_rel="$1"
+  local target_rel="$2"
+  local gate_prompt=""
+
+  gate_prompt=$(cat <<EOF
+Lê o ficheiro $queue_rel e faz o quality gate final da caricatura em $target_rel.
+Revê o SVG com exigência editorial e corrige diretamente o próprio ficheiro se precisares.
+Valida especialmente:
+- se a imagem representa o conflito central da notícia;
+- se a composição está legível e não demasiado confusa;
+- se a persona do blog está presente com moderação e de forma reconhecível;
+- se o resultado parece caricatura editorial e não stock art, meme ou slide genérico;
+- se o SVG está limpo, válido e sem dependências externas.
+Regras:
+- edita apenas o ficheiro SVG indicado;
+- não cries ficheiros alternativos;
+- não mudes o nome nem o diretório;
+- não mexas no artigo Markdown;
+- se a imagem estiver fraca mas recuperável, melhora-a diretamente;
+- se existir um bloqueio real que impeça uma capa minimamente publicável, trava o fluxo.
+Quando terminares com sucesso, a última linha não vazia tem de ser exatamente:
+CARICATURE_READY: $target_rel
+Se houver bloqueio real, a última linha não vazia tem de ser exatamente:
+BLOCKED: <motivo>
+EOF
+)
+
+  echo "A passar caricatura no quality gate: ${target_rel}"
+  run_agent_expect_status caricature-quality-gate "$gate_prompt" "CARICATURE_READY: $target_rel"
+}
+
+run_publication_readiness_gate() {
+  local draft_rel="$1"
+  local image_rel="$2"
+  local angle_rel="$3"
+  local readiness_prompt=""
+
+  readiness_prompt=$(cat <<EOF
+Faz o gate final de prontidão editorial desta publicação.
+Lê o ficheiro $draft_rel.
+Lê também o brief editorial em $angle_rel.
+EOF
+)
+
+  if [[ -n "$image_rel" ]]; then
+    readiness_prompt+=$'\n'
+    readiness_prompt+="Lê também a imagem local em $image_rel e valida se ela está coerente com o artigo e com o ângulo."$'\n'
+  fi
+
+  readiness_prompt+=$(cat <<EOF
+Missão:
+- garantir que artigo, ângulo e imagem contam a mesma história;
+- preservar e reforçar a persona do autor se ela estiver tímida;
+- confirmar que título, abertura e fecho têm pulso autoral;
+- corrigir diretamente o draft se houver desvio de foco, falta de clareza ou desalinhamento com o brief;
+- se existir imagem local, confirmar que ela encaixa no tema, no tom e na promessa do artigo.
+Regras:
+- a persona do autor nunca pode desaparecer; se o texto estiver limpo mas genérico, ainda não está pronto;
+- a voz do autor deve aparecer cedo e de forma reconhecível, com moderação;
+- não cries ficheiros novos;
+- edita no máximo o draft e, se necessário mesmo, a imagem local;
+- não mexas em slugs, datas nem caminhos;
+- se houver um bloqueio real de coerência editorial que não consigas corrigir numa passagem séria, trava o fluxo.
+Quando terminares com sucesso, a última linha não vazia tem de ser exatamente:
+PACKAGE_READY: $draft_rel
+Se houver bloqueio real, a última linha não vazia tem de ser exatamente:
+BLOCKED: <motivo>
+EOF
+)
+
+  echo "A passar no gate final de prontidao editorial"
+  run_agent_expect_status publication-readiness-gate "$readiness_prompt" "PACKAGE_READY: $draft_rel"
 }
 
 track_existing_drafts() {
@@ -497,6 +667,8 @@ article_image_dir="$repo_root/assets/images/posts/${post_date}-${slug}"
 article_image_abs=""
 article_image_rel=""
 article_image_url=""
+angle_brief_path="/tmp/${post_date}-${slug}-angle-$$.md"
+angle_brief_rel="$angle_brief_path"
 
 mkdir -p "$draft_dir"
 track_existing_drafts "$post_date"
@@ -507,8 +679,19 @@ if [[ -f "$post_path" ]]; then
   exit 1
 fi
 
+generate_angle_brief "$queue_file" "$angle_brief_path" "$angle_brief_rel"
+
+if [[ -z "$article_image_rel" ]]; then
+  generate_article_caricature "$queue_file" "_drafts/${post_date}-${slug}.md" "assets/images/posts/${post_date}-${slug}/cover.svg"
+fi
+
+if [[ "$article_image_rel" == assets/images/posts/${post_date}-${slug}/cover.svg ]]; then
+  quality_gate_article_caricature "$queue_file" "$article_image_rel"
+fi
+
 writer_prompt=$(cat <<EOF
-Lê o ficheiro $queue_file e cria um artigo novo em _drafts/${post_date}-${slug}.md.
+Lê o ficheiro $queue_file e o brief editorial em $angle_brief_rel.
+Cria um artigo novo em _drafts/${post_date}-${slug}.md.
 Usa o agente writer deste repositorio para transformar a noticia num artigo de opiniao em Markdown, com front matter Jekyll.
 Regras importantes:
 - corres em modo de automacao, por isso faz o trabalho e termina sem diagnosticos, sem sugestoes e sem pedir confirmacoes;
@@ -517,6 +700,8 @@ Regras importantes:
 - o texto tem de soar humano e natural;
 - privilegia leitura compacta: por defeito, aponta para 600 a 900 palavras;
 - chega a tese principal ate ao terceiro paragrafo;
+- segue o brief editorial sem soar mecanico;
+- a persona do autor e obrigatoria e deve aparecer cedo no artigo;
 - usa paragrafos curtos, em regra com 1 a 3 frases;
 - evita repetir a mesma ideia em abertura, desenvolvimento e fecho;
 - nao inventar factos;
@@ -595,6 +780,9 @@ normalize_generated_draft "$draft_path"
 
 echo "A passar no quality gate"
 run_agent_expect_status post-quality-gate "$quality_gate_prompt" "READY_TO_PUBLISH: _drafts/${post_date}-${slug}.md"
+normalize_generated_draft "$draft_path"
+
+run_publication_readiness_gate "_drafts/${post_date}-${slug}.md" "$article_image_rel" "$angle_brief_rel"
 normalize_generated_draft "$draft_path"
 
 if [[ "$publish" == "true" ]]; then
