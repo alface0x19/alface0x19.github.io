@@ -100,6 +100,25 @@ clear_dynamic_queue() {
   fi
 }
 
+clear_dynamic_drafts() {
+  local drafts_dir="$repo_root/_drafts"
+  local removed_any="false"
+  local draft_file
+
+  shopt -s nullglob
+  for draft_file in "$drafts_dir"/*.md; do
+    rm -f "$draft_file"
+    removed_any="true"
+  done
+  shopt -u nullglob
+
+  if [[ "$removed_any" == "true" ]]; then
+    echo "Drafts temporarios removidos de _drafts/."
+  else
+    echo "Nao havia drafts temporarios para remover."
+  fi
+}
+
 clear_python_cache() {
   local removed_any="false"
   local cache_dir
@@ -119,6 +138,7 @@ clear_python_cache() {
 
 clear_temporary_artifacts() {
   clear_dynamic_queue
+  clear_dynamic_drafts
   clear_python_cache
 }
 
@@ -155,7 +175,15 @@ validate_clean_finish() {
   done
   shopt -u nullglob
 
-  echo "Validacao final OK: worktree limpa, branch sincronizada e news_queue sem lixo dinamico."
+  shopt -s nullglob
+  for queue_file in "$repo_root"/_drafts/*.md; do
+    echo "Ainda existem drafts temporarios em _drafts/: ${queue_file#$repo_root/}"
+    shopt -u nullglob
+    return 1
+  done
+  shopt -u nullglob
+
+  echo "Validacao final OK: worktree limpa, branch sincronizada, news_queue limpa e _drafts sem temporarios."
 }
 
 published_any="false"

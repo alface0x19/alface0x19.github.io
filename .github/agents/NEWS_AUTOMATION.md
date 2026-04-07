@@ -54,6 +54,7 @@ bash scripts/run_codex_news_pipeline.sh --selected
 - `blog-editor`
 - `post-quality-gate`
   O resultado fica em `_drafts/`.
+  Se houver imagem local de capa disponível para o tema (ou se o pipeline a conseguir obter), o editor pode inseri-la no artigo.
 
 6. Se estiver tudo bem, publicas com:
 
@@ -69,6 +70,7 @@ bash scripts/run_codex_news_pipeline.sh --selected --publish
 
 7. Nesse modo, o script chama também o `main-publisher`.
    Antes disso, move o artigo terminado de `_drafts/` para `_posts/`.
+   Se o post referenciar imagens locais em `assets/images/posts/...`, esses assets seguem no mesmo commit.
 
 8. Se quiseres rever primeiro e publicar só depois, sem fazer o `mv` à mão, usa:
 
@@ -86,6 +88,7 @@ Nesse modo, o próprio script promove o draft para `_posts/` e chama o `main-pub
 - A curadoria e o pipeline travam temas já cobertos no blog; se a notícia bater num CVE ou tema já publicado, a automação procura alternativa ou aborta.
 - A curadoria tenta evitar viés para um único vendor de IA e procura diversidade real de ecossistema quando há boas opções.
 - Depois de publicar, a automação limpa a `news_queue/` dinâmica; fica apenas o `README.md`.
+- Depois de publicar, a automação limpa também drafts temporários em `_drafts/`.
 - O `post-quality-gate` faz a última revisão para evitar PT-BR, casing técnico errado e texto com cheiro a geração automática.
 - Um artigo só entra em `_posts/` quando já estiver terminado e pronto a publicar.
 - O writer/editor continuam a ser usados apenas onde faz sentido.

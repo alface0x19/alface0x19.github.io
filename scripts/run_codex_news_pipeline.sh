@@ -150,6 +150,102 @@ resolve_repo_path() {
   fi
 }
 
+find_existing_cover_image_abs() {
+  local candidate
+  shopt -s nullglob
+  for candidate in "$article_image_dir"/cover.png "$article_image_dir"/cover.jpg "$article_image_dir"/cover.jpeg "$article_image_dir"/cover.webp; do
+    if [[ -f "$candidate" ]]; then
+      printf '%s\n' "$candidate"
+      shopt -u nullglob
+      return 0
+    fi
+  done
+  shopt -u nullglob
+  return 1
+}
+
+prepare_article_cover_image() {
+  local source_url="$1"
+  local og_image_url=""
+  local extension=""
+  local target_abs=""
+  local tmp_abs=""
+
+  article_image_abs=""
+  article_image_rel=""
+  article_image_url=""
+
+  if article_image_abs="$(find_existing_cover_image_abs)"; then
+    article_image_rel="${article_image_abs#$repo_root/}"
+    article_image_url="{{ site.baseurl }}/${article_image_rel}"
+    echo "Imagem de capa existente encontrada: $article_image_rel"
+    return 0
+  fi
+
+  if [[ -z "$source_url" ]]; then
+    return 0
+  fi
+
+  if ! command -v curl >/dev/null 2>&1; then
+    return 0
+  fi
+
+  og_image_url="$(python3 - "$source_url" <<'PY'
+import re
+import sys
+import urllib.request
+
+url = sys.argv[1]
+try:
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=20) as resp:
+        html = resp.read().decode("utf-8", errors="ignore")
+except Exception:
+    print("")
+    raise SystemExit(0)
+
+patterns = [
+    r'<meta[^>]+property=["\\\']og:image["\\\'][^>]+content=["\\\']([^"\\\']+)["\\\']',
+    r'<meta[^>]+content=["\\\']([^"\\\']+)["\\\'][^>]+property=["\\\']og:image["\\\']',
+]
+for p in patterns:
+    m = re.search(p, html, flags=re.IGNORECASE)
+    if m:
+        print(m.group(1).strip())
+        raise SystemExit(0)
+print("")
+PY
+)"
+
+  if [[ -z "$og_image_url" ]]; then
+    return 0
+  fi
+
+  case "${og_image_url%%\?*}" in
+    *.png|*.PNG) extension="png" ;;
+    *.jpg|*.JPG) extension="jpg" ;;
+    *.jpeg|*.JPEG) extension="jpeg" ;;
+    *.webp|*.WEBP) extension="webp" ;;
+    *) return 0 ;;
+  esac
+
+  mkdir -p "$article_image_dir"
+  target_abs="$article_image_dir/cover.$extension"
+  tmp_abs="$target_abs.tmp"
+
+  if curl -LfsS --max-time 30 "$og_image_url" -o "$tmp_abs" 2>/dev/null; then
+    mv "$tmp_abs" "$target_abs"
+    article_image_abs="$target_abs"
+    article_image_rel="${article_image_abs#$repo_root/}"
+    article_image_url="{{ site.baseurl }}/${article_image_rel}"
+    echo "Imagem de capa obtida automaticamente: $article_image_rel"
+    return 0
+  fi
+
+  rm -f "$tmp_abs"
+  return 0
+}
+
 track_existing_drafts() {
   local prefix="$1"
   local candidate
@@ -384,6 +480,7 @@ PY
 
 title="$(extract_front_matter_value "title")"
 slug_hint="$(extract_front_matter_value "slug_hint")"
+article_url="$(extract_front_matter_value "article_url")"
 
 if [[ -n "$custom_slug" ]]; then
   slug="$custom_slug"
@@ -396,9 +493,14 @@ fi
 draft_dir="$repo_root/_drafts"
 draft_path="$draft_dir/${post_date}-${slug}.md"
 post_path="$repo_root/_posts/${post_date}-${slug}.md"
+article_image_dir="$repo_root/assets/images/posts/${post_date}-${slug}"
+article_image_abs=""
+article_image_rel=""
+article_image_url=""
 
 mkdir -p "$draft_dir"
 track_existing_drafts "$post_date"
+prepare_article_cover_image "$article_url"
 
 if [[ -f "$post_path" ]]; then
   echo "O post ja existe: $post_path"
@@ -443,6 +545,14 @@ Regras importantes:
 EOF
 )
 
+if [[ -n "$article_image_rel" ]]; then
+  editor_prompt+=$'\n'
+  editor_prompt+="Imagem opcional disponivel: ${article_image_rel}"$'\n'
+  editor_prompt+="Se essa imagem ajudar a leitura, insere exatamente uma imagem no artigo (na abertura ou no primeiro terco), usando este caminho e sem inventar outro:"$'\n'
+  editor_prompt+="![Imagem de capa do artigo](${article_image_url})"$'\n'
+  editor_prompt+="Nao dupliques a imagem e nao uses HTML."
+fi
+
 quality_gate_prompt=$(cat <<EOF
 Faz a ultima revisao de qualidade ao ficheiro _drafts/${post_date}-${slug}.md.
 Corrige diretamente qualquer problema residual de portugues de Portugal, casing de nomes tecnicos, titulo artificial, frases com cheiro a traducao ou jargao mal explicado.
@@ -466,8 +576,9 @@ Regras importantes:
 - usa a identidade Git ja configurada no ambiente; nao pares para pedir confirmacao nem para validar manualmente o utilizador;
 - nao incluas ficheiros de news_queue, SHORTLIST, _drafts ou quaisquer alteracoes nao relacionadas;
 - se houver alteracoes nao relacionadas, deixa-as fora do commit e continua com a publicacao do post;
+- se o artigo referenciar um asset de imagem em assets/images/posts/${post_date}-${slug}/, inclui esse asset no mesmo commit;
 - a mensagem de commit deve ser curta, especifica e focada no post;
-- faz git add apenas do post publicado, depois faz git commit usando pathspec desse post para nao arrastar outras alteracoes staged, e por fim git push origin main;
+- faz git add e git commit por pathspec apenas do post e dos assets de imagem usados pelo post, para nao arrastar outras alteracoes staged;
 - quando acabares, termina imediatamente;
 - a ultima linha da tua resposta tem de ser exatamente: PUBLISHED: _posts/${post_date}-${slug}.md
 - se ficares genuinamente bloqueado, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
