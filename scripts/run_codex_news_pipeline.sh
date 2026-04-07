@@ -93,6 +93,8 @@ cleanup_failed_run() {
     echo "Cleanup: removido brief temporario ${angle_brief_path}"
   fi
 
+  cleanup_unused_article_images
+
   exit "$exit_code"
 }
 
@@ -200,6 +202,54 @@ find_existing_cover_image_abs() {
   done
   shopt -u nullglob
   return 1
+}
+
+article_image_is_referenced_in() {
+  local content_path="$1"
+
+  if [[ -z "$article_image_rel" || ! -f "$content_path" ]]; then
+    return 1
+  fi
+
+  if grep -Fq "$article_image_rel" "$content_path"; then
+    return 0
+  fi
+
+  if [[ -n "$article_image_url" ]] && grep -Fq "$article_image_url" "$content_path"; then
+    return 0
+  fi
+
+  return 1
+}
+
+cleanup_unused_article_images() {
+  local candidate
+  local referenced="false"
+
+  if [[ -z "${article_image_dir:-}" || ! -d "$article_image_dir" ]]; then
+    return 0
+  fi
+
+  if article_image_is_referenced_in "$draft_path"; then
+    referenced="true"
+  elif article_image_is_referenced_in "$post_path"; then
+    referenced="true"
+  fi
+
+  if [[ "$referenced" == "true" ]]; then
+    return 0
+  fi
+
+  shopt -s nullglob
+  for candidate in "$article_image_dir"/cover.svg "$article_image_dir"/cover.png "$article_image_dir"/cover.jpg "$article_image_dir"/cover.jpeg "$article_image_dir"/cover.webp; do
+    if [[ -f "$candidate" ]]; then
+      rm -f "$candidate"
+      echo "Cleanup: removida imagem nao usada ${candidate#$repo_root/}"
+    fi
+  done
+  shopt -u nullglob
+
+  rmdir "$article_image_dir" 2>/dev/null || true
 }
 
 prepare_article_cover_image() {
@@ -822,11 +872,13 @@ if [[ "$publish" == "true" ]]; then
   fi
   mv "$draft_path" "$post_path"
   created_post_path="$post_path"
+  cleanup_unused_article_images
   echo "Draft movido para _posts/${post_date}-${slug}.md"
   echo "A publicar para main"
   publish_to_git "_posts/${post_date}-${slug}.md" "assets/images/posts/${post_date}-${slug}"
   created_post_path=""
 else
+  cleanup_unused_article_images
   echo "Draft criado em _drafts/${post_date}-${slug}.md"
   echo "Se quiseres publicar de seguida, corre este comando com --publish."
 fi
