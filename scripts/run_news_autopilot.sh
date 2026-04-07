@@ -20,8 +20,8 @@ fi
 
 cd "$repo_root"
 
-source "$repo_root/scripts/lib/copilot_cli.sh"
-ensure_copilot_cli || exit 1
+source "$repo_root/scripts/lib/codex_cli.sh"
+ensure_codex_cli || exit 1
 
 model=""
 while [[ $# -gt 0 ]]; do
@@ -100,6 +100,28 @@ clear_dynamic_queue() {
   fi
 }
 
+clear_python_cache() {
+  local removed_any="false"
+  local cache_dir
+
+  while IFS= read -r cache_dir; do
+    [[ -z "$cache_dir" ]] && continue
+    rm -rf "$cache_dir"
+    removed_any="true"
+  done < <(find "$repo_root/scripts" -type d -name __pycache__ -print 2>/dev/null || true)
+
+  if [[ "$removed_any" == "true" ]]; then
+    echo "Caches Python temporarias removidas."
+  else
+    echo "Nao havia caches Python temporarias para remover."
+  fi
+}
+
+clear_temporary_artifacts() {
+  clear_dynamic_queue
+  clear_python_cache
+}
+
 validate_clean_finish() {
   local status
   local branch_status
@@ -144,11 +166,13 @@ cleanup_after_run() {
 
   trap - EXIT
 
-  if [[ "$published_any" == "true" ]]; then
-    echo "[4/5] Limpar fila local"
-    if ! clear_dynamic_queue; then
-      final_code=1
-    fi
+  if [[ $exit_code -eq 0 && "$published_any" == "true" ]]; then
+    echo "[4/5] Limpar temporarios locais"
+  else
+    echo "[cleanup] Limpar temporarios"
+  fi
+  if ! clear_temporary_artifacts; then
+    final_code=1
   fi
 
   if [[ $exit_code -eq 0 && "$published_any" == "true" ]]; then
@@ -164,7 +188,9 @@ cleanup_after_run() {
 trap cleanup_after_run EXIT
 
 ensure_clean_start
-bash scripts/ensure_github_identity.sh
+
+echo "Preparar temporarios locais"
+clear_temporary_artifacts
 
 echo "[1/4] Recolher noticias"
 bash scripts/collect_news_queue.sh
@@ -202,7 +228,7 @@ publish_one() {
   if [[ -n "$model" ]]; then
     pipeline_args+=(--model "$model")
   fi
-  bash scripts/run_copilot_news_pipeline.sh "${pipeline_args[@]}"
+  bash scripts/run_codex_news_pipeline.sh "${pipeline_args[@]}"
   published_any="true"
 }
 

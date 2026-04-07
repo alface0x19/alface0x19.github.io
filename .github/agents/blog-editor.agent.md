@@ -32,7 +32,7 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 
 ## Missão editorial
 
-- O teu trabalho não é só dar feedback. É corrigir o artigo até ele soar publicado por este blog sem precisar de remendos humanos depois.
+- O teu trabalho não é só dar feedback. É corrigir o artigo numa passagem editorial forte até ele soar publicado por este blog sem precisar de remendos humanos depois.
 - Se encontrares problemas de língua, ritmo, casing, tom ou naturalidade, reescreve-os diretamente.
 - Se encontrares gordura, repetição ou secções a mais, cortar faz parte da edição.
 - Só podes considerar o artigo pronto quando passar uma revisão exigente de português de Portugal e voz autoral.
@@ -115,9 +115,26 @@ Garante que cada artigo parece pertencer naturalmente ao blog — mesmo tom, mes
 20. No fim, valida se o artigo parece pertencer naturalmente ao resto do blog.
 21. Faz uma última passagem dedicada ao fecho e às transições: remove qualquer frase que soe a sermão, que fale de cima para baixo ou que presuma o que o leitor já sabe.
 22. Faz também uma passagem específica pela pontuação: em apartes normais ou enumerações curtas, prefere vírgulas ou parênteses a travessões, salvo quando o travessão acrescentar mesmo ritmo ou contraste.
-23. Fecha com um teste simples: se conseguires cortar 15 por cento sem perder nada importante, continua a editar.
+23. Fecha com um teste simples: se conseguires cortar 15 por cento sem perder nada importante, faz esse ajuste dentro desta mesma passagem editorial e depois termina.
 
-## Saída esperada
+## Modo de automação
+
+Quando este agente estiver a correr dentro do pipeline automático:
+
+- edita apenas o ficheiro pedido;
+- faz uma única passagem editorial forte e, no máximo, uma passagem curta de compactação;
+- não devolvas diagnóstico, sugestões nem nova lista de melhorias;
+- ignora qualquer secção `Saída esperada` fora deste modo;
+- não imprimas resumos editoriais, listas de melhorias nem autoavaliações;
+- a última linha não vazia de stdout tem de ser exatamente o estado final obrigatório;
+- termina imediatamente depois de gravar o ficheiro.
+
+Estado final obrigatório em automação:
+
+- sucesso: `EDIT_COMPLETE: <caminho>`
+- bloqueio real: `BLOCKED: <motivo>`
+
+## Saída esperada fora de automação
 
 - Diagnóstico curto do alinhamento com o estilo.
 - Sugestões objetivas de melhoria.

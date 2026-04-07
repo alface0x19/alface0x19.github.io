@@ -7,10 +7,15 @@ if [[ -z "$repo_root" ]]; then
   exit 1
 fi
 
+source "$repo_root/scripts/lib/codex_cli.sh"
+
 schedule="${1:-17 8,13,19 * * *}"
-copilot_bin="${COPILOT_BIN:-$(command -v copilot 2>/dev/null || true)}"
-if [[ -n "$copilot_bin" ]]; then
-  cron_command="cd $repo_root && COPILOT_BIN=$copilot_bin bash scripts/run_news_autopilot.sh >> /tmp/alface0x19-news-cron.log 2>&1"
+codex_bin="${CODEX_BIN:-}"
+if [[ -z "$codex_bin" ]]; then
+  codex_bin="$(resolve_codex_cli)"
+fi
+if [[ -n "$codex_bin" ]]; then
+  cron_command="cd $repo_root && CODEX_BIN=$codex_bin bash scripts/run_news_autopilot.sh >> /tmp/alface0x19-news-cron.log 2>&1"
 else
   cron_command="cd $repo_root && bash scripts/run_news_autopilot.sh >> /tmp/alface0x19-news-cron.log 2>&1"
 fi

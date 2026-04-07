@@ -4,15 +4,15 @@ set -euo pipefail
 usage() {
   cat <<'EOF'
 Usage:
-  scripts/run_copilot_news_pipeline.sh <queue-file> [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
-  scripts/run_copilot_news_pipeline.sh --selected [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
-  scripts/run_copilot_news_pipeline.sh --publish-draft _drafts/YYYY-MM-DD-slug.md [--model model-name]
+  scripts/run_codex_news_pipeline.sh <queue-file> [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
+  scripts/run_codex_news_pipeline.sh --selected [--publish] [--date YYYY-MM-DD] [--slug custom-slug] [--model model-name]
+  scripts/run_codex_news_pipeline.sh --publish-draft _drafts/YYYY-MM-DD-slug.md [--model model-name]
 
 Examples:
-  scripts/run_copilot_news_pipeline.sh news_queue/2026-04-02-sample.md
-  scripts/run_copilot_news_pipeline.sh news_queue/2026-04-02-sample.md --publish
-  scripts/run_copilot_news_pipeline.sh --selected
-  scripts/run_copilot_news_pipeline.sh --publish-draft _drafts/2026-04-02-sample.md
+  scripts/run_codex_news_pipeline.sh news_queue/2026-04-02-sample.md
+  scripts/run_codex_news_pipeline.sh news_queue/2026-04-02-sample.md --publish
+  scripts/run_codex_news_pipeline.sh --selected
+  scripts/run_codex_news_pipeline.sh --publish-draft _drafts/2026-04-02-sample.md
 EOF
 }
 
@@ -32,8 +32,58 @@ if [[ -z "$repo_root" ]]; then
   exit 1
 fi
 
-source "$repo_root/scripts/lib/copilot_cli.sh"
-ensure_copilot_cli || exit 1
+source "$repo_root/scripts/lib/codex_cli.sh"
+ensure_codex_cli || exit 1
+
+created_post_path=""
+restorable_draft_source=""
+restorable_draft_target=""
+tracked_draft_prefix=""
+declare -a tracked_draft_baseline=()
+
+cleanup_failed_run() {
+  local exit_code=$?
+  local candidate
+  local known
+
+  trap - EXIT
+
+  if [[ $exit_code -eq 0 ]]; then
+    exit 0
+  fi
+
+  if [[ -n "$created_post_path" && -f "$created_post_path" ]]; then
+    rm -f "$created_post_path"
+    echo "Cleanup: removido post temporario ${created_post_path#$repo_root/}"
+  fi
+
+  if [[ -n "$restorable_draft_source" && -n "$restorable_draft_target" && -f "$restorable_draft_target" && ! -f "$restorable_draft_source" ]]; then
+    mv "$restorable_draft_target" "$restorable_draft_source"
+    echo "Cleanup: draft restaurado em ${restorable_draft_source#$repo_root/}"
+  fi
+
+  if [[ -n "$tracked_draft_prefix" ]]; then
+    shopt -s nullglob
+    for candidate in "$draft_dir"/"${tracked_draft_prefix}"*.md; do
+      known="false"
+      for baseline in "${tracked_draft_baseline[@]}"; do
+        if [[ "$candidate" == "$baseline" ]]; then
+          known="true"
+          break
+        fi
+      done
+      if [[ "$known" == "false" ]]; then
+        rm -f "$candidate"
+        echo "Cleanup: removido draft temporario ${candidate#$repo_root/}"
+      fi
+    done
+    shopt -u nullglob
+  fi
+
+  exit "$exit_code"
+}
+
+trap cleanup_failed_run EXIT
 
 queue_file=""
 use_selected="false"
@@ -98,6 +148,20 @@ resolve_repo_path() {
   else
     printf '%s\n' "$repo_root/$input_path"
   fi
+}
+
+track_existing_drafts() {
+  local prefix="$1"
+  local candidate
+
+  tracked_draft_prefix="$prefix"
+  tracked_draft_baseline=()
+
+  shopt -s nullglob
+  for candidate in "$draft_dir"/"${tracked_draft_prefix}"*.md; do
+    tracked_draft_baseline+=("$candidate")
+  done
+  shopt -u nullglob
 }
 
 normalize_generated_draft() {
@@ -175,32 +239,75 @@ publish_existing_draft() {
     exit 1
   fi
 
+  restorable_draft_source="$draft_abs"
+  restorable_draft_target="$post_abs"
   mv "$draft_abs" "$post_abs"
+  created_post_path="$post_abs"
   echo "Draft movido para $post_rel"
 
   publisher_prompt=$(cat <<EOF
 Publica o artigo ja validado em $post_rel.
 Analisa o git status, inclui apenas os ficheiros relevantes desta publicacao e faz commit e push para main.
 Se houver alteracoes nao relacionadas, deixa-as de fora.
+Regras importantes:
+- corres em modo de automacao: nao pecas confirmacao humana, nao dês relatorio longo e nao deixes texto depois do estado final;
+- usa a identidade Git ja configurada no ambiente;
+- nao incluas news_queue, SHORTLIST, _drafts ou alteracoes nao relacionadas;
+- faz git add apenas do post alvo, depois git commit com pathspec desse post e por fim git push origin main;
+- quando acabares, termina imediatamente;
+- a ultima linha da tua resposta tem de ser exatamente: PUBLISHED: $post_rel
+- se ficares genuinamente bloqueado, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
 EOF
 )
 
   echo "A publicar para main"
-  run_copilot -s "${copilot_args[@]}" --agent=main-publisher --prompt "$publisher_prompt"
+  run_agent_expect_status main-publisher "$publisher_prompt" "PUBLISHED: $post_rel"
+  created_post_path=""
+  restorable_draft_source=""
+  restorable_draft_target=""
 }
 
-copilot_args=(
-  --allow-all-tools
-  --add-dir "$repo_root"
-  --no-ask-user
-)
+run_agent() {
+  local agent_name="$1"
+  local agent_prompt="$2"
 
-if [[ -n "$model" ]]; then
-  copilot_args+=(--model "$model")
-fi
+  if [[ -n "$model" ]]; then
+    run_codex_agent --repo-root "$repo_root" --agent "$agent_name" --model "$model" --prompt "$agent_prompt"
+  else
+    run_codex_agent --repo-root "$repo_root" --agent "$agent_name" --prompt "$agent_prompt"
+  fi
+}
+
+run_agent_expect_status() {
+  local agent_name="$1"
+  local agent_prompt="$2"
+  local expected_status="$3"
+  local output=""
+  local last_nonempty=""
+
+  output="$(run_agent "$agent_name" "$agent_prompt")"
+  printf '%s\n' "$output"
+
+  last_nonempty="$(printf '%s\n' "$output" | awk 'NF { line=$0 } END { print line }')"
+
+  if [[ "$last_nonempty" == BLOCKED:* ]] || printf '%s\n' "$output" | grep -Eq '^BLOCKED: '; then
+    echo "O agente $agent_name devolveu BLOCKED e o fluxo foi interrompido."
+    exit 1
+  fi
+
+  if [[ "$last_nonempty" != "$expected_status" ]]; then
+    echo "O agente $agent_name nao devolveu o estado esperado."
+    echo "Esperado: $expected_status"
+    if [[ -n "$last_nonempty" ]]; then
+      echo "Ultima linha nao vazia recebida: $last_nonempty"
+    else
+      echo "Nao foi recebida nenhuma linha final de estado."
+    fi
+    exit 1
+  fi
+}
 
 if [[ -n "$publish_draft_input" ]]; then
-  bash scripts/ensure_github_identity.sh
   publish_existing_draft "$publish_draft_input"
   exit 0
 fi
@@ -291,6 +398,7 @@ draft_path="$draft_dir/${post_date}-${slug}.md"
 post_path="$repo_root/_posts/${post_date}-${slug}.md"
 
 mkdir -p "$draft_dir"
+track_existing_drafts "$post_date"
 
 if [[ -f "$post_path" ]]; then
   echo "O post ja existe: $post_path"
@@ -301,6 +409,7 @@ writer_prompt=$(cat <<EOF
 Lê o ficheiro $queue_file e cria um artigo novo em _drafts/${post_date}-${slug}.md.
 Usa o agente writer deste repositorio para transformar a noticia num artigo de opiniao em Markdown, com front matter Jekyll.
 Regras importantes:
+- corres em modo de automacao, por isso faz o trabalho e termina sem diagnosticos, sem sugestoes e sem pedir confirmacoes;
 - tens de gravar exatamente no caminho _drafts/${post_date}-${slug}.md;
 - nao podes inventar outro nome de ficheiro, nao podes renomear, nao podes traduzir o slug e nao podes introduzir Unicode no nome;
 - o texto tem de soar humano e natural;
@@ -312,7 +421,10 @@ Regras importantes:
 - explicar acronimos e chavoes no proprio texto;
 - pode usar humor, musica, carros ou mitologia com moderacao, so quando fizer sentido;
 - manter um angulo claro e um tom alinhado com este blog.
-No fim, grava mesmo o ficheiro no caminho indicado.
+- faz no maximo uma passagem de escrita e uma passagem curta de compactacao;
+- quando o ficheiro estiver gravado e fechado, termina imediatamente;
+- a ultima linha da tua resposta tem de ser exatamente: DRAFT_WRITTEN: _drafts/${post_date}-${slug}.md
+- se ficares genuinamente bloqueado, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
 EOF
 )
 
@@ -321,7 +433,13 @@ Revê e melhora o ficheiro _drafts/${post_date}-${slug}.md.
 Polir o texto para ficar mais humano, natural e alinhado com a voz do blog.
 Explicar acronimos e chavoes quando aparecerem, cortar frases demasiado artificiais, remover gordura e redundancia e manter o texto pronto a publicar.
 Se o artigo estiver comprido para o valor que entrega, encurta sem perder voz.
-Grava as alteracoes no mesmo ficheiro.
+Regras importantes:
+- corres em modo de automacao: nao dês diagnostico, nao deixes sugestoes e nao abras novas rondas de revisao;
+- faz uma unica passagem editorial forte e, no maximo, uma passagem curta de compactacao;
+- usa a heuristica de compactacao apenas uma vez; se o texto ja estiver suficientemente denso, para;
+- grava as alteracoes no mesmo ficheiro e termina logo de seguida;
+- a ultima linha da tua resposta tem de ser exatamente: EDIT_COMPLETE: _drafts/${post_date}-${slug}.md
+- se ficares genuinamente bloqueado, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
 EOF
 )
 
@@ -330,30 +448,42 @@ Faz a ultima revisao de qualidade ao ficheiro _drafts/${post_date}-${slug}.md.
 Corrige diretamente qualquer problema residual de portugues de Portugal, casing de nomes tecnicos, titulo artificial, frases com cheiro a traducao ou jargao mal explicado.
 Se ainda houver repeticao, paragrafo inchado ou contexto a mais, corta.
 So considera o artigo pronto se estiver mesmo publicavel sem remendos humanos depois.
-Grava as alteracoes no mesmo ficheiro.
+Regras importantes:
+- corres em modo de automacao: nao dês relatorio longo, nao proposes nova ronda e nao reescrevas por perfeccionismo;
+- faz uma unica passagem de quality gate e, se ficar publicavel, para;
+- usa a regra de compactacao apenas como heuristica numa unica passagem, nao como motivo para iteracao infinita;
+- grava as alteracoes no mesmo ficheiro e termina logo de seguida;
+- se o artigo ficar pronto, a ultima linha da tua resposta tem de ser exatamente: READY_TO_PUBLISH: _drafts/${post_date}-${slug}.md
+- se encontrares um bloqueio real que impeça publicacao automatica, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
 EOF
 )
 
 publisher_prompt=$(cat <<EOF
-Publica o artigo acabado de criar.
-Analisa o git status, inclui apenas os ficheiros relevantes deste fluxo e faz commit e push para main.
+Publica o artigo acabado de criar em modo totalmente automatico.
+Analisa o git status, inclui apenas os ficheiros relevantes desta publicacao e faz commit e push para main.
 O ficheiro principal a publicar e _posts/${post_date}-${slug}.md.
-Se houver alteracoes nao relacionadas, deixa-as de fora.
+Regras importantes:
+- usa a identidade Git ja configurada no ambiente; nao pares para pedir confirmacao nem para validar manualmente o utilizador;
+- nao incluas ficheiros de news_queue, SHORTLIST, _drafts ou quaisquer alteracoes nao relacionadas;
+- se houver alteracoes nao relacionadas, deixa-as fora do commit e continua com a publicacao do post;
+- a mensagem de commit deve ser curta, especifica e focada no post;
+- faz git add apenas do post publicado, depois faz git commit usando pathspec desse post para nao arrastar outras alteracoes staged, e por fim git push origin main;
+- quando acabares, termina imediatamente;
+- a ultima linha da tua resposta tem de ser exatamente: PUBLISHED: _posts/${post_date}-${slug}.md
+- se ficares genuinamente bloqueado, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
 EOF
 )
 
-bash scripts/ensure_github_identity.sh
-
 echo "A criar draft em _drafts/${post_date}-${slug}.md"
-run_copilot -s "${copilot_args[@]}" --agent=tech-news-opinion-writer --prompt "$writer_prompt"
+run_agent_expect_status tech-news-opinion-writer "$writer_prompt" "DRAFT_WRITTEN: _drafts/${post_date}-${slug}.md"
 normalize_generated_draft "$draft_path"
 
 echo "A rever draft com o editor"
-run_copilot -s "${copilot_args[@]}" --agent=blog-editor --prompt "$editor_prompt"
+run_agent_expect_status blog-editor "$editor_prompt" "EDIT_COMPLETE: _drafts/${post_date}-${slug}.md"
 normalize_generated_draft "$draft_path"
 
 echo "A passar no quality gate"
-run_copilot -s "${copilot_args[@]}" --agent=post-quality-gate --prompt "$quality_gate_prompt"
+run_agent_expect_status post-quality-gate "$quality_gate_prompt" "READY_TO_PUBLISH: _drafts/${post_date}-${slug}.md"
 normalize_generated_draft "$draft_path"
 
 if [[ "$publish" == "true" ]]; then
@@ -362,9 +492,11 @@ if [[ "$publish" == "true" ]]; then
     exit 1
   fi
   mv "$draft_path" "$post_path"
+  created_post_path="$post_path"
   echo "Draft movido para _posts/${post_date}-${slug}.md"
   echo "A publicar para main"
-  run_copilot -s "${copilot_args[@]}" --agent=main-publisher --prompt "$publisher_prompt"
+  run_agent_expect_status main-publisher "$publisher_prompt" "PUBLISHED: _posts/${post_date}-${slug}.md"
+  created_post_path=""
 else
   echo "Draft criado em _drafts/${post_date}-${slug}.md"
   echo "Se quiseres publicar de seguida, corre este comando com --publish."

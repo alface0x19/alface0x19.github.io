@@ -22,16 +22,16 @@ Publicar apenas o que está realmente pronto, com segurança e contexto suficien
 - evitar incluir trabalho não relacionado.
 - assumir que o artigo já passou pelo `post-quality-gate` e travar a publicação se isso não parecer verdade.
 - assumir que o artigo já foi promovido de `_drafts/` para `_posts/` antes de entrar em publicação.
-- assumir que a conta/autoria pretendida para este repo e `alface0x19`, salvo instrução explícita em contrário.
+- usar a identidade Git já configurada no ambiente atual, salvo instrução explícita em contrário.
 
 ## Regras de comportamento
 
 - Assume que a branch de destino é `main`, exceto se o utilizador disser o contrário.
 - Trabalha de forma conservadora: primeiro inspeciona, depois publica.
 - Mantém o processo legível e previsível.
-- Se o estado do repositório não estiver claro, explica o problema antes de avançar.
+- Se o estado do repositório não estiver claro, falha com um motivo objetivo e curto, sem entrar em modo conversacional.
 - O commit deve refletir apenas o trabalho que pertence à publicação atual.
-- Antes de publicar, confirma que a identidade GitHub/Git usada para este repo continua alinhada com `alface0x19`.
+- Usa a identidade Git já configurada no ambiente. Só deves bloquear se `git commit` ou `git push` falharem por falta de identidade ou permissões.
 
 ## Não fazer
 
@@ -47,16 +47,16 @@ Publicar apenas o que está realmente pronto, com segurança e contexto suficien
 1. Corre `git status --short` para perceber o estado atual.
 2. Identifica os ficheiros alterados que pertencem à publicação atual, por exemplo:
    - novos posts em `_posts/`;
-   - ficheiros em `news_queue/` se fizerem parte do fluxo que o utilizador quer guardar;
    - scripts ou config diretamente relacionados com a automação do blog.
+   - por defeito, não incluir ficheiros dinâmicos em `news_queue/`, `news_queue/SHORTLIST.md` nem ficheiros em `_drafts/` no commit final.
    - não incluir drafts ainda presentes em `_drafts/` no commit final, exceto se o utilizador pedir explicitamente.
 3. Lê rapidamente os ficheiros principais alterados para confirmar que fazem sentido publicar.
 4. Se existirem alterações não relacionadas, deixa-as de fora do commit.
 5. Gera uma mensagem de commit curta, específica e natural.
 6. Faz `git add` apenas dos ficheiros certos.
-7. Faz `git commit`.
+7. Faz `git commit` apenas com pathspec dos ficheiros alvo desta publicação, para não arrastar alterações staged não relacionadas. Se o post alvo for `_posts/foo.md`, prefere um padrão como `git commit -m "..." -- _posts/foo.md`.
 8. Faz `git push origin main`.
-9. No fim, resume ao utilizador o que foi publicado.
+9. No fim, devolve um resumo curto e terminal do que foi publicado.
 
 ## Estilo da mensagem de commit
 
@@ -78,7 +78,24 @@ Antes do commit final, valida que:
 - acrónimos e chavões importantes já têm contexto suficiente no texto.
 - existe uma secção curta de fontes no fim do artigo quando o conteúdo nasce de notícias ou reporting externo.
 
-## Saída esperada
+## Modo de automação
+
+Quando este agente estiver a correr dentro do pipeline automático:
+
+- trabalha de forma não-interativa;
+- publica apenas o post alvo pedido no prompt, deixando alterações não relacionadas de fora;
+- não peças confirmação humana para identidade Git, staging ou push;
+- ignora qualquer secção `Saída esperada` fora deste modo;
+- não imprimas relatórios longos nem texto depois do estado final;
+- a última linha não vazia de stdout tem de ser exatamente o estado final obrigatório;
+- se conseguires publicar, termina logo após o push.
+
+Estado final obrigatório em automação:
+
+- sucesso: `PUBLISHED: <caminho>`
+- bloqueio real: `BLOCKED: <motivo>`
+
+## Saída esperada fora de automação
 
 - Publicação limpa para `main`.
 - Resumo curto com:

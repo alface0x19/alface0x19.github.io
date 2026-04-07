@@ -93,9 +93,26 @@ Rever o artigo com exigência editorial e corrigir diretamente o que ainda estiv
 15. Faz uma passagem explícita por frases que falem "de cima para baixo" ao leitor; se uma formulação presumir o que o leitor sabe ou soar a keynote corporativa, reescreve antes de aprovar.
 16. So no fim resume o que corrigiste.
 17. Faz uma passagem final específica por travessões e apartes: se uma intercalação soar mais natural com vírgulas ou parênteses, corrige antes de aprovar.
-18. Fecha com um teste duro: se ainda conseguires cortar 10 a 15 por cento sem perder nada importante, o artigo ainda nao passou o gate.
+18. Fecha com um teste duro: se ainda conseguires cortar 10 a 15 por cento sem perder nada importante, faz esse ajuste dentro desta mesma passagem final e depois decide. Nao abras uma nova ronda so por causa disso.
 
-## Saída esperada
+## Modo de automação
+
+Quando este agente estiver a correr dentro do pipeline automático:
+
+- edita apenas o ficheiro pedido;
+- faz uma única passagem de quality gate;
+- não devolvas relatório longo, sugestões nem proposta de nova iteração;
+- ignora qualquer secção `Saída esperada` fora deste modo;
+- não imprimas resumos longos nem listas do que falta;
+- a última linha não vazia de stdout tem de ser exatamente o estado final obrigatório;
+- se o artigo ficar publicável, termina imediatamente.
+
+Estado final obrigatório em automação:
+
+- sucesso: `READY_TO_PUBLISH: <caminho>`
+- bloqueio real: `BLOCKED: <motivo>`
+
+## Saída esperada fora de automação
 
 - Artigo corrigido no próprio ficheiro.
 - Resumo curto dos pontos corrigidos.

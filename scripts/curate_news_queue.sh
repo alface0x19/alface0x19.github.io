@@ -9,10 +9,8 @@ fi
 
 cd "$repo_root"
 
-source "$repo_root/scripts/lib/copilot_cli.sh"
-ensure_copilot_cli || exit 1
-
-bash scripts/ensure_github_identity.sh
+source "$repo_root/scripts/lib/codex_cli.sh"
+ensure_codex_cli || exit 1
 
 shopt -s nullglob
 queue_files=(news_queue/*.md)
@@ -53,12 +51,9 @@ No fim, grava mesmo o ficheiro news_queue/SHORTLIST.md.
 EOF
 )
 
-run_copilot \
-  -s \
-  --allow-all-tools \
-  --add-dir "$repo_root" \
-  --no-ask-user \
-  --agent=news-curator \
+run_codex_agent \
+  --repo-root "$repo_root" \
+  --agent news-curator \
   --prompt "$prompt"
 
 echo "Curadoria atualizada em news_queue/SHORTLIST.md"

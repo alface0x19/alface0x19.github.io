@@ -28,7 +28,7 @@ O ganho raramente está em pedir à IA que faça tudo sozinha. O verdadeiro valo
 
 ## 1. Developer: escrever menos boilerplate, pensar melhor na solução
 
-Para developers, a IA pode ser um excelente copiloto em várias fases do trabalho.
+Para developers, a IA pode ser um excelente assistente em várias fases do trabalho.
 
 ### Geração de boilerplate e código repetitivo
 
@@ -255,6 +255,6 @@ Para **DevOps**, reduz toil e acelera automação.
 Para **DevSecOps**, reforça análise e comunicação de risco.  
 Para **SRE**, encurta investigação e melhora aprendizagem após incidentes.
 
-O mais importante é encará-la como um **copiloto técnico**, não como piloto automático. Quem combinar IA com boas práticas de engenharia, validação e pensamento crítico vai ganhar velocidade sem perder qualidade.
+O mais importante é encará-la como um **parceiro técnico**, não como piloto automático. Quem combinar IA com boas práticas de engenharia, validação e pensamento crítico vai ganhar velocidade sem perder qualidade.
 
 No fim, a pergunta não é apenas "como usar IA?". A pergunta certa é: **como integrar IA no fluxo de trabalho de forma responsável, útil e sustentável?**

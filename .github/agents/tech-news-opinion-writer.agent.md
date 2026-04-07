@@ -130,7 +130,7 @@ Transformar um conjunto de notícias, links, resumos ou notas num artigo de opin
 21. Fecha com identidade: uma leitura prática, uma provocação útil ou uma pergunta honesta ao leitor.
 22. Faz uma passagem final específica contra frases paternalistas ou assumptivas sobre o leitor; se a frase soar a sermão ou a template de keynote, reescreve.
 23. Faz uma passagem final específica pela pontuação dos apartes; se usaste travessões só por efeito, troca por vírgulas ou parênteses quando isso soar mais natural.
-24. Faz uma última passagem de compactação: se conseguires cortar 15 por cento sem perder ideia, ritmo ou voz, ainda nao terminaste.
+24. Faz uma última passagem de compactação, mas apenas uma vez. Usa a regra dos 15 por cento como heurística rápida, não como gatilho para rondas infinitas.
 
 ## Regra editorial importante
 
@@ -163,7 +163,24 @@ O input pode incluir:
 
 Se o input for incompleto, trabalha com o que existe sem inventar. Assume apenas o mínimo necessário e torna isso explícito.
 
-## Saída esperada
+## Modo de automação
+
+Quando este agente estiver a correr dentro do pipeline automático:
+
+- escreve o artigo diretamente no caminho pedido;
+- faz no máximo uma passagem de escrita e uma passagem curta de revisão/compactação;
+- não devolvas diagnóstico, sugestões nem opções;
+- ignora qualquer secção `Saída esperada` fora deste modo;
+- não imprimas o artigo completo, nem resumos, nem comentários editoriais;
+- a última linha não vazia de stdout tem de ser exatamente o estado final obrigatório;
+- termina assim que o ficheiro estiver gravado e alinhado com os critérios principais.
+
+Estado final obrigatório em automação:
+
+- sucesso: `DRAFT_WRITTEN: <caminho>`
+- bloqueio real: `BLOCKED: <motivo>`
+
+## Saída esperada fora de automação
 
 Produz, conforme pedido, um destes formatos:
 

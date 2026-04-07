@@ -18,7 +18,7 @@ Comandos úteis:
 ```bash
 python3 scripts/fetch_news.py
 scripts/curate_news_queue.sh
-scripts/run_copilot_news_pipeline.sh news_queue/<ficheiro>.md
-scripts/run_copilot_news_pipeline.sh --selected
-scripts/run_copilot_news_pipeline.sh news_queue/<ficheiro>.md --publish
+scripts/run_codex_news_pipeline.sh news_queue/<ficheiro>.md
+scripts/run_codex_news_pipeline.sh --selected
+scripts/run_codex_news_pipeline.sh news_queue/<ficheiro>.md --publish
 ```

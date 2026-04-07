@@ -3,7 +3,7 @@
 Este repositório agora tem um fluxo simples e dividido por responsabilidades:
 
 - RSS/feeds para recolher notícias;
-- agentes do Copilot CLI para curar, escrever, rever, validar e publicar;
+- agentes do Codex CLI para curar, escrever, rever, validar e publicar;
 - cron local para meter novas notícias na fila do repo.
 - Só entram notícias da semana corrente; a fila limpa automaticamente itens antigos.
 
@@ -14,12 +14,10 @@ Este repositório agora tem um fluxo simples e dividido por responsabilidades:
 - `scripts/collect_news_queue.sh`: wrapper para recolha local, pensado para cron.
 - `scripts/install_news_cron.sh`: instala ou atualiza a entrada de cron local.
 - `scripts/curate_news_queue.sh`: usa o agente curador para priorizar a fila.
-- `scripts/ensure_github_identity.sh`: força a conta GitHub/autoria local antes de qualquer uso do Copilot CLI.
-- `scripts/run_copilot_news_pipeline.sh`: pega numa notícia da fila e chama os agentes.
+- `scripts/run_codex_news_pipeline.sh`: pega numa notícia da fila e chama os agentes.
 - `scripts/run_news_autopilot.sh`: encadeia recolha, curadoria, escrita, revisão, quality gate e publicação.
 - `_drafts/`: rascunhos em trabalho antes de irem para `_posts/`.
 - `news_queue/`: fila local de trabalho; o `README.md` fica no repo, os ficheiros dinâmicos da fila ficam ignorados no git.
-- Qualquer script que use `copilot` força primeiro a conta GitHub `alface0x19` e normaliza a autoria Git local para essa conta.
 
 ## Fluxo recomendado
 
@@ -42,13 +40,13 @@ bash scripts/curate_news_queue.sh
 4. Corres:
 
 ```bash
-bash scripts/run_copilot_news_pipeline.sh news_queue/<ficheiro>.md
+bash scripts/run_codex_news_pipeline.sh news_queue/<ficheiro>.md
 ```
 
 Ou, se quiseres usar diretamente a notícia escolhida em `SHORTLIST.md`:
 
 ```bash
-bash scripts/run_copilot_news_pipeline.sh --selected
+bash scripts/run_codex_news_pipeline.sh --selected
 ```
 
 5. O script chama:
@@ -60,13 +58,13 @@ bash scripts/run_copilot_news_pipeline.sh --selected
 6. Se estiver tudo bem, publicas com:
 
 ```bash
-bash scripts/run_copilot_news_pipeline.sh news_queue/<ficheiro>.md --publish
+bash scripts/run_codex_news_pipeline.sh news_queue/<ficheiro>.md --publish
 ```
 
 Ou:
 
 ```bash
-bash scripts/run_copilot_news_pipeline.sh --selected --publish
+bash scripts/run_codex_news_pipeline.sh --selected --publish
 ```
 
 7. Nesse modo, o script chama também o `main-publisher`.
@@ -75,7 +73,7 @@ bash scripts/run_copilot_news_pipeline.sh --selected --publish
 8. Se quiseres rever primeiro e publicar só depois, sem fazer o `mv` à mão, usa:
 
 ```bash
-bash scripts/run_copilot_news_pipeline.sh --publish-draft _drafts/YYYY-MM-DD-slug.md
+bash scripts/run_codex_news_pipeline.sh --publish-draft _drafts/YYYY-MM-DD-slug.md
 ```
 
 Nesse modo, o próprio script promove o draft para `_posts/` e chama o `main-publisher`.
@@ -91,6 +89,6 @@ Nesse modo, o próprio script promove o draft para `_posts/` e chama o `main-pub
 - O `post-quality-gate` faz a última revisão para evitar PT-BR, casing técnico errado e texto com cheiro a geração automática.
 - Um artigo só entra em `_posts/` quando já estiver terminado e pronto a publicar.
 - O writer/editor continuam a ser usados apenas onde faz sentido.
-- Se usares Copilot Free, este desenho ajuda a poupar requests porque a recolha não depende da IA.
+- Se usares Codex em modo mais conservador, este desenho ajuda a poupar requests porque a recolha não depende da IA.
 - O cron local agora pode publicar sozinho, por isso o autopilot aborta se o repo já arrancar com alterações pendentes.
-- Antes de qualquer uso do `copilot`, o fluxo corre `bash scripts/ensure_github_identity.sh`, que força `gh auth switch --hostname github.com --user alface0x19` e ajusta `git config --local user.name/user.email` para essa identidade.
+- O fluxo com `codex` usa a identidade Git local já configurada no ambiente em que corre.
