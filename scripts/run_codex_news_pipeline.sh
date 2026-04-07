@@ -125,6 +125,8 @@ publish="false"
 post_date="$(date +%F)"
 custom_slug=""
 model=""
+default_writer_model="gpt-5.4"
+default_support_model="gpt-5.4-mini"
 writer_model=""
 editor_model=""
 angle_model=""
@@ -606,25 +608,40 @@ publish_existing_draft() {
 
 resolve_stage_model() {
   local stage="$1"
+  local fallback_model="$model"
+
+  if [[ -z "$fallback_model" ]]; then
+    case "$stage" in
+      writer)
+        fallback_model="$default_writer_model"
+        ;;
+      editor|angle|image|gate)
+        fallback_model="$default_support_model"
+        ;;
+      *)
+        fallback_model="$default_support_model"
+        ;;
+    esac
+  fi
 
   case "$stage" in
     writer)
-      printf '%s\n' "${writer_model:-$model}"
+      printf '%s\n' "${writer_model:-$fallback_model}"
       ;;
     editor)
-      printf '%s\n' "${editor_model:-$model}"
+      printf '%s\n' "${editor_model:-$fallback_model}"
       ;;
     angle)
-      printf '%s\n' "${angle_model:-$model}"
+      printf '%s\n' "${angle_model:-$fallback_model}"
       ;;
     image)
-      printf '%s\n' "${image_model:-$model}"
+      printf '%s\n' "${image_model:-$fallback_model}"
       ;;
     gate)
-      printf '%s\n' "${gate_model:-$model}"
+      printf '%s\n' "${gate_model:-$fallback_model}"
       ;;
     *)
-      printf '%s\n' "$model"
+      printf '%s\n' "$fallback_model"
       ;;
   esac
 }

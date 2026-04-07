@@ -11,6 +11,7 @@ Usage:
 Description:
   Recolhe noticias, faz curadoria, gera artigo, valida e publica automaticamente
   se o fluxo considerar o artigo pronto.
+  Defaults sem flags: writer=gpt-5.4 e restantes etapas=gpt-5.4-mini.
 EOF
 }
 
