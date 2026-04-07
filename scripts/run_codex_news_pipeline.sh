@@ -511,23 +511,8 @@ publish_existing_draft() {
   created_post_path="$post_abs"
   echo "Draft movido para $post_rel"
 
-  publisher_prompt=$(cat <<EOF
-Publica o artigo ja validado em $post_rel.
-Analisa o git status, inclui apenas os ficheiros relevantes desta publicacao e faz commit e push para main.
-Se houver alteracoes nao relacionadas, deixa-as de fora.
-Regras importantes:
-- corres em modo de automacao: nao pecas confirmacao humana, nao dês relatorio longo e nao deixes texto depois do estado final;
-- usa a identidade Git ja configurada no ambiente;
-- nao incluas news_queue, SHORTLIST, _drafts ou alteracoes nao relacionadas;
-- faz git add apenas do post alvo, depois git commit com pathspec desse post e por fim git push origin main;
-- quando acabares, termina imediatamente;
-- a ultima linha da tua resposta tem de ser exatamente: PUBLISHED: $post_rel
-- se ficares genuinamente bloqueado, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
-EOF
-)
-
   echo "A publicar para main"
-  run_agent_expect_status main-publisher "$publisher_prompt" "PUBLISHED: $post_rel"
+  publish_to_git "$post_rel"
   created_post_path=""
   restorable_draft_source=""
   restorable_draft_target=""
@@ -542,6 +527,21 @@ run_agent() {
   else
     run_codex_agent --repo-root "$repo_root" --agent "$agent_name" --prompt "$agent_prompt"
   fi
+}
+
+publish_to_git() {
+  local post_rel="$1"
+  local image_dir_rel="${2:-}"
+  local commit_msg
+
+  git -C "$repo_root" add "$repo_root/$post_rel"
+  if [[ -n "$image_dir_rel" && -d "$repo_root/$image_dir_rel" ]]; then
+    git -C "$repo_root" add "$repo_root/$image_dir_rel/"
+  fi
+  commit_msg="post: $(basename "$post_rel" .md)"
+  git -C "$repo_root" commit -m "$commit_msg"
+  git -C "$repo_root" push origin main
+  echo "PUBLISHED: $post_rel"
 }
 
 run_agent_expect_status() {
@@ -753,23 +753,6 @@ Regras importantes:
 EOF
 )
 
-publisher_prompt=$(cat <<EOF
-Publica o artigo acabado de criar em modo totalmente automatico.
-Analisa o git status, inclui apenas os ficheiros relevantes desta publicacao e faz commit e push para main.
-O ficheiro principal a publicar e _posts/${post_date}-${slug}.md.
-Regras importantes:
-- usa a identidade Git ja configurada no ambiente; nao pares para pedir confirmacao nem para validar manualmente o utilizador;
-- nao incluas ficheiros de news_queue, SHORTLIST, _drafts ou quaisquer alteracoes nao relacionadas;
-- se houver alteracoes nao relacionadas, deixa-as fora do commit e continua com a publicacao do post;
-- se o artigo referenciar um asset de imagem em assets/images/posts/${post_date}-${slug}/, inclui esse asset no mesmo commit;
-- a mensagem de commit deve ser curta, especifica e focada no post;
-- faz git add e git commit por pathspec apenas do post e dos assets de imagem usados pelo post, para nao arrastar outras alteracoes staged;
-- quando acabares, termina imediatamente;
-- a ultima linha da tua resposta tem de ser exatamente: PUBLISHED: _posts/${post_date}-${slug}.md
-- se ficares genuinamente bloqueado, a ultima linha tem de ser exatamente: BLOCKED: <motivo>
-EOF
-)
-
 echo "A criar draft em _drafts/${post_date}-${slug}.md"
 run_agent_expect_status tech-news-opinion-writer "$writer_prompt" "DRAFT_WRITTEN: _drafts/${post_date}-${slug}.md"
 normalize_generated_draft "$draft_path"
@@ -794,7 +777,7 @@ if [[ "$publish" == "true" ]]; then
   created_post_path="$post_path"
   echo "Draft movido para _posts/${post_date}-${slug}.md"
   echo "A publicar para main"
-  run_agent_expect_status main-publisher "$publisher_prompt" "PUBLISHED: _posts/${post_date}-${slug}.md"
+  publish_to_git "_posts/${post_date}-${slug}.md" "assets/images/posts/${post_date}-${slug}"
   created_post_path=""
 else
   echo "Draft criado em _drafts/${post_date}-${slug}.md"
