@@ -297,11 +297,13 @@ generate_article_caricature() {
   mkdir -p "$article_image_dir"
 
   cover_prompt=$(cat <<EOF
-Lê o ficheiro $queue_rel e cria uma caricatura editorial em SVG para esta notícia.
+Lê o ficheiro $queue_rel e lê também o draft final em $draft_rel.
+Cria uma caricatura editorial em SVG para esta notícia com base no artigo já escrito.
 Grava exatamente o ficheiro em $target_rel.
 Usa a persona já definida neste repositório: tom humano, ligeiro humor seco e uma referência reconhecível a música, carros ou mitologia quando isso encaixar.
 Objetivo visual:
 - interpretar a notícia de forma editorial, não fotográfica;
+- ser fiel ao ângulo e à tese que ficaram no draft final, não apenas ao headline bruto;
 - a imagem deve parecer uma caricatura conceptual da notícia, não um logo colado nem um screenshot;
 - privilegiar composição simples, legível e expressiva;
 - se houver texto dentro do SVG, ele tem de ser curto, ter contraste alto com o fundo e continuar legivel em ecrãs pequenos;
@@ -373,14 +375,16 @@ EOF
 
 quality_gate_article_caricature() {
   local queue_rel="$1"
-  local target_rel="$2"
+  local draft_rel="$2"
+  local target_rel="$3"
   local gate_prompt=""
 
   gate_prompt=$(cat <<EOF
-Lê o ficheiro $queue_rel e faz o quality gate final da caricatura em $target_rel.
+Lê o ficheiro $queue_rel, lê o draft final em $draft_rel e faz o quality gate final da caricatura em $target_rel.
 Revê o SVG com exigência editorial e corrige diretamente o próprio ficheiro se precisares.
 Valida especialmente:
 - se a imagem representa o conflito central da notícia;
+- se a imagem está alinhada com a tese e o ângulo do draft final;
 - se a composição está legível e não demasiado confusa;
 - se qualquer texto, label ou callout dentro do SVG tem contraste suficiente e se lê sem esforço;
 - se a persona do blog está presente com moderação e de forma reconhecível;
@@ -742,14 +746,6 @@ fi
 
 generate_angle_brief "$queue_file" "$angle_brief_path" "$angle_brief_rel"
 
-if [[ -z "$article_image_rel" ]]; then
-  generate_article_caricature "$queue_file" "_drafts/${post_date}-${slug}.md" "assets/images/posts/${post_date}-${slug}/cover.svg"
-fi
-
-if [[ "$article_image_rel" == assets/images/posts/${post_date}-${slug}/cover.svg ]]; then
-  quality_gate_article_caricature "$queue_file" "$article_image_rel"
-fi
-
 writer_prompt=$(cat <<EOF
 Lê o ficheiro $queue_file e o brief editorial em $angle_brief_rel.
 Cria um artigo novo em _drafts/${post_date}-${slug}.md.
@@ -807,6 +803,14 @@ normalize_generated_draft "$draft_path"
 echo "A fazer revisao editorial final"
 run_agent_expect_status blog-editor "$editor_prompt" "READY_TO_PUBLISH: _drafts/${post_date}-${slug}.md" "editor"
 normalize_generated_draft "$draft_path"
+
+if [[ -z "$article_image_rel" ]]; then
+  generate_article_caricature "$queue_file" "_drafts/${post_date}-${slug}.md" "assets/images/posts/${post_date}-${slug}/cover.svg"
+fi
+
+if [[ "$article_image_rel" == assets/images/posts/${post_date}-${slug}/cover.svg ]]; then
+  quality_gate_article_caricature "$queue_file" "_drafts/${post_date}-${slug}.md" "$article_image_rel"
+fi
 
 run_publication_readiness_gate "_drafts/${post_date}-${slug}.md" "$article_image_rel" "$angle_brief_rel"
 normalize_generated_draft "$draft_path"
