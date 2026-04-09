@@ -6,7 +6,8 @@ permalink: /podcast.xml
 {% assign podcast_posts = site.posts | where_exp: "post", "post.podcast == true or post.audio_url" %}
 {% assign podcast_image = site.podcast.image %}
 {% unless podcast_image contains '://' %}
-  {% assign podcast_image = site.url | append: (site.podcast.image | relative_url) %}
+  {% assign podcast_image_rel = site.podcast.image | relative_url %}
+  {% assign podcast_image = site.url | append: podcast_image_rel %}
 {% endunless %}
 <rss version="2.0"
   xmlns:atom="http://www.w3.org/2005/Atom"
@@ -39,7 +40,8 @@ permalink: /podcast.xml
     {% for post in podcast_posts %}
     {% assign audio_href = post.audio_url %}
     {% unless audio_href contains '://' %}
-      {% assign audio_href = site.url | append: (post.audio_url | relative_url) %}
+      {% assign audio_href_rel = post.audio_url | relative_url %}
+      {% assign audio_href = site.url | append: audio_href_rel %}
     {% endunless %}
     <item>
       <title>{{ post.title | xml_escape }}</title>
