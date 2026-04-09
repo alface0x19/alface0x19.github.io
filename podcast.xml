@@ -3,7 +3,6 @@ layout: null
 permalink: /podcast.xml
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-{% assign podcast_posts = site.posts | where_exp: "post", "post.audio_url != nil and post.audio_url != ''" %}
 {% assign podcast_image = site.podcast.image %}
 {% unless podcast_image contains '://' %}
   {% assign podcast_image_rel = site.podcast.image | relative_url %}
@@ -37,29 +36,31 @@ permalink: /podcast.xml
       <title>{{ site.podcast.title | xml_escape }}</title>
       <link>{{ site.url }}{{ site.baseurl }}/podcast/</link>
     </image>
-    {% for post in podcast_posts %}
-    {% assign audio_href = post.audio_url %}
-    {% unless audio_href contains '://' %}
-      {% assign audio_href_rel = post.audio_url | relative_url %}
-      {% assign audio_href = site.url | append: audio_href_rel %}
-    {% endunless %}
-    <item>
-      <title>{{ post.title | xml_escape }}</title>
-      <link>{{ site.url }}{{ post.url }}</link>
-      <guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
-      <pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
-      <description>{{ post.podcast_summary | default: post.excerpt | strip_html | strip_newlines | xml_escape }}</description>
-      <itunes:author>{{ post.podcast_author | default: site.podcast.author | xml_escape }}</itunes:author>
-      <itunes:summary>{{ post.podcast_summary | default: post.excerpt | strip_html | strip_newlines | xml_escape }}</itunes:summary>
-      <itunes:duration>{{ post.audio_duration | default: "00:10:00" }}</itunes:duration>
-      <itunes:episodeType>{{ post.episode_type | default: "full" }}</itunes:episodeType>
-      <itunes:explicit>{{ post.explicit | default: site.podcast.explicit | xml_escape }}</itunes:explicit>
-      {% if post.episode_number %}<itunes:episode>{{ post.episode_number }}</itunes:episode>{% endif %}
-      <enclosure
-        url="{{ audio_href }}"
-        length="{{ post.audio_size | default: 0 }}"
-        type="{{ post.audio_type | default: 'audio/mpeg' }}" />
-    </item>
+    {% for post in site.posts %}
+      {% if post.audio_url and post.audio_url != '' %}
+      {% assign audio_href = post.audio_url %}
+      {% unless audio_href contains '://' %}
+        {% assign audio_href_rel = post.audio_url | relative_url %}
+        {% assign audio_href = site.url | append: audio_href_rel %}
+      {% endunless %}
+      <item>
+        <title>{{ post.title | xml_escape }}</title>
+        <link>{{ site.url }}{{ post.url }}</link>
+        <guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
+        <pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
+        <description>{{ post.podcast_summary | default: post.excerpt | strip_html | strip_newlines | xml_escape }}</description>
+        <itunes:author>{{ post.podcast_author | default: site.podcast.author | xml_escape }}</itunes:author>
+        <itunes:summary>{{ post.podcast_summary | default: post.excerpt | strip_html | strip_newlines | xml_escape }}</itunes:summary>
+        <itunes:duration>{{ post.audio_duration | default: "00:10:00" }}</itunes:duration>
+        <itunes:episodeType>{{ post.episode_type | default: "full" }}</itunes:episodeType>
+        <itunes:explicit>{{ post.explicit | default: site.podcast.explicit | xml_escape }}</itunes:explicit>
+        {% if post.episode_number %}<itunes:episode>{{ post.episode_number }}</itunes:episode>{% endif %}
+        <enclosure
+          url="{{ audio_href }}"
+          length="{{ post.audio_size | default: 0 }}"
+          type="{{ post.audio_type | default: 'audio/mpeg' }}" />
+      </item>
+      {% endif %}
     {% endfor %}
   </channel>
 </rss>
