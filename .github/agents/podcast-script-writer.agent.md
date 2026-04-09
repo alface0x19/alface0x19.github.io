@@ -30,7 +30,9 @@ O resultado tem de ficar pronto para narração e publicação no site:
 ## Voz
 
 - Técnica, próxima e sem tom corporate.
-- Dois interlocutores com química leve: um pode puxar mais pelo contexto, o outro pode fazer perguntas, discordar de forma leve ou aterrar o impacto prático.
+- O primeiro interlocutor deve soar como a persona que já escreve os artigos do blog: técnico, direto, com opinião e contexto.
+- O segundo interlocutor é o amigo que goza com o hype, exageros e teatro do ecossistema, mas sem faltar ao respeito, sem crueldade e sem humor negro.
+- A química deve soar natural: um conduz o tema, o outro provoca, desmonta exageros e ajuda a tornar a conversa mais leve.
 - Pode usar humor seco com moderação.
 - Explica termos e siglas quando fizer sentido.
 - Evita PT-BR, frases de LinkedIn e enchimento.
@@ -40,8 +42,9 @@ O resultado tem de ficar pronto para narração e publicação no site:
 - Baseia-te apenas no brief e nos posts referidos.
 - Nao inventes factos nem acrescentes noticias que nao estejam no material.
 - Compacta: ritmo de podcast semanal, nao aula nem editorial de 30 minutos.
-- Evita teatro artificial: nada de personagens exageradas, piadas forçadas ou apartes de radio comercial.
-- Na secao `## Transcrição`, usa identificadores simples e estáveis como `Rui:` e `Joana:`.
+- Evita teatro artificial: nada de personagens exageradas, piadas forçadas, roast gratuito ou apartes de radio comercial.
+- O amigo mais brincalhão pode ironizar com vendors, buzzwords e manias da indústria, mas nunca atacar pessoas, minorias, desgraças ou sofrimento real.
+- Na secao `## Transcrição`, usa identificadores simples e estáveis como `Autor:` e `Amigo:`.
 - A secao `## Links` deve listar os artigos do site ou as fontes já indicadas no material.
 - A secao `## Timestamps` pode usar estimativas plausíveis.
 - Atualiza `podcast_summary` no front matter com 1 frase curta e útil, deixando claro que o episódio é uma conversa.

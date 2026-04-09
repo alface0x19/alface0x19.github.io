@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import unicodedata
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -21,6 +22,7 @@ class PostItem:
     categories: list[str]
     topic: str
     excerpt: str
+    post_url: str
 
 
 def parse_args() -> argparse.Namespace:
@@ -59,12 +61,41 @@ def parse_inline_list(raw: str) -> list[str]:
     return [item.strip().strip('"').strip("'") for item in match.group(1).split(",") if item.strip()]
 
 
+def slugify(value: str) -> str:
+    normalized = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    normalized = normalized.lower()
+    normalized = re.sub(r"[^a-z0-9]+", "-", normalized)
+    return normalized.strip("-")
+
+
 def canonical_topic(title: str, categories: list[str], body: str) -> str:
-    haystack = " ".join([title, " ".join(categories), body]).lower()
-    if any(token in haystack for token in ("segurança", "seguranca", "cyber", "cve-", "ransomware", "vulnerab", "malware")):
+    title_and_body = " ".join([title, body]).lower()
+    category_text = " ".join(categories).lower()
+
+    has_ai = any(token in category_text for token in ("ia", "ai"))
+    has_cyber = any(token in category_text for token in ("segurança", "seguranca", "vulnerab", "devsecops", "cyber"))
+    has_general_tech = any(
+        token in category_text
+        for token in ("cloud", "infraestrutura", "devops", "operações", "operacoes", "empresas", "tecnologia")
+    )
+
+    strong_cyber_signal = any(
+        token in title_and_body
+        for token in ("cve-", "ransomware", "malware", "exploit", "zero-day", "zeroday", "patch", "vulnerab")
+    )
+
+    if has_cyber and strong_cyber_signal:
         return "cybersecurity"
-    if any(token in haystack for token in (" ia", "ia ", "artificial intelligence", "llm", "openai", "anthropic", "claude", "gemini", "mistral", "codex", "agentes")):
+
+    if has_general_tech and not has_cyber:
+        return "technology"
+
+    if has_ai:
         return "ai"
+
+    if has_cyber:
+        return "cybersecurity"
+
     return "technology"
 
 
@@ -99,6 +130,10 @@ def load_posts(posts_dir: Path) -> list[PostItem]:
         except ValueError:
             continue
         categories = parse_inline_list(meta.get("categories", ""))
+        stem = path.stem
+        post_slug = stem[11:] if len(stem) > 11 and stem[4] == "-" and stem[7] == "-" else stem
+        category_path = "/".join(slugify(category) for category in categories)
+        post_url = f"/{category_path}/{post_slug}/" if category_path else f"/{post_slug}/"
         items.append(
             PostItem(
                 path=path,
@@ -107,6 +142,7 @@ def load_posts(posts_dir: Path) -> list[PostItem]:
                 categories=categories,
                 topic=canonical_topic(raw_title, categories, body),
                 excerpt=extract_excerpt(body),
+                post_url=post_url,
             )
         )
     return items
@@ -150,12 +186,6 @@ def next_episode_number(posts_dir: Path) -> int:
     return highest + 1
 
 
-def slugify(value: str) -> str:
-    normalized = value.lower()
-    normalized = re.sub(r"[^a-z0-9]+", "-", normalized)
-    return normalized.strip("-")
-
-
 def render_brief(output_path: Path, reference_date: date, start_date: date, selected: list[PostItem], episode_number: int) -> None:
     iso_year, iso_week, _iso_weekday = reference_date.isocalendar()
     episode_title = f"Resumo semanal #{episode_number}"
@@ -192,6 +222,7 @@ def render_brief(output_path: Path, reference_date: date, start_date: date, sele
                 f"- Tópico: {item.topic}",
                 f"- Categorias: {categories}",
                 f"- Ficheiro: {item.path}",
+                f"- URL: {item.post_url}",
                 f"- Excerto: {item.excerpt}",
                 "",
             ]

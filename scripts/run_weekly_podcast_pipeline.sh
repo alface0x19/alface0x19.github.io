@@ -6,6 +6,7 @@ usage() {
 Usage:
   scripts/run_weekly_podcast_pipeline.sh [--date YYYY-MM-DD] [--model model-name]
     [--writer-model model-name] [--publish] [--publish-without-audio] [--dry-run]
+    [--local-writer]
 
 Description:
   Gera o brief semanal do podcast a partir dos posts recentes, cria um draft
@@ -29,6 +30,7 @@ writer_model=""
 publish="false"
 publish_without_audio="false"
 dry_run="false"
+local_writer="false"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -54,6 +56,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --dry-run)
       dry_run="true"
+      shift
+      ;;
+    --local-writer)
+      local_writer="true"
       shift
       ;;
     -h|--help)
@@ -161,6 +167,8 @@ Le o brief em $brief_path e edita apenas o draft em $draft_path.
 Objetivo:
 - transformar os temas da semana num episodio compacto e natural;
 - escrever em formato de conversa entre dois amigos informados, com naturalidade e sem teatro;
+- o Autor tem de soar como a persona que escreve os artigos deste blog;
+- o Amigo tem de ser o contraponto que goza com hype, buzzwords e exageros do ecossistema sem faltar ao respeito e sem humor negro;
 - preencher podcast_summary no front matter;
 - substituir placeholders por conteudo real;
 - deixar o draft pronto para narracao;
@@ -171,7 +179,11 @@ PODCAST_DRAFT_WRITTEN: $draft_path
 EOF
 )"
 
-run_codex_agent --repo-root "$repo_root" --agent "podcast-script-writer" --model "$selected_model" --prompt "$agent_prompt"
+if [[ "$local_writer" == "true" || "${PODCAST_WRITER_MODE:-}" == "local" ]]; then
+  python3 "$repo_root/scripts/render_weekly_podcast_draft.py" --brief "$brief_path" --draft "$draft_path"
+else
+  run_codex_agent --repo-root "$repo_root" --agent "podcast-script-writer" --model "$selected_model" --prompt "$agent_prompt"
+fi
 
 audio_generated="false"
 if bash "$repo_root/scripts/render_podcast_audio.sh" "$draft_path" "$audio_path" "$episode_title"; then
