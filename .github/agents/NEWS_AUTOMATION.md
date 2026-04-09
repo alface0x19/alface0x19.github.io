@@ -16,6 +16,9 @@ Este repositório agora tem um fluxo simples e dividido por responsabilidades:
 - `scripts/curate_news_queue.sh`: usa o agente curador para priorizar a fila.
 - `scripts/run_codex_news_pipeline.sh`: pega numa notícia da fila e chama os agentes.
 - `scripts/run_news_autopilot.sh`: encadeia recolha, curadoria, escrita, revisão, quality gate e publicação.
+- `scripts/build_weekly_podcast_brief.py`: junta os posts mais recentes da semana num brief para episódio.
+- `scripts/run_weekly_podcast_pipeline.sh`: cria o episódio semanal de podcast, tenta gerar áudio e publica quando estiver pronto.
+- `scripts/install_podcast_cron.sh`: instala ou atualiza o cron semanal do podcast.
 - `.github/agents/angle-setter.agent.md`: cria um brief editorial curto para fixar tese, foco e o toque de persona antes da escrita.
 - `.github/agents/news-caricaturist.agent.md`: gera uma capa local em SVG com caricatura editorial da notícia quando não houver imagem melhor disponível.
 - `.github/agents/caricature-quality-gate.agent.md`: faz a revisão final da caricatura antes de ela entrar no artigo.
@@ -27,9 +30,17 @@ Este repositório agora tem um fluxo simples e dividido por responsabilidades:
 
 1. O cron local corre `bash scripts/run_news_autopilot.sh` em horários definidos.
 2. O autopilot recolhe notícias, atualiza `news_queue/`, faz curadoria, escreve, revê e tenta publicar sozinho.
-3. Sempre que houver material suficiente, tenta publicar até 2 artigos por ronda, desde que sejam temas claramente diferentes.
+3. Sempre que houver material suficiente, tenta publicar até 3 artigos por ronda, privilegiando diversidade entre IA, cybersecurity e tecnologia geral.
 4. Só publica se cada artigo passar writer, editor, quality gate e publisher.
 5. No fim de uma ronda com publicação bem-sucedida, limpa o conteúdo dinâmico de `news_queue/` e valida que a worktree ficou limpa e sincronizada com `origin/main`.
+
+## Podcast semanal
+
+1. O cron semanal pode correr `bash scripts/run_weekly_podcast_pipeline.sh --publish` à quinta-feira às 18:00.
+2. O pipeline cria um brief com posts recentes da semana, gera um draft de episódio e tenta produzir áudio.
+3. Para renderizar áudio, define `PODCAST_TTS_COMMAND` no ambiente do cron.
+4. Se o áudio for gerado com sucesso, o episódio fica com `audio_url` preenchido e pode aparecer no feed `podcast.xml`.
+5. Sem `PODCAST_TTS_COMMAND`, o pipeline pára no draft, a menos que publiques explicitamente sem áudio.
 
 ## Fluxo manual
 

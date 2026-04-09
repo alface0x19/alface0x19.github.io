@@ -2,7 +2,7 @@
   "default_days": 7,
   "recency_mode": "current_week",
   "default_limit_per_feed": 4,
-  "default_total_limit": 14,
+  "default_total_limit": 18,
   "include_keywords": [
     "ai",
     "artificial intelligence",

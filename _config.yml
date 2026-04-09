@@ -6,6 +6,17 @@ name: alface0x19
 description: Blog técnico • Segurança • DevOps • Write-ups
 url: https://alface0x19.github.io
 baseurl: ""
+lang: pt-PT
+
+podcast:
+  title: alface0x19 Podcast
+  description: Resumo semanal das notícias mais relevantes em IA, cloud, segurança e ecossistema developer.
+  subtitle: Leituras semanais com contexto técnico, opinião e links para as fontes originais.
+  author: alface0x19
+  email: podcast@alface0x19.github.io
+  category: Technology
+  explicit: "no"
+  image: /assets/images/index/icon.png
 
 # =========================
 # Theme (Dark)
@@ -79,6 +90,7 @@ defaults:
 # =========================
 header_pages:
   - index.md
+  - podcast.md
   - support.md
 
 # =========================
@@ -90,3 +102,4 @@ exclude:
   - scripts/
   - config/
   - news_queue/
+  - podcast-episode-template.md

@@ -48,6 +48,9 @@ class NewsItem:
     score: int
 
 
+TARGET_TOPIC_ORDER = ("cybersecurity", "technology", "ai")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Fetch RSS/Atom/JSON feed items and queue them as Markdown."
@@ -323,6 +326,13 @@ def queue_filename(item: NewsItem) -> str:
     return f"{published_date}-{source_slug}-{title_slug}-{digest}.md"
 
 
+def canonical_topic(category: str) -> str:
+    normalized = (category or "").strip().lower()
+    if normalized == "cloud":
+        return "technology"
+    return normalized
+
+
 def quote_yaml(value: str) -> str:
     escaped = value.replace("\\", "\\\\").replace('"', '\\"')
     return f'"{escaped}"'
@@ -544,8 +554,29 @@ def collect_items(
         reverse=True,
     )
 
+    selected_items: list[NewsItem] = []
+    used_links: set[str] = set()
+
+    for topic in TARGET_TOPIC_ORDER:
+        for item in ranked_items:
+            if item.link in used_links:
+                continue
+            if canonical_topic(item.source.category) != topic:
+                continue
+            selected_items.append(item)
+            used_links.add(item.link)
+            break
+
+    for item in ranked_items:
+        if len(selected_items) >= limit_total:
+            break
+        if item.link in used_links:
+            continue
+        selected_items.append(item)
+        used_links.add(item.link)
+
     queued: list[tuple[Path, str]] = []
-    for item in ranked_items[:limit_total]:
+    for item in selected_items[:limit_total]:
         path = output_dir / queue_filename(item)
         if path.exists():
             continue

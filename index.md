@@ -18,6 +18,7 @@ author_profile: false
         <div class="hero-actions">
           <a href="https://youtube.com/@alface0x19" target="_blank" rel="noopener noreferrer" class="social-btn social-btn--youtube">▶ YouTube</a>
           <a href="https://www.twitch.tv/alface0x19" target="_blank" rel="noopener noreferrer" class="social-btn social-btn--twitch">◈ Twitch</a>
+          <a href="{{ '/podcast' | relative_url }}" class="social-btn">♫ podcast</a>
           <a href="{{ '/sitemap' | relative_url }}" class="social-btn">≡ artigos</a>
           <a href="{{ '/support' | relative_url }}" class="social-btn">☕ apoiar</a>
         </div>

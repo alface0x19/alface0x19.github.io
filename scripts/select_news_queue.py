@@ -3,7 +3,8 @@
 
 Ordena por score (campo front matter), filtra os que já estão cobertos
 em _posts/ usando a mesma lógica do check_topic_uniqueness.py, e escreve
-news_queue/SHORTLIST.md com os campos selected: e selected_secondary:.
+news_queue/SHORTLIST.md com até 3 escolhas: selected, selected_secondary
+e selected_tertiary.
 """
 from __future__ import annotations
 
@@ -16,6 +17,7 @@ from pathlib import Path
 CVE_RE = re.compile(r"\bCVE-\d{4}-\d{4,}\b", re.IGNORECASE)
 FRONT_MATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
 KEY_RE = re.compile(r"^(?P<key>[A-Za-z0-9_-]+):\s*\"?(?P<value>.*?)\"?\s*$", re.MULTILINE)
+TARGET_CATEGORY_ORDER = ("cybersecurity", "technology", "ai")
 
 
 def parse_args() -> argparse.Namespace:
@@ -50,6 +52,13 @@ def slugify(value: str) -> str:
 
 def normalized_title(value: str) -> str:
     return slugify(value).replace("-", " ")
+
+
+def canonical_category(value: str) -> str:
+    normalized = slugify(value).replace("-", "")
+    if normalized == "cloud":
+        return "technology"
+    return slugify(value)
 
 
 def extract_cves(*values: str) -> set[str]:
@@ -99,7 +108,7 @@ def is_already_covered(queue_path: Path, posts_dir: Path) -> tuple[bool, str]:
 
 
 def are_too_similar(path_a: Path, meta_a: dict[str, str], path_b: Path, meta_b: dict[str, str]) -> bool:
-    """Impede que primary e secondary sejam o mesmo tema disfarçado."""
+    """Impede que duas escolhas sejam o mesmo tema disfarçado."""
     title_a = normalized_title(meta_a.get("title", path_a.stem))
     title_b = normalized_title(meta_b.get("title", path_b.stem))
     if SequenceMatcher(None, title_a, title_b).ratio() >= 0.80:
@@ -126,6 +135,13 @@ def are_too_similar(path_a: Path, meta_a: dict[str, str], path_b: Path, meta_b: 
             return True
 
     return False
+
+
+def can_select(path: Path, meta: dict[str, str], selected: list[tuple[Path, dict[str, str]]]) -> bool:
+    for existing_path, existing_meta in selected:
+        if are_too_similar(existing_path, existing_meta, path, meta):
+            return False
+    return True
 
 
 def main() -> int:
@@ -156,9 +172,7 @@ def main() -> int:
 
     scored.sort(key=lambda x: x[0], reverse=True)
 
-    primary: Path | None = None
-    secondary: Path | None = None
-    primary_meta: dict[str, str] = {}
+    available: list[tuple[int, Path, dict[str, str]]] = []
     covered_log: list[str] = []
 
     for score, path, meta in scored:
@@ -166,49 +180,62 @@ def main() -> int:
         if covered:
             covered_log.append(f"  - {path.name}: {reason}")
             continue
+        available.append((score, path, meta))
 
-        rel = f"news_queue/{path.name}"
-        if primary is None:
-            primary = path
-            primary_meta = meta
-            print(f"Principal: {path.name} (score={score})")
+    selected: list[tuple[Path, dict[str, str]]] = []
+    selected_paths: set[Path] = set()
+
+    for category in TARGET_CATEGORY_ORDER:
+        for score, path, meta in available:
+            if path in selected_paths:
+                continue
+            if canonical_category(meta.get("category", "")) != category:
+                continue
+            if not can_select(path, meta, selected):
+                print(f"Ignorada (demasiado proxima de outra ja escolhida): {path.name}")
+                continue
+            selected.append((path, meta))
+            selected_paths.add(path)
+            print(f"Escolhida para {category}: {path.name} (score={score})")
+            break
+
+    for score, path, meta in available:
+        if len(selected) >= 3:
+            break
+        if path in selected_paths:
             continue
-
-        if secondary is None:
-            if not are_too_similar(primary, primary_meta, path, meta):
-                secondary = path
-                print(f"Secundaria: {path.name} (score={score})")
-                break
-            else:
-                print(f"Ignorada (demasiado proxima da principal): {path.name}")
+        if not can_select(path, meta, selected):
+            print(f"Ignorada (demasiado proxima de outra ja escolhida): {path.name}")
+            continue
+        selected.append((path, meta))
+        selected_paths.add(path)
+        print(f"Escolha adicional: {path.name} (score={score})")
 
     if covered_log:
         print("Ignoradas por ja estarem cobertas:")
         for line in covered_log:
             print(line)
 
-    primary_rel = f"news_queue/{primary.name}" if primary else "none"
-    secondary_rel = f"news_queue/{secondary.name}" if secondary else "none"
+    labels = ["selected", "selected_secondary", "selected_tertiary"]
+    section_titles = ["Principal", "Secundaria", "Terciaria"]
+    selected_rels = [
+        f"news_queue/{path.name}" for path, _meta in selected
+    ]
+    while len(selected_rels) < 3:
+        selected_rels.append("none")
 
     lines = [
-        f"selected: {primary_rel}",
-        f"selected_secondary: {secondary_rel}",
+        f"{labels[0]}: {selected_rels[0]}",
+        f"{labels[1]}: {selected_rels[1]}",
+        f"{labels[2]}: {selected_rels[2]}",
         "",
     ]
-    if primary:
-        lines.append(f"## Principal")
-        lines.append(f"- Ficheiro: {primary_rel}")
-        lines.append(f"- Titulo: {primary_meta.get('title', '')}")
-        lines.append(f"- Score: {primary_meta.get('score', '?')}")
-        lines.append(f"- Categoria: {primary_meta.get('category', '?')}")
-        lines.append("")
-    if secondary:
-        sec_meta = parse_front_matter(read_text(secondary))
-        lines.append(f"## Secundaria")
-        lines.append(f"- Ficheiro: {secondary_rel}")
-        lines.append(f"- Titulo: {sec_meta.get('title', '')}")
-        lines.append(f"- Score: {sec_meta.get('score', '?')}")
-        lines.append(f"- Categoria: {sec_meta.get('category', '?')}")
+    for index, (path, meta) in enumerate(selected):
+        lines.append(f"## {section_titles[index]}")
+        lines.append(f"- Ficheiro: news_queue/{path.name}")
+        lines.append(f"- Titulo: {meta.get('title', '')}")
+        lines.append(f"- Score: {meta.get('score', '?')}")
+        lines.append(f"- Categoria: {meta.get('category', '?')}")
         lines.append("")
 
     output_path.write_text("\n".join(lines), encoding="utf-8")

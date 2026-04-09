@@ -256,6 +256,7 @@ bash scripts/curate_news_queue.sh
 
 selected_file="$(selected_from_shortlist selected)"
 secondary_file="$(selected_from_shortlist selected_secondary)"
+tertiary_file="$(selected_from_shortlist selected_tertiary)"
 if [[ -z "$selected_file" ]]; then
   echo "Nenhuma noticia foi aprovada para artigo nesta ronda."
   exit 0
@@ -271,8 +272,17 @@ if [[ -n "$secondary_file" && ! -f "$repo_root/$secondary_file" ]]; then
   exit 1
 fi
 
+if [[ -n "$tertiary_file" && ! -f "$repo_root/$tertiary_file" ]]; then
+  echo "A shortlist aponta para uma terceira noticia inexistente: $tertiary_file"
+  exit 1
+fi
+
 if [[ -n "$secondary_file" && "$secondary_file" == "$selected_file" ]]; then
   secondary_file=""
+fi
+
+if [[ -n "$tertiary_file" && ( "$tertiary_file" == "$selected_file" || "$tertiary_file" == "$secondary_file" ) ]]; then
+  tertiary_file=""
 fi
 
 publish_one() {
@@ -307,6 +317,9 @@ echo "[3/4] Gerar, validar e publicar"
 publish_one "$selected_file" "Publicar tema principal"
 if [[ -n "$secondary_file" ]]; then
   publish_one "$secondary_file" "Publicar tema secundario"
+fi
+if [[ -n "$tertiary_file" ]]; then
+  publish_one "$tertiary_file" "Publicar tema terciario"
 fi
 
 echo "Fluxo autonomo concluido."

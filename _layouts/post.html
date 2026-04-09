@@ -8,6 +8,29 @@ layout: default
   <h1>{{ page.title }}</h1>
   <p class="post-meta"><small>{{ page.date | date: "%d %b %Y" }}{% if page.categories %} &nbsp;·&nbsp; {{ page.categories | join: ", " }}{% endif %}</small></p>
 
+  {% if page.podcast or page.audio_url %}
+  {% assign audio_href = page.audio_url %}
+  {% unless audio_href contains '://' %}
+    {% assign audio_href = page.audio_url | relative_url %}
+  {% endunless %}
+  <section class="podcast-player" aria-labelledby="podcast-player-title">
+    <div class="podcast-player__eyebrow">Podcast</div>
+    <h2 id="podcast-player-title" class="podcast-player__title">{{ page.episode_title | default: page.title }}</h2>
+    {% if page.podcast_summary %}
+    <p class="podcast-player__summary">{{ page.podcast_summary }}</p>
+    {% endif %}
+    <audio controls preload="none" class="podcast-player__audio">
+      <source src="{{ audio_href }}" type="{{ page.audio_type | default: 'audio/mpeg' }}">
+      O teu browser nao suporta audio HTML5.
+    </audio>
+    <div class="podcast-player__meta">
+      {% if page.audio_duration %}<span><strong>Duracao:</strong> {{ page.audio_duration }}</span>{% endif %}
+      {% if page.episode_number %}<span><strong>Episodio:</strong> {{ page.episode_number }}</span>{% endif %}
+      <span><strong>Feed:</strong> <a href="{{ '/podcast.xml' | relative_url }}">RSS podcast</a></span>
+    </div>
+  </section>
+  {% endif %}
+
   {{ content }}
 
   <hr>

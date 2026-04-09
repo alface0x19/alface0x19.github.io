@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
 
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS Feed" href="{{ '/feed.xml' | relative_url }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.podcast.title | default: site.title | escape }}" href="{{ '/podcast.xml' | relative_url }}">
 
 <!-- Reading progress bar -->
 <script>
