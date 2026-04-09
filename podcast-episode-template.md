@@ -22,20 +22,8 @@ explicit: "no"
 - Tema 2
 - Tema 3
 
-## Timestamps
-
-- `00:00` Abertura
-- `00:45` Tema 1
-- `04:10` Tema 2
-- `08:20` Tema 3
-- `11:30` Fecho
-
 ## Links
 
 - [Fonte 1](https://example.com)
 - [Fonte 2](https://example.com)
 - [Fonte 3](https://example.com)
-
-## Transcrição
-
-Transcrição opcional do episódio.

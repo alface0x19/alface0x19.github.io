@@ -130,6 +130,9 @@ def load_posts(posts_dir: Path) -> list[PostItem]:
         except ValueError:
             continue
         categories = parse_inline_list(meta.get("categories", ""))
+        is_podcast = meta.get("podcast", "").strip().lower() == "true"
+        if is_podcast or any(category.strip().lower() == "podcast" for category in categories):
+            continue
         stem = path.stem
         post_slug = stem[11:] if len(stem) > 11 and stem[4] == "-" and stem[7] == "-" else stem
         category_path = "/".join(slugify(category) for category in categories)

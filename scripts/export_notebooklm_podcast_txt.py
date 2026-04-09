@@ -70,7 +70,32 @@ def render_output(meta: dict[str, str], body: str) -> str:
     title = meta.get("title", "Podcast semanal")
     summary = meta.get("podcast_summary", "").strip()
     topics = bullet_lines(extract_section(body, "Neste episódio"))
-    transcript = normalize_dialogue(extract_section(body, "Transcrição"))
+    links = bullet_lines(extract_section(body, "Links"))
+
+    dialogue_lines: list[str] = [
+        "Autor: Esta semana foi daquelas em que a IA, a infraestrutura e a segurança pareceram entrar todas na mesma faixa ao mesmo tempo.",
+        "Amigo: Sim, e com a diferença habitual entre o que os anúncios prometem e aquilo que depois alguém tem mesmo de pôr a funcionar.",
+        "",
+    ]
+
+    for topic in topics[:4]:
+        dialogue_lines.extend(
+            [
+                f"Autor: Vamos pegar em {topic.lower()} porque isso ajuda a perceber onde está a mudar o centro de gravidade desta semana.",
+                "Amigo: Traduzindo para português sem fumo de palco: menos magia, mais disputa por controlo, integração e posição dentro da stack.",
+                "Autor: O importante aqui é separar o que é mudança operacional real do que é só marketing a fazer flexões em público.",
+                "Amigo: Exato. Sempre que uma empresa jura que agora resolveu tudo, convém ver quem fica com as chaves, a conta e o problema quando aquilo chiar.",
+                "",
+            ]
+        )
+
+    dialogue_lines.extend(
+        [
+            "Autor: No fim, a fotografia da semana é bastante simples. Já ninguém está só a vender modelos; estão a vender controlo, operação e dependência.",
+            "Amigo: E quando toda a gente quer ser a garagem, a estrada e o stand ao mesmo tempo, o mínimo é confirmar onde acaba a conveniência e começa a prisão domiciliária tecnológica.",
+        ]
+    )
+    transcript = "\n".join(dialogue_lines)
 
     header = [
         title,
@@ -88,10 +113,21 @@ def render_output(meta: dict[str, str], body: str) -> str:
         header.extend(["", "Temas da semana:"])
         header.extend(f"- {topic}" for topic in topics)
 
+    if links:
+        header.extend(["", "Leituras base recomendadas:"])
+        header.extend(f"- {link}" for link in links)
+
     header.extend(
         [
             "",
-            "Guião base / transcrição:",
+            "Instruções para o Audio Overview:",
+            "- Português de Portugal.",
+            "- Conversa entre dois amigos.",
+            "- O Autor é técnico, direto e opinativo.",
+            "- O Amigo goza com hype e buzzwords sem faltar ao respeito e sem humor negro.",
+            "- Nada de locução comercial, entusiasmo artificial ou teatro de rádio.",
+            "",
+            "Guião base sugerido:",
             "",
             transcript.strip(),
             "",

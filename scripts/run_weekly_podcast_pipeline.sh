@@ -9,7 +9,7 @@ Usage:
 
 Description:
   Gera o brief semanal do podcast a partir dos posts recentes e cria um draft
-  com guiao/transcricao para posterior producao manual de audio.
+  para posterior producao manual de audio no NotebookLM.
 EOF
 }
 
@@ -130,17 +130,9 @@ explicit: "no"
 
 - Placeholder
 
-## Timestamps
-
-- \`00:00\` Abertura
-
 ## Links
 
 - Placeholder
-
-## Transcrição
-
-Placeholder.
 EOF
 
 if [[ "$dry_run" == "true" ]]; then
@@ -161,7 +153,7 @@ Objetivo:
 - o Amigo tem de ser o contraponto que goza com hype, buzzwords e exageros do ecossistema sem faltar ao respeito e sem humor negro;
 - preencher podcast_summary no front matter;
 - substituir placeholders por conteudo real;
-- deixar o draft pronto para narracao;
+- deixar o draft pronto para publicacao no site, sem timestamps inventados e sem transcricao publica;
 - usar os artigos indicados no brief como base principal.
 
 A ultima linha nao vazia tem de ser exatamente:

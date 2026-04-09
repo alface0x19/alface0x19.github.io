@@ -1,4 +1,4 @@
-Resumo semanal #1
+Resumo semanal #2
 
 Documento preparado para importação no NotebookLM.
 Objetivo: gerar um podcast em português de Portugal, em formato de conversa entre dois amigos.
@@ -8,39 +8,48 @@ A persona 'Amigo' goza com o hype e os exageros da indústria sem faltar ao resp
 Resumo editorial: Conversa entre o Autor e o Amigo sobre os temas mais relevantes da semana em IA, segurança e operação tecnológica.
 
 Temas da semana:
-- A próxima fase da IA empresarial não é conversa. É controlo.
-- Anthropic no limbo jurídico: quando o risco já é de procurement
-- A AWS não está indecisa. Está a comprar a estrada.
-- Quando o acesso fechado diz mais do que o modelo
+- **A próxima fase da IA empresarial não é conversa. É controlo.**: Há anúncios de IA que entram como solo de guitarra de dez minutos: tecnicamente competentes, mas ninguém lhes pediu aquilo.
+- **Anthropic no limbo jurídico: quando o risco já é de procurement**: Há notícias que parecem guerra cultural entre Estado e Big Tech.
+- **A AWS não está indecisa. Está a comprar a estrada.**: Há declarações de executivos que soam a solo de guitarra demasiado comprido: muito aparato, pouca revelação.
+- **Quando o acesso fechado diz mais do que o modelo**: Há anúncios de IA que entram como solo de guitarra.
 
-Guião base / transcrição:
+Leituras base recomendadas:
+- [A próxima fase da IA empresarial não é conversa. É controlo.](/ia/empresas/operacoes/the-next-phase-of-enterprise-ai/)
+- [Anthropic no limbo jurídico: quando o risco já é de procurement](/ia/seguranca/procurement/conflicting-rulings-leave-anthropic-in-supply-chain-risk-limbo/)
+- [A AWS não está indecisa. Está a comprar a estrada.](/ia/cloud/empresas/aws-boss-explains-why-investing-billions-in-both-anthropic-and-openai/)
+- [Quando o acesso fechado diz mais do que o modelo](/ia/seguranca/devsecops/anthropic-limits-access-to-mythos-its-new-cybersecurity-ai-model/)
+
+Instruções para o Audio Overview:
+- Português de Portugal.
+- Conversa entre dois amigos.
+- O Autor é técnico, direto e opinativo.
+- O Amigo goza com hype e buzzwords sem faltar ao respeito e sem humor negro.
+- Nada de locução comercial, entusiasmo artificial ou teatro de rádio.
+
+Guião base sugerido:
 
 Autor: Esta semana foi daquelas em que a IA, a infraestrutura e a segurança pareceram entrar todas na mesma faixa ao mesmo tempo.
-Amigo: Sim, foi uma semana muito rica em promessas de futuro e em pequenos lembretes de que o futuro também avaria.
+Amigo: Sim, e com a diferença habitual entre o que os anúncios prometem e aquilo que depois alguém tem mesmo de pôr a funcionar.
 
-Autor: Vamos pegar em a próxima fase da ia empresarial não é conversa. é controlo. porque isto ajuda a perceber para onde o ecossistema está a descair esta semana.
-Amigo: Traduzindo: mais um anúncio a jurar que agora é que o foguete vai mesmo levantar, mas ao menos desta vez há detalhes concretos no meio do fumo.
-Autor: O ponto útil aqui é este: Há anúncios de IA que entram como solo de guitarra de dez minutos: tecnicamente competentes, mas ninguém lhes pediu aquilo. O texto da OpenAI sobre a "next phase of enterprise AI" tinha tudo para cair nessa categoria. Só que, no meio do brilho habitual, há uma mudança que…
-Amigo: E isso é a parte que separa tecnologia real de teatro com buzzwords e uma dashboard a piscar luzinhas.
-Autor: Exato. O que interessa não é o slogan; é perceber quem ganha controlo, quem ganha dependência e quem fica a segurar a conta quando a demo acaba.
+Autor: Vamos pegar em **a próxima fase da ia empresarial não é conversa. é controlo.**: há anúncios de ia que entram como solo de guitarra de dez minutos: tecnicamente competentes, mas ninguém lhes pediu aquilo. porque isso ajuda a perceber onde está a mudar o centro de gravidade desta semana.
+Amigo: Traduzindo para português sem fumo de palco: menos magia, mais disputa por controlo, integração e posição dentro da stack.
+Autor: O importante aqui é separar o que é mudança operacional real do que é só marketing a fazer flexões em público.
+Amigo: Exato. Sempre que uma empresa jura que agora resolveu tudo, convém ver quem fica com as chaves, a conta e o problema quando aquilo chiar.
 
-Autor: Vamos pegar em anthropic no limbo jurídico: quando o risco já é de procurement porque isto ajuda a perceber para onde o ecossistema está a descair esta semana.
-Amigo: Traduzindo: mais um anúncio a jurar que agora é que o foguete vai mesmo levantar, mas ao menos desta vez há detalhes concretos no meio do fumo.
-Autor: O ponto útil aqui é este: Há notícias que parecem guerra cultural entre Estado e Big Tech. Esta soa mais a carro de frota com a luz do motor acesa: ainda pode andar, mas ninguém sério assina o contrato sem levantar o capot. Quando duas decisões judiciais puxam o volante em sentidos opostos, já não…
-Amigo: E isso é a parte que separa tecnologia real de teatro com buzzwords e uma dashboard a piscar luzinhas.
-Autor: Exato. O que interessa não é o slogan; é perceber quem ganha controlo, quem ganha dependência e quem fica a segurar a conta quando a demo acaba.
+Autor: Vamos pegar em **anthropic no limbo jurídico: quando o risco já é de procurement**: há notícias que parecem guerra cultural entre estado e big tech. porque isso ajuda a perceber onde está a mudar o centro de gravidade desta semana.
+Amigo: Traduzindo para português sem fumo de palco: menos magia, mais disputa por controlo, integração e posição dentro da stack.
+Autor: O importante aqui é separar o que é mudança operacional real do que é só marketing a fazer flexões em público.
+Amigo: Exato. Sempre que uma empresa jura que agora resolveu tudo, convém ver quem fica com as chaves, a conta e o problema quando aquilo chiar.
 
-Autor: Vamos pegar em a aws não está indecisa. está a comprar a estrada. porque isto ajuda a perceber para onde o ecossistema está a descair esta semana.
-Amigo: Traduzindo: mais um anúncio a jurar que agora é que o foguete vai mesmo levantar, mas ao menos desta vez há detalhes concretos no meio do fumo.
-Autor: O ponto útil aqui é este: Há declarações de executivos que soam a solo de guitarra demasiado comprido: muito aparato, pouca revelação. A de Matt Garman, CEO da AWS, sobre investir milhares de milhões tanto na Anthropic como na OpenAI parecia candidata a entrar nessa categoria. Mas, no meio do ruído, há…
-Amigo: E isso é a parte que separa tecnologia real de teatro com buzzwords e uma dashboard a piscar luzinhas.
-Autor: Exato. O que interessa não é o slogan; é perceber quem ganha controlo, quem ganha dependência e quem fica a segurar a conta quando a demo acaba.
+Autor: Vamos pegar em **a aws não está indecisa. está a comprar a estrada.**: há declarações de executivos que soam a solo de guitarra demasiado comprido: muito aparato, pouca revelação. porque isso ajuda a perceber onde está a mudar o centro de gravidade desta semana.
+Amigo: Traduzindo para português sem fumo de palco: menos magia, mais disputa por controlo, integração e posição dentro da stack.
+Autor: O importante aqui é separar o que é mudança operacional real do que é só marketing a fazer flexões em público.
+Amigo: Exato. Sempre que uma empresa jura que agora resolveu tudo, convém ver quem fica com as chaves, a conta e o problema quando aquilo chiar.
 
-Autor: Vamos pegar em quando o acesso fechado diz mais do que o modelo porque isto ajuda a perceber para onde o ecossistema está a descair esta semana.
-Amigo: Traduzindo: mais um anúncio a jurar que agora é que o foguete vai mesmo levantar, mas ao menos desta vez há detalhes concretos no meio do fumo.
-Autor: O ponto útil aqui é este: Há anúncios de IA que entram como solo de guitarra. Este chega mais como ensaio de som com a porta fechada: ouve-se potência, mas só meia dúzia entra. A Anthropic limitou o acesso ao Claude Mythos Preview, o seu novo modelo para cibersegurança, e esse detalhe diz mais do que a…
-Amigo: E isso é a parte que separa tecnologia real de teatro com buzzwords e uma dashboard a piscar luzinhas.
-Autor: Exato. O que interessa não é o slogan; é perceber quem ganha controlo, quem ganha dependência e quem fica a segurar a conta quando a demo acaba.
+Autor: Vamos pegar em **quando o acesso fechado diz mais do que o modelo**: há anúncios de ia que entram como solo de guitarra. porque isso ajuda a perceber onde está a mudar o centro de gravidade desta semana.
+Amigo: Traduzindo para português sem fumo de palco: menos magia, mais disputa por controlo, integração e posição dentro da stack.
+Autor: O importante aqui é separar o que é mudança operacional real do que é só marketing a fazer flexões em público.
+Amigo: Exato. Sempre que uma empresa jura que agora resolveu tudo, convém ver quem fica com as chaves, a conta e o problema quando aquilo chiar.
 
-Autor: No fim, a fotografia da semana é bastante simples. Já ninguém está só a vender modelos; estão a vender controlo, operação e posição dentro da stack.
-Amigo: E quando toda a gente quer ser a garagem, a estrada e o stand ao mesmo tempo, convém confirmar quem fica com as chaves.
+Autor: No fim, a fotografia da semana é bastante simples. Já ninguém está só a vender modelos; estão a vender controlo, operação e dependência.
+Amigo: E quando toda a gente quer ser a garagem, a estrada e o stand ao mesmo tempo, o mínimo é confirmar onde acaba a conveniência e começa a prisão domiciliária tecnológica.

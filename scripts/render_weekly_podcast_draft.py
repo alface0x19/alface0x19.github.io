@@ -57,55 +57,42 @@ def update_front_matter_summary(text: str, summary: str) -> str:
     return re.sub(r'^podcast_summary:\s*.*$', f'podcast_summary: "{summary}"', text, flags=re.M)
 
 
+def teaser_from_excerpt(excerpt: str) -> str:
+    cleaned = " ".join(excerpt.split()).strip()
+    if not cleaned:
+        return "Sem resumo curto disponível."
+    sentence_match = re.match(r"(.+?[.!?])(?:\s|$)", cleaned)
+    if sentence_match:
+        return sentence_match.group(1).strip()
+    return cleaned.rstrip(".…") + "."
+
+
 def render_body(topics: list[dict[str, str]]) -> str:
     links = []
     bullets = []
-    transcript = []
-    timestamps = ["- `00:00` Abertura e leitura rápida da semana"]
+    opening = (
+        "Nesta semana, o fio condutor passa menos pela novidade em si e mais por quem quer "
+        "controlar a stack, a operação e a narrativa à volta da IA."
+    )
 
-    for index, topic in enumerate(topics[:4], start=1):
+    for topic in topics[:4]:
         title = topic.get("título") or topic.get("titulo") or topic.get("title") or "Tema"
         excerpt = topic.get("excerto") or topic.get("excerpt") or "Sem excerto."
         post_url = topic.get("url") or "#"
-        bullets.append(f"- {title}")
+        bullets.append(f"- **{title}**: {teaser_from_excerpt(excerpt)}")
         links.append(f"- [{title}]({post_url})")
-        timestamps.append(f"- `0{index}:3{index}` {title}")
-
-        transcript.extend(
-            [
-                f"Autor: Vamos pegar em {title.lower()} porque isto ajuda a perceber para onde o ecossistema está a descair esta semana.",
-                f"Amigo: Traduzindo: mais um anúncio a jurar que agora é que o foguete vai mesmo levantar, mas ao menos desta vez há detalhes concretos no meio do fumo.",
-                f"Autor: O ponto útil aqui é este: {excerpt}",
-                "Amigo: E isso é a parte que separa tecnologia real de teatro com buzzwords e uma dashboard a piscar luzinhas.",
-                "Autor: Exato. O que interessa não é o slogan; é perceber quem ganha controlo, quem ganha dependência e quem fica a segurar a conta quando a demo acaba.",
-                "",
-            ]
-        )
-
-    timestamps.append("- `12:30` Fecho")
 
     return "\n".join(
         [
+            opening,
+            "",
             "## Neste episódio",
             "",
             *bullets,
             "",
-            "## Timestamps",
-            "",
-            *timestamps,
-            "",
             "## Links",
             "",
             *links,
-            "",
-            "## Transcrição",
-            "",
-            "Autor: Esta semana foi daquelas em que a IA, a infraestrutura e a segurança pareceram entrar todas na mesma faixa ao mesmo tempo.",
-            "Amigo: Sim, foi uma semana muito rica em promessas de futuro e em pequenos lembretes de que o futuro também avaria.",
-            "",
-            *transcript,
-            "Autor: No fim, a fotografia da semana é bastante simples. Já ninguém está só a vender modelos; estão a vender controlo, operação e posição dentro da stack.",
-            "Amigo: E quando toda a gente quer ser a garagem, a estrada e o stand ao mesmo tempo, convém confirmar quem fica com as chaves.",
         ]
     )
 
@@ -123,7 +110,7 @@ def main() -> int:
     if not topics:
         raise SystemExit("No topics found in brief.")
 
-    summary = f"Conversa entre o Autor e o Amigo sobre os temas mais relevantes da semana em IA, segurança e operação tecnológica."
+    summary = "Conversa entre o Autor e o Amigo sobre os temas mais relevantes da semana em IA, segurança e operação tecnológica."
     body = render_body(topics)
     draft_text = update_front_matter_summary(draft_text, summary)
     draft_text = re.sub(r"## Neste episódio.*", body, draft_text, flags=re.S)
