@@ -17,7 +17,7 @@ Este repositório agora tem um fluxo simples e dividido por responsabilidades:
 - `scripts/run_codex_news_pipeline.sh`: pega numa notícia da fila e chama os agentes.
 - `scripts/run_news_autopilot.sh`: encadeia recolha, curadoria, escrita, revisão, quality gate e publicação.
 - `scripts/build_weekly_podcast_brief.py`: junta os posts mais recentes da semana num brief para episódio.
-- `scripts/run_weekly_podcast_pipeline.sh`: cria o episódio semanal de podcast, tenta gerar áudio e publica quando estiver pronto.
+- `scripts/run_weekly_podcast_pipeline.sh`: cria o episódio semanal de podcast em draft, para posterior produção manual de áudio.
 - `scripts/install_podcast_cron.sh`: instala ou atualiza o cron semanal do podcast.
 - `.github/agents/angle-setter.agent.md`: cria um brief editorial curto para fixar tese, foco e o toque de persona antes da escrita.
 - `.github/agents/news-caricaturist.agent.md`: gera uma capa local em SVG com caricatura editorial da notícia quando não houver imagem melhor disponível.
@@ -36,11 +36,10 @@ Este repositório agora tem um fluxo simples e dividido por responsabilidades:
 
 ## Podcast semanal
 
-1. O cron semanal pode correr `bash scripts/run_weekly_podcast_pipeline.sh --publish` à quinta-feira às 18:00.
-2. O pipeline cria um brief com posts recentes da semana, gera um draft de episódio e tenta produzir áudio.
-3. Para renderizar áudio, define `PODCAST_TTS_COMMAND` no ambiente do cron.
-4. Se o áudio for gerado com sucesso, o episódio fica com `audio_url` preenchido e pode aparecer no feed `podcast.xml`.
-5. Sem `PODCAST_TTS_COMMAND`, o pipeline pára no draft, a menos que publiques explicitamente sem áudio.
+1. O cron semanal pode correr `bash scripts/run_weekly_podcast_pipeline.sh` à quinta-feira às 18:00.
+2. O pipeline cria um brief com posts recentes da semana e gera um draft de episódio.
+3. O áudio passa a ser um passo manual e externo ao repositório.
+4. Depois de obteres o ficheiro de áudio, preenches `audio_url`, `audio_size` e `audio_duration` no draft antes de o mover para `_posts/`.
 
 ## Fluxo manual
 

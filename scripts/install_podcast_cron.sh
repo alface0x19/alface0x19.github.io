@@ -16,9 +16,9 @@ if [[ -z "$codex_bin" ]]; then
 fi
 
 if [[ -n "$codex_bin" ]]; then
-  cron_command="cd $repo_root && CODEX_BIN=$codex_bin bash scripts/run_weekly_podcast_pipeline.sh --publish >> /tmp/alface0x19-podcast-cron.log 2>&1"
+  cron_command="cd $repo_root && CODEX_BIN=$codex_bin bash scripts/run_weekly_podcast_pipeline.sh >> /tmp/alface0x19-podcast-cron.log 2>&1"
 else
-  cron_command="cd $repo_root && bash scripts/run_weekly_podcast_pipeline.sh --publish >> /tmp/alface0x19-podcast-cron.log 2>&1"
+  cron_command="cd $repo_root && bash scripts/run_weekly_podcast_pipeline.sh >> /tmp/alface0x19-podcast-cron.log 2>&1"
 fi
 
 begin_marker="# BEGIN alface0x19-weekly-podcast"

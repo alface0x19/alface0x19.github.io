@@ -5,7 +5,7 @@ permalink: /podcast/
 author_profile: false
 ---
 
-{% assign podcast_posts = site.posts | where_exp: "post", "post.podcast == true or post.audio_url" %}
+{% assign podcast_posts = site.posts | where_exp: "post", "post.audio_url != nil and post.audio_url != ''" %}
 
 <div class="post">
   <h1>{{ page.title }}</h1>

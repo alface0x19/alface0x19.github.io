@@ -1,3 +1,20 @@
+Resumo semanal #1
+
+Documento preparado para importação no NotebookLM.
+Objetivo: gerar um podcast em português de Portugal, em formato de conversa entre dois amigos.
+A persona 'Autor' é a voz técnica e opinativa do blog.
+A persona 'Amigo' goza com o hype e os exageros da indústria sem faltar ao respeito e sem humor negro.
+
+Resumo editorial: Conversa entre o Autor e o Amigo sobre os temas mais relevantes da semana em IA, segurança e operação tecnológica.
+
+Temas da semana:
+- A próxima fase da IA empresarial não é conversa. É controlo.
+- Anthropic no limbo jurídico: quando o risco já é de procurement
+- A AWS não está indecisa. Está a comprar a estrada.
+- Quando o acesso fechado diz mais do que o modelo
+
+Guião base / transcrição:
+
 Autor: Esta semana foi daquelas em que a IA, a infraestrutura e a segurança pareceram entrar todas na mesma faixa ao mesmo tempo.
 Amigo: Sim, foi uma semana muito rica em promessas de futuro e em pequenos lembretes de que o futuro também avaria.
 

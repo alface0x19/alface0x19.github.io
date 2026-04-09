@@ -3,7 +3,7 @@ layout: null
 permalink: /podcast.xml
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-{% assign podcast_posts = site.posts | where_exp: "post", "post.podcast == true or post.audio_url" %}
+{% assign podcast_posts = site.posts | where_exp: "post", "post.audio_url != nil and post.audio_url != ''" %}
 {% assign podcast_image = site.podcast.image %}
 {% unless podcast_image contains '://' %}
   {% assign podcast_image_rel = site.podcast.image | relative_url %}

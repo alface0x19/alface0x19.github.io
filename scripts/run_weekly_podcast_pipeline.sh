@@ -5,12 +5,11 @@ usage() {
   cat <<'EOF'
 Usage:
   scripts/run_weekly_podcast_pipeline.sh [--date YYYY-MM-DD] [--model model-name]
-    [--writer-model model-name] [--publish] [--publish-without-audio] [--dry-run]
-    [--local-writer]
+    [--writer-model model-name] [--dry-run] [--local-writer]
 
 Description:
-  Gera o brief semanal do podcast a partir dos posts recentes, cria um draft
-  com guiao/transcricao e, se houver TTS configurado, produz audio e publica.
+  Gera o brief semanal do podcast a partir dos posts recentes e cria um draft
+  com guiao/transcricao para posterior producao manual de audio.
 EOF
 }
 
@@ -27,8 +26,6 @@ source "$repo_root/scripts/lib/codex_cli.sh"
 reference_date="$(date +%F)"
 model=""
 writer_model=""
-publish="false"
-publish_without_audio="false"
 dry_run="false"
 local_writer="false"
 
@@ -45,14 +42,6 @@ while [[ $# -gt 0 ]]; do
     --writer-model)
       writer_model="$2"
       shift 2
-      ;;
-    --publish)
-      publish="true"
-      shift
-      ;;
-    --publish-without-audio)
-      publish_without_audio="true"
-      shift
       ;;
     --dry-run)
       dry_run="true"
@@ -116,7 +105,7 @@ fi
 draft_path="$repo_root/_drafts/${episode_slug}.md"
 post_path="$repo_root/_posts/${episode_slug}.md"
 audio_rel="/assets/audio/podcast/$(date -d "$reference_date" +%Y 2>/dev/null || date +%Y)/${episode_slug}.mp3"
-audio_path="$repo_root${audio_rel}"
+audio_txt_path="$repo_root/assets/audio/podcast/$(date -d "$reference_date" +%Y 2>/dev/null || date +%Y)/${episode_slug}.txt"
 
 cat > "$draft_path" <<EOF
 ---
@@ -157,6 +146,7 @@ EOF
 if [[ "$dry_run" == "true" ]]; then
   echo "DRY_RUN: brief em $brief_path"
   echo "DRY_RUN: draft base em $draft_path"
+  echo "DRY_RUN: txt NotebookLM em $audio_txt_path"
   exit 0
 fi
 
@@ -185,39 +175,8 @@ else
   run_codex_agent --repo-root "$repo_root" --agent "podcast-script-writer" --model "$selected_model" --prompt "$agent_prompt"
 fi
 
-audio_generated="false"
-if bash "$repo_root/scripts/render_podcast_audio.sh" "$draft_path" "$audio_path" "$episode_title"; then
-  audio_generated="true"
-  audio_size="$(wc -c < "$audio_path" | tr -d ' ')"
-  python3 - "$draft_path" "$audio_rel" "$audio_size" <<'PY'
-from pathlib import Path
-import re
-import sys
+python3 "$repo_root/scripts/export_notebooklm_podcast_txt.py" --draft "$draft_path" --output "$audio_txt_path"
 
-path = Path(sys.argv[1])
-audio_url = sys.argv[2]
-audio_size = sys.argv[3]
-text = path.read_text(encoding="utf-8", errors="ignore")
-text = re.sub(r'^audio_url:\s*.*$', f'audio_url: {audio_url}', text, flags=re.M)
-text = re.sub(r'^audio_size:\s*.*$', f'audio_size: {audio_size}', text, flags=re.M)
-path.write_text(text, encoding="utf-8")
-PY
-else
-  status=$?
-  if [[ $status -eq 2 ]]; then
-    echo "Audio nao gerado: PODCAST_TTS_COMMAND nao configurado."
-  else
-    exit $status
-  fi
-fi
-
-if [[ "$publish" == "true" ]]; then
-  if [[ "$audio_generated" != "true" && "$publish_without_audio" != "true" ]]; then
-    echo "Publicacao abortada: sem audio gerado. Usa --publish-without-audio se quiseres publicar o episodio sem player." >&2
-    exit 1
-  fi
-  mv "$draft_path" "$post_path"
-  echo "PODCAST_PUBLISHED: $post_path"
-else
-  echo "PODCAST_DRAFT_READY: $draft_path"
-fi
+echo "PODCAST_DRAFT_READY: $draft_path"
+echo "NOTEBOOKLM_TXT_READY: $audio_txt_path"
+echo "Proximo passo manual: importar o TXT no NotebookLM, gerar audio externo e preencher audio_url/audio_size/audio_duration antes de publicar."
